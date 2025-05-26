@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Out of the nest</string>
+    <string name="app_slogan">Out of the nest</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <!-- Home screen -->
+    <string name="welcome_to">WELCOME TO</string>
+    <string name="bt_get_started">Get Start</string>
+    <string name="bt_login">Sing in</string>
+
+    <!-- Authentication screen -->
+    <string name="authentication_pager_desc">Authentication pages</string>
+    <string name="bt_register">Register</string>
+    <string name="txt_login_title">Login in your account</string>
+    <string name="txt_register_title">Create your account</string>
+    <string name="txt_name">Name</string>
+    <string name="txt_email">Email</string>
+    <string name="txt_password">Password</string>
+    <string name="txt_confirm_password">Confirm Password</string>
+</resources>
