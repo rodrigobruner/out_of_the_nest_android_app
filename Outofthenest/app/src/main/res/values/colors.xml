@@ -9,7 +9,23 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="background">#FFF5F5F5</color>
+    <!-- Custom colors for the app -->
+    <color name="blue_1000">#FF03045E</color>
+    <color name="blue_800">#FF023E8A</color>
+    <color name="blue_600">#FF0277B6</color>
+    <color name="blue_400">#FF0096C7</color>
+    <color name="blue_200">#FF00B4D8</color>
+
+    <color name="orange_1000">#FFFF5400</color>
+    <color name="orange_800">#FFFF6D01</color>
+    <color name="orange_600">#FFFF8502</color>
+    <color name="orange_400">#FFFF9103</color>
+    <color name="orange_200">#FFFF9D03</color>
+
+    <color name="red_400">#FFDB6566</color>
+    <color name="red_200">#FF97475F</color>
+
+    <color name="background">#FFFCFEFF</color>
     <color name="primary">#FF27CBD9</color>
     <color name="secondary">#FF9CE8ED</color>
 </resources>

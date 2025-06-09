@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentLogin"
+    android:windowSoftInputMode="adjustResize"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/background"
     android:padding="20dp">
@@ -20,29 +20,35 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editTextEmail"
         style="@style/Email">
+
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextEmailInput"
+            android:id="@+id/inpEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/txt_email"/>
+            android:focusedByDefault="true"
+            android:hint="@string/txt_email"
+            android:inputType="textEmailAddress"
+            android:keyboardNavigationCluster="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editTextPassword"
         style="@style/Password">
+
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextPasswordInput"
+            android:id="@+id/inpPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/txt_password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:keyboardNavigationCluster="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/buttonLogin"
+        android:id="@+id/btnLogin"
         style="@style/ButtonFullSizeFilled"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/bt_login" />
+        android:text="@string/btn_login" />
 
 </LinearLayout>

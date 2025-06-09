@@ -1,22 +1,56 @@
 <resources>
     <string name="app_name">Out of the nest</string>
     <string name="app_slogan">Out of the nest</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_events">Events</string>
+    <string name="title_profile">Profile</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_maps">Maps</string>
+
+
+    <!-- Family Members -->
+    <string name="family_member_male">Men</string>
+    <string name="family_member_female">Woman</string>
+    <string name="family_member_boy">Boy</string>
+    <string name="family_member_girl">Girl</string>
+    <string name="family_member_dog">Dog</string>
+    <string name="family_member_cat">Cat</string>
+    <string name="family_member_other">Others</string>
+
 
     <!-- Home screen -->
     <string name="welcome_to">WELCOME TO</string>
-    <string name="bt_get_started">Get Start</string>
-    <string name="bt_login">Sing in</string>
+    <string name="btn_get_started">Get Start</string>
+    <string name="btn_login">Sing in</string>
 
-    <!-- Authentication screen -->
+    <!-- Register and authentication screen -->
     <string name="authentication_pager_desc">Authentication pages</string>
-    <string name="bt_register">Register</string>
+    <string name="btn_register">Register</string>
     <string name="txt_login_title">Login in your account</string>
     <string name="txt_register_title">Create your account</string>
     <string name="txt_name">Name</string>
     <string name="txt_email">Email</string>
     <string name="txt_password">Password</string>
     <string name="txt_confirm_password">Confirm Password</string>
+
+    <string name="txt_password_not_match">Passwords do not match</string>
+    <string name="txt_invalid_name">Inform a valid name</string>
+    <string name="txt_invalid_email">Inform a valid e-mail</string>
+    <string name="txt_invalid_password">Inform a valid password</string>
+    <string name="txt_registration_success">User created successfully</string>
+    <string name="txt_registration_failed">The user could not be registered</string>
+    <string name="txt_login_failed">Incorrect username or password</string>
+
+    <!-- Maps screen -->
+    <string name="search_here">Search here...</string>
+    <string name="add_place">Add Place</string>
+    <string name="btn_cancel">Cancel</string>
+
+
+    <!-- Settings screen -->
+    <string name="profile_title">Profille</string>
+    <string name="txt_logout">Logout</string>
+    <string name="title_activity_navegation">NavegationActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+
 </resources>

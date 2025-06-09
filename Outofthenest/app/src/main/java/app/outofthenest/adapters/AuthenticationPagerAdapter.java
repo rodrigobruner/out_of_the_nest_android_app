@@ -7,8 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-import app.outofthenest.ui.login.LoginFragment;
-import app.outofthenest.ui.register.RegisterFragment;
+import app.outofthenest.view.authentication.LoginFragment;
+import app.outofthenest.view.authentication.RegisterFragment;
 
 public class AuthenticationPagerAdapter extends FragmentStateAdapter {
 

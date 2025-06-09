@@ -1,8 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
 }
-
+//def MAPS_API_KEY = project.findProperty("MAPS_API_KEY") ?: ""
+val MAPS_API_KEY: String = project.findProperty("MAPS_API_KEY") as? String ?: ""
 android {
     namespace = "app.outofthenest"
     compileSdk = 35
@@ -15,6 +17,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+//        buildConfigField "String", "MAPS_API_KEY", "\"${MAPS_API_KEY}\""
+        buildConfigField("String", "MAPS_API_KEY", "\"$MAPS_API_KEY\"")
     }
 
     buildTypes {
@@ -32,6 +36,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -46,6 +51,7 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.activity)
     implementation(libs.firebase.auth)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

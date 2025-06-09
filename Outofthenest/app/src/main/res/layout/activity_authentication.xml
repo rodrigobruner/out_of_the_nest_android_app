@@ -1,71 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/activity_authentication"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Authentication">
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <FrameLayout
+    tools:context=".view.authentication.AuthenticationActivity">
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@color/primary"
-            android:padding="20dp"
-            android:id="@+id/backgroundArea">
-            <LinearLayout
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/textViewAppName"
-                    style="@style/TextTitleLight"
-                    android:textAlignment="center"
-                    android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:background="?attr/colorPrimary"
+                android:padding="20dp"
+                android:id="@+id/backgroundArea">
+            </FrameLayout>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayoutAuthentication"
+                style="@style/TabMenu"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_name" />
-
-                <TextView
-                    android:id="@+id/textViewAppSlogan"
-                    style="@style/TextSubtitleLight"
-                    android:gravity="right"
-                    android:layout_width="match_parent"
+                    android:text="@string/btn_register" />
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_slogan" />
-            </LinearLayout>
-        </FrameLayout>
+                    android:text="@string/btn_login" />
+            </com.google.android.material.tabs.TabLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayoutAuthentication"
-            style="@style/TabMenu"
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/bt_register" />
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/bt_login" />
-        </com.google.android.material.tabs.TabLayout>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPagerAuthentication"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/authentication_pager_desc" />
-    </LinearLayout>
-
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPagerAuthentication"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/authentication_pager_desc" />
+        </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

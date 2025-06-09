@@ -1,69 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    android:id="@+id/scrollViewRegister"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="@color/background"
     android:padding="20dp">
 
-
-    <TextView
-        android:id="@+id/textView2"
-        style="@style/TextH2"
-        android:layout_marginTop="20dp"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/txt_register_title" />
+        android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextName"
-        style="@style/TextField">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextNameInput"
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/TextH2"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/txt_name"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:text="@string/txt_register_title" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextEmail"
-        style="@style/Email">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextEmailInput"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtName"
+            style="@style/TextField">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inpName"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/txt_name"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextEmail"
+            style="@style/Email">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inpEmail"
+                android:inputType="textEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/txt_email"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextPassword"
+            style="@style/Password">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inpPassword"
+                android:inputType="textPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/txt_password"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtConfirmPassword"
+            style="@style/Password">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inpConfirmPassword"
+                android:inputType="textPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/txt_confirm_password"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_register"
+            style="@style/ButtonFullSizeFilled"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/txt_email"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:text="@string/btn_register" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextPassword"
-        style="@style/Password">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextPasswordInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/txt_password"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextConfirmPassword"
-        style="@style/Password">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextConfirmPasswordInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/txt_confirm_password"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/button"
-        style="@style/ButtonFullSizeFilled"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/bt_login" />
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
