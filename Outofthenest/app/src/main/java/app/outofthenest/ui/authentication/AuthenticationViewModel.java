@@ -1,4 +1,4 @@
-package app.outofthenest.view.authentication;
+package app.outofthenest.ui.authentication;
 
 import android.app.Application;
 

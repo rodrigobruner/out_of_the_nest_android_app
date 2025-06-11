@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_maps"
-        android:name="app.outofthenest.view.maps.MapsFragment"
+        android:name="app.outofthenest.ui.maps.MapsFragment"
         android:label="@string/title_maps"
         tools:layout="@layout/fragment_maps" />
 
     <fragment
         android:id="@+id/navigation_events"
-        android:name="app.outofthenest.view.events.EventsFragment"
+        android:name="app.outofthenest.ui.events.EventsFragment"
         android:label="@string/title_events"
         tools:layout="@layout/fragment_events" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="app.outofthenest.view.notifications.NotificationsFragment"
+        android:name="app.outofthenest.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="app.outofthenest.view.profile.ProfileFragment"
+        android:name="app.outofthenest.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 

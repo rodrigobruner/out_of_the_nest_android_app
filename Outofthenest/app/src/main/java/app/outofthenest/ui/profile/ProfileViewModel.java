@@ -1,4 +1,4 @@
-package app.outofthenest.view.profile;
+package app.outofthenest.ui.profile;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

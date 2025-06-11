@@ -19,8 +19,8 @@
 
     <!-- Home screen -->
     <string name="welcome_to">WELCOME TO</string>
-    <string name="btn_get_started">Get Start</string>
-    <string name="btn_login">Sing in</string>
+    <string name="btn_get_started">Get Started</string>
+    <string name="btn_login">Sign in</string>
 
     <!-- Register and authentication screen -->
     <string name="authentication_pager_desc">Authentication pages</string>
@@ -45,6 +45,24 @@
     <string name="add_place">Add Place</string>
     <string name="btn_cancel">Cancel</string>
 
+
+    <!-- New Place screen -->
+    <string name="new_place_title">New Place</string>
+    <string name="txt_place_name">Place Name</string>
+    <string name="txt_place_type">Choose a place type</string>
+    <string name="txt_address">Address</string>
+    <string name="txt_description">Description</string>
+    <string name="btn_save">Save</string>
+    <string name="txt_place_saved">Place saved successfully</string>
+    <string name="txt_place_not_saved">Place could not be saved</string>
+
+    <string-array name="place_types">
+        <item>Select a type...</item>
+        <item>Playground</item>
+        <item>Restaurant</item>
+        <item>Park</item>
+        <item>Other</item>
+    </string-array>
 
     <!-- Settings screen -->
     <string name="profile_title">Profille</string>

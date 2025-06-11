@@ -1,4 +1,4 @@
-package app.outofthenest.view.events;
+package app.outofthenest.ui.events;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

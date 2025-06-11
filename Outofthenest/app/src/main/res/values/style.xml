@@ -76,13 +76,25 @@
     <style name="TextField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">60dp</item>
-        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginTop">15dp</item>
         <item name="boxBackgroundMode">outline</item>
         <item name="boxBackgroundColor">?attr/colorOnPrimary</item>
         <item name="boxStrokeColor">?attr/colorPrimary</item>
         <item name="boxStrokeWidth">2dp</item>
         <item name="hintTextColor">?attr/colorPrimary</item>
         <item name="endIconMode">clear_text</item>
+    </style>
+
+    <style name="Spiner">
+        <item name="android:layout_width">match_parent</item>
+<!--        <item name="android:layout_height">wrap_content</item>-->
+        <item name="android:spinnerMode">dropdown</item>
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="boxStrokeColor">?attr/colorPrimary</item>
+        <item name="android:fontFamily">@font/poppins_semi_bold</item>
     </style>
 
     <style name="Email" parent="TextField">

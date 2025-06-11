@@ -1,4 +1,4 @@
-package app.outofthenest.view.maps;
+package app.outofthenest.ui.maps;
 
 import android.animation.ValueAnimator;
 import android.content.Context;

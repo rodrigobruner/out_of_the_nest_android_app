@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/maps_search_places_fragment"
-        android:name="app.outofthenest.view.maps.MapsSearchPlacesFragment"
+        android:name="app.outofthenest.ui.maps.MapsSearchPlacesFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

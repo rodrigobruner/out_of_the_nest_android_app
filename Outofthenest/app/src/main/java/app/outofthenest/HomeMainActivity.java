@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import app.outofthenest.databinding.ActivityHomeMainBinding;
-import app.outofthenest.view.authentication.AuthenticationActivity;
-import app.outofthenest.view.authentication.AuthenticationViewModel;
+import app.outofthenest.ui.authentication.AuthenticationActivity;
+import app.outofthenest.ui.authentication.AuthenticationViewModel;
 
 
 public class HomeMainActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package app.outofthenest.view.maps;
+package app.outofthenest.ui.maps;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
