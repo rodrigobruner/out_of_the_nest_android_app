@@ -73,7 +73,47 @@
                     <Button
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:text="Button 1"
+                        android:text="Washrooms"
+                        android:padding="5dp"
+                        android:layout_margin="5dp"
+                        android:layout_marginEnd="8dp"/>
+
+                    <Button
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:text="Playgrounds"
+                        android:padding="5dp"
+                        android:layout_margin="5dp"
+                        android:layout_marginEnd="8dp"/>
+
+                    <Button
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:text="Splash Pads"
+                        android:padding="5dp"
+                        android:layout_margin="5dp"
+                        android:layout_marginEnd="8dp"/>
+
+                    <Button
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:text="Indoor Play Centers"
+                        android:padding="5dp"
+                        android:layout_margin="5dp"
+                        android:layout_marginEnd="8dp"/>
+
+                    <Button
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:text="Nature Trails"
+                        android:padding="5dp"
+                        android:layout_margin="5dp"
+                        android:layout_marginEnd="8dp"/>
+
+                    <Button
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:text="Public Libraries"
                         android:padding="5dp"
                         android:layout_margin="5dp"
                         android:layout_marginEnd="8dp"/>

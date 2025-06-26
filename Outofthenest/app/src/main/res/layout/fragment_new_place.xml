@@ -24,6 +24,8 @@
                 style="@style/TextAppearance.AppCompat.Headline"
                 android:text="@string/new_place_title"/>
 
+
+
             <EditText
                 android:id="@+id/place_name"
                 style="@style/TextField"

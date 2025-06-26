@@ -15,11 +15,13 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class AuthenticationRepository {
 
+    private static final String TAG = "AuthenticationRepo";
     private Application app;
     private MutableLiveData<FirebaseUser> firebaseUserMLData;
     private MutableLiveData<Boolean> userLoggedMLData;
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authStateListener;
+    private MutableLiveData<String> errorMessageMLData = new MutableLiveData<>();
 
     public AuthenticationRepository(Application application){
         this.app = application;
@@ -48,21 +50,20 @@ public class AuthenticationRepository {
     }
 
     public void register(String email , String pass){
-        Log.i("Register", "Attempting to register user with email: " + email);
+        Log.i(TAG, "Attempting to register user with email: " + email);
         auth.createUserWithEmailAndPassword(email , pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    Log.i("Register", "Success!");
+                    Log.i(TAG, "Register - Success!");
                     firebaseUserMLData.postValue(auth.getCurrentUser());
                 }else{
-                    Log.i("Register", "Fail!"+ task.getException());
-                    Toast.makeText(app, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, "Register - Fail!"+ task.getException());
+                    setErrorMessage(task.getException().getMessage());
                 }
             }
         });
     }
-
 
 
 
@@ -73,15 +74,27 @@ public class AuthenticationRepository {
                 if (task.isSuccessful()){
                     firebaseUserMLData.postValue(auth.getCurrentUser());
                 }else{
-                    Toast.makeText(app, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    setErrorMessage(task.getException().getMessage());
                 }
             }
         });
     }
 
+
+
     public void signOut(){
         auth.signOut();
         userLoggedMLData.postValue(true);
+    }
+
+
+    //Error handling
+    public MutableLiveData<String> getErrorMessageMLData() {
+        return errorMessageMLData;
+    }
+
+    public void setErrorMessage(String message) {
+        errorMessageMLData.postValue(message);
     }
 
 }

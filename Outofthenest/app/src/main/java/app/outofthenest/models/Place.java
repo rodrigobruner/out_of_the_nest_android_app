@@ -2,25 +2,67 @@ package app.outofthenest.models;
 
 import java.util.ArrayList;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Place {
+
+    @SerializedName("id")
+    @Expose
     private int id;
+
+    @SerializedName("title")
+    @Expose
     private String title;
+
+    @SerializedName("description")
+    @Expose
     private String description;
+
+    @SerializedName("type")
+    @Expose
     private String type;
+
+    @SerializedName("address")
+    @Expose
     private String address;
-    private String time;
+
+    @SerializedName("datetime")
+    @Expose
+    private String datetime;
+
+    @SerializedName("distance")
+    @Expose
     private String distance;
+
+    @SerializedName("status")
+    @Expose
     private String status;
+
+    @SerializedName("rating")
+    @Expose
     private float rating;
+
+    @SerializedName("latitude")
+    @Expose
     private double latitude;
+
+    @SerializedName("longitude")
+    @Expose
     private double longitude;
+
+    @SerializedName("delta")
+    @Expose
     private float delta;
+
+    @SerializedName("tags")
+    @Expose
     private ArrayList<String> tags;
 
-    public Place(String title, String address, String time, String distance, String status, float rating, double latitude, double longitude, float delta) {
+    public Place(String title, String address, String datetime, String distance, String status, float rating, double latitude, double longitude, float delta) {
         this.title = title;
         this.address = address;
-        this.time = time;
+        this.datetime = datetime;
         this.distance = distance;
         this.status = status;
         this.rating = rating;
@@ -29,19 +71,18 @@ public class Place {
         this.delta = delta;
     }
 
-    public Place(int id, String title, String description, String type, String address, String time, String distance, String status, float rating, double latitude, double longitude, float delta, ArrayList<String> tags) {
+    public Place(int id, String title, String description, String type, String address, String datetime, String distance, String status, float rating, double latitude, double longitude, float delta, ArrayList<String> tags) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.type = type;
         this.address = address;
-        this.time = time;
+        this.datetime = datetime;
         this.distance = distance;
         this.status = status;
         this.rating = rating;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.delta = delta;
         this.tags = tags;
     }
 
@@ -85,12 +126,12 @@ public class Place {
         this.address = address;
     }
 
-    public String getTime() {
-        return time;
+    public String getDatetime() {
+        return datetime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 
     public String getDistance() {
@@ -131,14 +172,6 @@ public class Place {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
-    }
-
-    public float getDelta() {
-        return delta;
-    }
-
-    public void setDelta(float delta) {
-        this.delta = delta;
     }
 
     public ArrayList<String> getTags() {

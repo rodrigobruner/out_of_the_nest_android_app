@@ -32,7 +32,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
         Place place = placeList.get(position);
         holder.title.setText(place.getTitle());
         holder.address.setText(place.getAddress());
-        holder.time.setText(place.getTime());
+        holder.time.setText(place.getDatetime());
         holder.distance.setText(place.getDistance());
         holder.status.setText(place.getStatus());
         holder.ratingBar.setRating(place.getRating());

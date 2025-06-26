@@ -24,6 +24,8 @@ public class RegisterFragment extends Fragment {
     private static final String TAG = "RegisterFragment";
     private FragmentRegisterBinding registerBinding;
     private AuthenticationViewModel viewModel;
+    private boolean buttonPressed = false;
+
 
     @Nullable
     @Override
@@ -37,9 +39,17 @@ public class RegisterFragment extends Fragment {
 
     private void init() {
         setupViewModel();
+        errorHandling();
         register();
     }
 
+    private void errorHandling() {
+        viewModel.getErrorMessageMLData().observe(getViewLifecycleOwner(), message -> {
+            if (message != null) {
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void setupStatusBar() {
         int statusBarHeight = 0;
@@ -57,6 +67,9 @@ public class RegisterFragment extends Fragment {
         viewModel.getFirebaseUserMLData().observe(getViewLifecycleOwner(), new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
+                //Skip first call
+                if (!buttonPressed) return;
+
                 if (firebaseUser != null) {
                     Toast.makeText(getContext(), getString(R.string.txt_registration_success), Toast.LENGTH_SHORT).show();
                     changeTab();
@@ -83,6 +96,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
 //                Log.i(TAG, "Clocked register button");
+                buttonPressed=true;
 
                 String name = registerBinding.inpName.getText().toString();
                 String email = registerBinding.inpEmail.getText().toString();

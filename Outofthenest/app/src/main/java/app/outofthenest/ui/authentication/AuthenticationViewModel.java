@@ -35,11 +35,18 @@ public class AuthenticationViewModel extends AndroidViewModel {
     public void register(String name, String email , String pass){
         repository.register(email, pass);
     }
+
     public void signIn(String email , String pass){
         repository.login(email, pass);
     }
+
     public void signOut(){
         repository.signOut();
+    }
+
+
+    public MutableLiveData<String> getErrorMessageMLData() {
+        return repository.getErrorMessageMLData();
     }
 
 }

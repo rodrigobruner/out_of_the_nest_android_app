@@ -24,6 +24,7 @@ public class LoginFragment extends Fragment {
     private static final String TAG = "LoginFragment";
     private FragmentLoginBinding loginBinding;
     private AuthenticationViewModel viewModel;
+    private boolean buttonPressed = false;
 
     @Nullable
     @Override
@@ -36,11 +37,22 @@ public class LoginFragment extends Fragment {
 
     private void init(){
         setUpView();
+        errorHandling();
         checkIfUserIsLoggedIn();
         login();
     }
 
+    private void errorHandling() {
+        viewModel.getErrorMessageMLData().observe(getViewLifecycleOwner(), message -> {
+            if (message != null && !message.trim().isEmpty()) {
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void setUpView() {
+        viewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
+                .getInstance(getActivity().getApplication())).get(AuthenticationViewModel.class);
         loginBinding.inpEmail.requestFocus();
     }
 
@@ -51,6 +63,9 @@ public class LoginFragment extends Fragment {
         viewModel.getFirebaseUserMLData().observe(getViewLifecycleOwner(), new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
+
+                if(!buttonPressed) return;
+
                 if (firebaseUser != null) {
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
@@ -65,6 +80,9 @@ public class LoginFragment extends Fragment {
         loginBinding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                buttonPressed = true;
+
                 String email = loginBinding.inpEmail.getText().toString();
                 String password = loginBinding.inpPassword.getText().toString();
 

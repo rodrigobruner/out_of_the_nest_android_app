@@ -144,10 +144,10 @@ public class MapsSearchPlacesFragment extends Fragment {
 
     private List<Place> getPlaces() {
         return Arrays.asList(
-                new Place("Title 1", "Address 1", "10 min", "2 km", "Open", 4, 43.460867, -80.509813, 0.0f),
-                new Place("Title 2", "Address 2", "15 min", "3 km", "Close soon", 5, 43.460867, -80.509813, 0.0f),
-                new Place("Title 3", "Address 2", "15 min", "3 km", "Closed", 5, 43.460867, -80.509813, 0.0f),
-                new Place("Title 4", "Address 2", "15 min", "3 km", "Open", 5, 43.460867, -80.509813, 0.0f)
+                new Place("Waterloo Park", "Westmount Rd Entrance, 90 Westmount Rd N, Waterloo, ON N2L", "11 min", "5,2 km", "Open", 4, 43.460867, -80.509813, 0.0f),
+                new Place("Waterloo Public Library", "2001 University Ave E, Waterloo, ON N2K 0B3", "17 min", "6 km", "Close soon", 5, 43.460867, -80.509813, 0.0f),
+                new Place("Playground - Bridge St W", "185 Bridge St W, Waterloo, ON N2K 1K9", "18 min", "7.3 km", "Closed", 5, 43.460867, -80.509813, 0.0f),
+                new Place("Galaxy Cinemas Waterloo", "550 King St N, Waterloo, ON N2L 5W6", "21 min", "8.8 km", "Open", 5, 43.460867, -80.509813, 0.0f)
         );
     }
 }
