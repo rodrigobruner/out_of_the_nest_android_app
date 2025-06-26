@@ -44,6 +44,7 @@
     <string name="search_here">Search here...</string>
     <string name="add_place">Add Place</string>
     <string name="btn_cancel">Cancel</string>
+    <string name="txt_location_permission_denied">Location permission denied</string>
 
 
     <!-- New Place screen -->

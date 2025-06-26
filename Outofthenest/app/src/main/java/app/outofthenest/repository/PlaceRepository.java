@@ -18,9 +18,9 @@ public class PlaceRepository {
         placeApi = ApiService.getRetrofit().create(PlaceApi.class);
     }
 
-    public LiveData<List<Place>> getPlacesNear(double lat, double lng, double delta) {
+    public LiveData<List<Place>> getPlacesNearWithFilter(double lat, double lng, double delta, String filter, Double minRating) {
         MutableLiveData<List<Place>> data = new MutableLiveData<>();
-        placeApi.getPlacesNear(lat, lng, delta).enqueue(new Callback<List<Place>>() {
+        placeApi.getPlacesNearWithFilter(lat, lng, delta, filter, minRating).enqueue(new Callback<List<Place>>() {
             @Override
             public void onResponse(Call<List<Place>> call, Response<List<Place>> response) {
                 data.setValue(response.body());

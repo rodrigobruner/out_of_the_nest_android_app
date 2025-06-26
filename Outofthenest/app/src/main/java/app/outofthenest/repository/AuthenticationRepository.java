@@ -23,7 +23,7 @@ public class AuthenticationRepository {
     private FirebaseAuth.AuthStateListener authStateListener;
     private MutableLiveData<String> errorMessageMLData = new MutableLiveData<>();
 
-    public AuthenticationRepository(Application application){
+    public AuthenticationRepository(Application application) {
         this.app = application;
         firebaseUserMLData = new MutableLiveData<>();
         userLoggedMLData = new MutableLiveData<>();
@@ -49,16 +49,16 @@ public class AuthenticationRepository {
         return userLoggedMLData;
     }
 
-    public void register(String email , String pass){
+    public void register(String email, String pass) {
         Log.i(TAG, "Attempting to register user with email: " + email);
-        auth.createUserWithEmailAndPassword(email , pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Log.i(TAG, "Register - Success!");
                     firebaseUserMLData.postValue(auth.getCurrentUser());
-                }else{
-                    Log.i(TAG, "Register - Fail!"+ task.getException());
+                } else {
+                    Log.i(TAG, "Register - Fail!" + task.getException());
                     setErrorMessage(task.getException().getMessage());
                 }
             }
@@ -66,14 +66,13 @@ public class AuthenticationRepository {
     }
 
 
-
-    public void login(String email , String pass){
+    public void login(String email, String pass) {
         auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     firebaseUserMLData.postValue(auth.getCurrentUser());
-                }else{
+                } else {
                     setErrorMessage(task.getException().getMessage());
                 }
             }
@@ -81,8 +80,7 @@ public class AuthenticationRepository {
     }
 
 
-
-    public void signOut(){
+    public void signOut() {
         auth.signOut();
         userLoggedMLData.postValue(true);
     }

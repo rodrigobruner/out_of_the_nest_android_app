@@ -1,8 +1,15 @@
 package app.outofthenest.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class User {
+
+    @SerializedName("id")
+    @Expose
+    private String id;
     private String name;
     private String email;
     private String password;
