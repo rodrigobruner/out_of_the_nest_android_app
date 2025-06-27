@@ -1,75 +1,80 @@
 package app.outofthenest.models;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Place {
 
+    // UID
     @SerializedName("id")
     @Expose
     private int id;
 
+    // Name of the place
     @SerializedName("title")
     @Expose
     private String title;
 
+    // Short description of the place
     @SerializedName("description")
     @Expose
     private String description;
 
+    // Type of the place (e.g., restaurant, park)
     @SerializedName("type")
     @Expose
     private String type;
 
+    // Full address of the place
     @SerializedName("address")
     @Expose
     private String address;
 
+    // Date and time created
     @SerializedName("datetime")
     @Expose
     private String datetime;
 
+    // Use when getting places from the API
     @SerializedName("distance")
     @Expose
     private String distance;
 
+    // Status of the place (e.g., open, closed)
     @SerializedName("status")
     @Expose
     private String status;
 
+    // Rating of the place (0.0 to 5.0)
     @SerializedName("rating")
     @Expose
     private float rating;
 
+    // latitude
     @SerializedName("latitude")
     @Expose
     private double latitude;
 
+    // longitude
     @SerializedName("longitude")
     @Expose
     private double longitude;
+
 
     @SerializedName("delta")
     @Expose
     private float delta;
 
+    // Tags associated with the place
     @SerializedName("tags")
     @Expose
     private ArrayList<String> tags;
-
-    public Place(String title, String address, String datetime, String distance, String status, float rating, double latitude, double longitude, float delta) {
-        this.title = title;
-        this.address = address;
-        this.datetime = datetime;
-        this.distance = distance;
-        this.status = status;
-        this.rating = rating;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.delta = delta;
-    }
 
     public Place(int id, String title, String description, String type, String address, String datetime, String distance, String status, float rating, double latitude, double longitude, float delta, ArrayList<String> tags) {
         this.id = id;
@@ -83,7 +88,31 @@ public class Place {
         this.rating = rating;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.delta = delta;
         this.tags = tags;
+    }
+
+    // Constructor for creating a new place
+    public Place(String title, String description, String type, String address, double latitude, double longitude, ArrayList<String> tags) {
+        this.title = title;
+        this.description = description;
+        this.type = type;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.tags = tags;
+
+        // Current date and time
+        Date currentDate = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        String datetime = sdf.format(currentDate);
+        this.datetime = datetime;
+        //Default
+        this.distance = "0.0 km";
+        this.status = "open";
+        this.rating = 0.0f;
+        this.id = 0;
+        this.delta = 0.0f;
     }
 
     public int getId() {

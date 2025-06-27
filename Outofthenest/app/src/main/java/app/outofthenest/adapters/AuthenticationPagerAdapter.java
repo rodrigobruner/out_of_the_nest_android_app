@@ -12,6 +12,8 @@ import app.outofthenest.ui.authentication.RegisterFragment;
 
 public class AuthenticationPagerAdapter extends FragmentStateAdapter {
 
+    private static final String TAG = "AuthenticationPagerAdapter";
+
     private final Context context;
 
     public AuthenticationPagerAdapter(@NonNull FragmentActivity fa, Context context) {
@@ -24,11 +26,10 @@ public class AuthenticationPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
 
         if (position == 0) {
-
-            Log.d("BRN", "RegisterFragment");
+//            Log.d(TAG, "RegisterFragment");
             return new RegisterFragment();
         } else {
-            Log.d("BRN", "LoginFragment");
+//            Log.d(TAG, "LoginFragment");
             return new LoginFragment();
         }
 

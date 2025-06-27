@@ -7,10 +7,10 @@ import retrofit2.Call;
 import retrofit2.http.*;
 
 public interface EventsApi {
-    @POST("api/events/createEvent")
+    @POST("events/createEvent")
     Call<Events> createEvent(@Body Events event);
 
-    @GET("api/events/searchEvents")
+    @GET("events/searchEvents")
     Call<List<Events>> searchEvents(
             @Query("lat") double lat,
             @Query("lng") double lng,
@@ -19,9 +19,9 @@ public interface EventsApi {
             @Query("endDate") String endDate
     );
 
-    @GET("api/events/getEvent")
+    @GET("events/getEvent")
     Call<Events> getEvent(@Query("id") String id);
 
-    @GET("api/events/getEventsByDate")
+    @GET("events/getEventsByDate")
     Call<List<Events>> getEventsByDate(@Query("date") String date);
 }

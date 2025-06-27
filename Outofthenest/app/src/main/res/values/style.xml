@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 <!--    <style name="Theme.OutOfTheNest.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
 <!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
 <!--        <item name="colorPrimary">@color/primary</item>-->
@@ -76,6 +76,19 @@
     <style name="TextField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">60dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxBackgroundColor">?attr/colorOnPrimary</item>
+        <item name="boxStrokeColor">?attr/colorPrimary</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="hintTextColor">?attr/colorPrimary</item>
+        <item name="endIconMode">clear_text</item>
+    </style>
+
+    <style name="EditText" parent="EditText" tools:ignore="ResourceCycle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:height">48dp</item>
         <item name="android:layout_marginTop">15dp</item>
         <item name="boxBackgroundMode">outline</item>
         <item name="boxBackgroundColor">?attr/colorOnPrimary</item>

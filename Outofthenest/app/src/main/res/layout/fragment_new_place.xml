@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/new_place"
     android:layout_width="match_parent"
@@ -27,14 +25,16 @@
 
 
             <EditText
-                android:id="@+id/place_name"
-                style="@style/TextField"
+                android:id="@+id/inp_place_name"
+                style="@style/EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/txt_place_name"/>
+                android:autofillHints="name"
+                android:hint="@string/txt_place_name"
+                android:inputType="textCapWords" />
 
             <Spinner
-                android:id="@+id/place_type_spinner"
+                android:id="@+id/spn_place_type"
                 style="@style/TextField"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -42,31 +42,64 @@
                 android:spinnerMode="dropdown"/>
 
             <EditText
-                android:id="@+id/editTextTextPostalAddress"
+                android:id="@+id/inp_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/TextField"
+                style="@style/EditText"
+                android:autofillHints="postalAddress"
                 android:ems="10"
                 android:hint="@string/txt_address"
                 android:inputType="textPostalAddress" />
 
-            <EditText
-                android:id="@+id/editTextTextMultiLine"
+            <Button
+                android:id="@+id/btn_current_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_use_current_location"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_add_location"
+                android:drawablePadding="8dp"/>
+
+            <FrameLayout
+                android:id="@+id/autocomplete_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/TextField"
+                android:layout_marginTop="8dp"/>
+
+            <EditText
+                android:id="@+id/inp_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/EditText"
+                android:autofillHints="description"
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="@string/txt_description"
                 android:inputType="textMultiLine" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/txt_tags"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_tags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp" />
+
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btn_save"
                 style="@style/ButtonFullSizeFilled"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_save" />
-
 
         </LinearLayout>
 

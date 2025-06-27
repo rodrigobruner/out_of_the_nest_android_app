@@ -1,0 +1,976 @@
+{
+	"info": {
+		"_postman_id": "ed2e062e-2140-4f91-80bb-c168f173802b",
+		"name": "Out of the nest App - Complete API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45617596",
+		"_collection_link": "https://bank-app.postman.co/workspace/Bank-App-Workspace~59c6de0b-3e43-4321-87f5-ff4d78b32fd7/collection/45617596-ed2e062e-2140-4f91-80bb-c168f173802b?action=share&source=collection_link&creator=45617596"
+	},
+	"item": [
+		{
+			"name": "/api/users",
+			"item": [
+				{
+					"name": "/createUser",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"familyMembers\": [\n    {\n      \"type\": \"MAN\",\n      \"age\": 35\n    },\n    {\n      \"type\": \"WOMAN\",\n      \"age\": 32\n    },\n    {\n      \"type\": \"BOY\",\n      \"age\": 8\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/createUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"createUser"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example 1 - Family with children",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"familyMembers\": [\n    {\n      \"type\": \"MAN\",\n      \"age\": 35\n    },\n    {\n      \"type\": \"WOMAN\",\n      \"age\": 32\n    },\n    {\n      \"type\": \"BOY\",\n      \"age\": 8\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/users/createUser",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"users",
+										"createUser"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"id\": \"user_001\",\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"familyMembers\": [\n    {\"type\": \"MAN\", \"age\": 35},\n    {\"type\": \"WOMAN\", \"age\": 32},\n    {\"type\": \"BOY\", \"age\": 8}\n  ]\n}"
+						},
+						{
+							"name": "Example 2 - Single parent",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"familyMembers\": [\n    {\n      \"type\": \"MAN\",\n      \"age\": 35\n    },\n    {\n      \"type\": \"WOMAN\",\n      \"age\": 32\n    },\n    {\n      \"type\": \"BOY\",\n      \"age\": 8\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/users/createUser",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"users",
+										"createUser"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"id\": \"user_002\",\n  \"name\": \"Sarah Smith\",\n  \"email\": \"sarah@example.com\",\n  \"familyMembers\": [\n    {\"type\": \"WOMAN\", \"age\": 28},\n    {\"type\": \"GIRL\", \"age\": 5}\n  ]\n}"
+						},
+						{
+							"name": "Example 3 - Family with pets",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"familyMembers\": [\n    {\n      \"type\": \"MAN\",\n      \"age\": 35\n    },\n    {\n      \"type\": \"WOMAN\",\n      \"age\": 32\n    },\n    {\n      \"type\": \"BOY\",\n      \"age\": 8\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/users/createUser",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"users",
+										"createUser"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"id\": \"user_003\",\n  \"name\": \"Mike Johnson\",\n  \"email\": \"mike@example.com\",\n  \"familyMembers\": [\n    {\"type\": \"MAN\", \"age\": 40},\n    {\"type\": \"WOMAN\", \"age\": 38},\n    {\"type\": \"DOG\", \"age\": 3}\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "/getUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users/getUser?id=user_001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"getUser"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "user_001"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/places",
+			"item": [
+				{
+					"name": "/createPlace",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Central Park Playground\",\n  \"description\": \"Large playground with swings and slides\",\n  \"type\": \"playground\",\n  \"address\": \"Central Park, New York, NY\",\n  \"datetime\": \"2024-12-18T10:00:00Z\",\n  \"distance\": \"2.5km\",\n  \"status\": \"open\",\n  \"rating\": 4.5,\n  \"latitude\": 40.785091,\n  \"longitude\": -73.968285,\n  \"delta\": 0.5,\n  \"tags\": [\"playground\", \"family\", \"outdoor\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/places/createPlace",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"places",
+								"createPlace"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example 1 - Playground",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Central Park Playground\",\n  \"description\": \"Large playground with swings and slides\",\n  \"type\": \"playground\",\n  \"address\": \"Central Park, New York, NY\",\n  \"datetime\": \"2024-12-18T10:00:00Z\",\n  \"distance\": \"2.5km\",\n  \"status\": \"open\",\n  \"rating\": 4.5,\n  \"latitude\": 40.785091,\n  \"longitude\": -73.968285,\n  \"delta\": 0.5,\n  \"tags\": [\"playground\", \"family\", \"outdoor\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/places/createPlace",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"places",
+										"createPlace"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"id\": 1,\n  \"title\": \"Central Park Playground\",\n  \"description\": \"Large playground with swings and slides\",\n  \"type\": \"playground\",\n  \"address\": \"Central Park, New York, NY\",\n  \"datetime\": \"2024-12-18T10:00:00Z\",\n  \"distance\": \"2.5km\",\n  \"status\": \"open\",\n  \"rating\": 4.5,\n  \"latitude\": 40.785091,\n  \"longitude\": -73.968285,\n  \"delta\": 0.5,\n  \"tags\": [\"playground\", \"family\", \"outdoor\"]\n}"
+						},
+						{
+							"name": "Example 2 - Restaurant",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Central Park Playground\",\n  \"description\": \"Large playground with swings and slides\",\n  \"type\": \"playground\",\n  \"address\": \"Central Park, New York, NY\",\n  \"datetime\": \"2024-12-18T10:00:00Z\",\n  \"distance\": \"2.5km\",\n  \"status\": \"open\",\n  \"rating\": 4.5,\n  \"latitude\": 40.785091,\n  \"longitude\": -73.968285,\n  \"delta\": 0.5,\n  \"tags\": [\"playground\", \"family\", \"outdoor\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/places/createPlace",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"places",
+										"createPlace"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"id\": 2,\n  \"title\": \"Family Diner\",\n  \"description\": \"Kid-friendly restaurant with high chairs\",\n  \"type\": \"restaurant\",\n  \"address\": \"123 Main St, Toronto, ON\",\n  \"datetime\": \"2024-12-18T12:00:00Z\",\n  \"distance\": \"1.2km\",\n  \"status\": \"open\",\n  \"rating\": 4.2,\n  \"latitude\": 43.6532,\n  \"longitude\": -79.3832,\n  \"delta\": 0.3,\n  \"tags\": [\"restaurant\", \"family\", \"washroom\"]\n}"
+						},
+						{
+							"name": "Example 3 - Park",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Central Park Playground\",\n  \"description\": \"Large playground with swings and slides\",\n  \"type\": \"playground\",\n  \"address\": \"Central Park, New York, NY\",\n  \"datetime\": \"2024-12-18T10:00:00Z\",\n  \"distance\": \"2.5km\",\n  \"status\": \"open\",\n  \"rating\": 4.5,\n  \"latitude\": 40.785091,\n  \"longitude\": -73.968285,\n  \"delta\": 0.5,\n  \"tags\": [\"playground\", \"family\", \"outdoor\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/places/createPlace",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"places",
+										"createPlace"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"id\": 3,\n  \"title\": \"Riverside Park\",\n  \"description\": \"Beautiful park with walking trails\",\n  \"type\": \"park\",\n  \"address\": \"456 River Rd, Waterloo, ON\",\n  \"datetime\": \"2024-12-18T08:00:00Z\",\n  \"distance\": \"3.1km\",\n  \"status\": \"open\",\n  \"rating\": 4.7,\n  \"latitude\": 43.4794,\n  \"longitude\": -80.5205,\n  \"delta\": 1.0,\n  \"tags\": [\"park\", \"nature\", \"walking\"]\n}"
+						}
+					]
+				},
+				{
+					"name": "/getPlacesNear",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/places/getPlacesNear?lat=43.4794&lng=-80.5205&delta=5&filter=playground,restaurant",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"places",
+								"getPlacesNear"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "43.4794"
+								},
+								{
+									"key": "lng",
+									"value": "-80.5205"
+								},
+								{
+									"key": "delta",
+									"value": "5"
+								},
+								{
+									"key": "filter",
+									"value": "playground,restaurant"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example 1 - Multiple places",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/places/getPlacesNear?lat=43.4794&lng=-80.5205&delta=5&filter=playground,restaurant",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"places",
+										"getPlacesNear"
+									],
+									"query": [
+										{
+											"key": "lat",
+											"value": "43.4794"
+										},
+										{
+											"key": "lng",
+											"value": "-80.5205"
+										},
+										{
+											"key": "delta",
+											"value": "5"
+										},
+										{
+											"key": "filter",
+											"value": "playground,restaurant"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "[\n  {...playground example...},\n  {...restaurant example...}\n]"
+						}
+					]
+				},
+				{
+					"name": "/getPlace",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/places/getPlace?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"places",
+								"getPlace"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/events",
+			"item": [
+				{
+					"name": "/createEvent",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Kids Summer Festival\",\n  \"description\": \"Annual summer festival with activities for children\",\n  \"datetime\": \"2024-07-15T14:00:00Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/events/createEvent",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"events",
+								"createEvent"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example 1 - Summer Festival",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Kids Summer Festival\",\n  \"description\": \"Annual summer festival with activities for children\",\n  \"datetime\": \"2024-07-15T14:00:00Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/events/createEvent",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"events",
+										"createEvent"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"id\": \"evt_001\",\n  \"title\": \"Kids Summer Festival\",\n  \"description\": \"Annual summer festival with activities for children\",\n  \"datetime\": \"2024-07-15T14:00:00Z\"\n}"
+						},
+						{
+							"name": "Example 2 - Story Time",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Kids Summer Festival\",\n  \"description\": \"Annual summer festival with activities for children\",\n  \"datetime\": \"2024-07-15T14:00:00Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/events/createEvent",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"events",
+										"createEvent"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"id\": \"evt_002\",\n  \"title\": \"Library Story Time\",\n  \"description\": \"Weekly story reading for toddlers\",\n  \"datetime\": \"2024-12-20T10:30:00Z\"\n}"
+						},
+						{
+							"name": "Example 3 - Sports Day",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Kids Summer Festival\",\n  \"description\": \"Annual summer festival with activities for children\",\n  \"datetime\": \"2024-07-15T14:00:00Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/events/createEvent",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"events",
+										"createEvent"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"id\": \"evt_003\",\n  \"title\": \"Family Sports Day\",\n  \"description\": \"Outdoor sports activities for families\",\n  \"datetime\": \"2024-12-22T09:00:00Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/searchEvents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/events/searchEvents?lat=43.4794&lng=-80.5205&radius=10&startDate=2024-12-18&endDate=2024-12-25",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"events",
+								"searchEvents"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "43.4794"
+								},
+								{
+									"key": "lng",
+									"value": "-80.5205"
+								},
+								{
+									"key": "radius",
+									"value": "10"
+								},
+								{
+									"key": "startDate",
+									"value": "2024-12-18"
+								},
+								{
+									"key": "endDate",
+									"value": "2024-12-25"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/reviews",
+			"item": [
+				{
+					"name": "/createReview",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Great playground!\",\n  \"description\": \"My kids loved the new swings. Very clean and safe.\",\n  \"rating\": 5,\n  \"datetime\": \"2024-12-18T15:30:00Z\",\n  \"userId\": \"user_001\",\n  \"placeId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/reviews/createReview",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reviews",
+								"createReview"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example 1 - Positive review",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Great playground!\",\n  \"description\": \"My kids loved the new swings. Very clean and safe.\",\n  \"rating\": 5,\n  \"datetime\": \"2024-12-18T15:30:00Z\",\n  \"userId\": \"user_001\",\n  \"placeId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/reviews/createReview",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"reviews",
+										"createReview"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"id\": \"rev_001\",\n  \"title\": \"Great playground!\",\n  \"description\": \"My kids loved the new swings. Very clean and safe.\",\n  \"rating\": 5,\n  \"datetime\": \"2024-12-18T15:30:00Z\",\n  \"userId\": \"user_001\"\n}"
+						},
+						{
+							"name": "Example 2 - Average review",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Great playground!\",\n  \"description\": \"My kids loved the new swings. Very clean and safe.\",\n  \"rating\": 5,\n  \"datetime\": \"2024-12-18T15:30:00Z\",\n  \"userId\": \"user_001\",\n  \"placeId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/reviews/createReview",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"reviews",
+										"createReview"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"id\": \"rev_002\",\n  \"title\": \"Good but crowded\",\n  \"description\": \"Nice facilities but gets very busy on weekends.\",\n  \"rating\": 3,\n  \"datetime\": \"2024-12-18T16:00:00Z\",\n  \"userId\": \"user_002\"\n}"
+						},
+						{
+							"name": "Example 3 - Report issue",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Great playground!\",\n  \"description\": \"My kids loved the new swings. Very clean and safe.\",\n  \"rating\": 5,\n  \"datetime\": \"2024-12-18T15:30:00Z\",\n  \"userId\": \"user_001\",\n  \"placeId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/reviews/createReview",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"reviews",
+										"createReview"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"id\": \"rev_003\",\n  \"title\": \"Needs maintenance\",\n  \"description\": \"Some equipment needs repair. Reported to management.\",\n  \"rating\": 2,\n  \"datetime\": \"2024-12-18T17:00:00Z\",\n  \"userId\": \"user_003\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/getReviewsByPlace",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/reviews/getReviewsByPlace?placeId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reviews",
+								"getReviewsByPlace"
+							],
+							"query": [
+								{
+									"key": "placeId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/dictionary",
+			"item": [
+				{
+					"name": "/getTags",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/dictionary/getTags",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dictionary",
+								"getTags"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example 1 - Basic tags",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/dictionary/getTags",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"dictionary",
+										"getTags"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "[\n  {\"name\": \"playground\", \"icon\": \"ic_playground\"},\n  {\"name\": \"restaurant\", \"icon\": \"ic_restaurant\"},\n  {\"name\": \"washroom\", \"icon\": \"ic_washroom\"}\n]"
+						},
+						{
+							"name": "Example 2 - Activity tags",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/dictionary/getTags",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"dictionary",
+										"getTags"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "[\n  {\"name\": \"family\", \"icon\": \"ic_family\"},\n  {\"name\": \"outdoor\", \"icon\": \"ic_outdoor\"},\n  {\"name\": \"indoor\", \"icon\": \"ic_indoor\"}\n]"
+						},
+						{
+							"name": "Example 3 - Service tags",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/dictionary/getTags",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"dictionary",
+										"getTags"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "[\n  {\"name\": \"parking\", \"icon\": \"ic_parking\"},\n  {\"name\": \"wheelchair\", \"icon\": \"ic_wheelchair\"},\n  {\"name\": \"pet_friendly\", \"icon\": \"ic_pet\"}\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "/api/notifications",
+			"item": [
+				{
+					"name": "/sendEventNotification",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"user_001\",\n  \"eventId\": \"evt_001\",\n  \"message\": \"Reminder: Kids Summer Festival starts in 1 hour!\",\n  \"scheduledTime\": \"2024-07-15T13:00:00Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/notifications/sendEventNotification",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"notifications",
+								"sendEventNotification"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

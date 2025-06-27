@@ -1,18 +1,23 @@
 package app.outofthenest.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
 import app.outofthenest.R;
 import app.outofthenest.models.Place;
 
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHolder> {
+
+    private static final String TAG = "PlaceAdapter";
     private List<Place> placeList;
 
     public PlaceAdapter(List<Place> placeList) {
@@ -40,6 +45,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
 
     @Override
     public int getItemCount() {
+//        Log.i(TAG, "getItemCount: " + placeList.size());
         return placeList.size();
     }
 

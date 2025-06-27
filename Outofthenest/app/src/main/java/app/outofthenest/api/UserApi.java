@@ -6,15 +6,15 @@ import retrofit2.Call;
 import retrofit2.http.*;
 
 public interface UserApi {
-    @POST("api/users/createUser")
+    @POST("users/createUser")
     Call<User> createUser(@Body User user);
 
-    @GET("api/users/getUser")
+    @GET("users/getUser")
     Call<User> getUser(@Query("id") String id);
 
-    @PUT("api/users/updateUser")
+    @PUT("users/updateUser")
     Call<User> updateUser(@Path("id") String id, @Body User user);
 
-    @POST("api/users/login")
+    @POST("users/login")
     Call<User> login(@Body LoginRequest loginRequest);
 }

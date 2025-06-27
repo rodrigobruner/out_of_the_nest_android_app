@@ -2,6 +2,7 @@ package app.outofthenest;
 
 import android.os.Bundle;
 
+import com.google.android.libraries.places.api.Places;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +28,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init(){
+
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), BuildConfig.MAPS_API_KEY);
+        }
+
         setupBottomNavigation();
+
     }
 
     private void setupBottomNavigation(){

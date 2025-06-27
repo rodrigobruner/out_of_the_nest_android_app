@@ -1,5 +1,7 @@
 package app.outofthenest.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import java.util.List;
@@ -12,6 +14,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PlaceRepository {
+    private static final String TAG = "PlaceRepository";
     private PlaceApi placeApi;
 
     public PlaceRepository() {
@@ -28,6 +31,24 @@ public class PlaceRepository {
             @Override
             public void onFailure(Call<List<Place>> call, Throwable t) {
                 data.setValue(null);
+            }
+        });
+        return data;
+    }
+
+    public LiveData<Place> createPlace(Place place) {
+        Log.i(TAG, "Creating place: " + place.getTitle());
+        MutableLiveData<Place> data = new MutableLiveData<>();
+        placeApi.createPlace(place).enqueue(new Callback<Place>() {
+            @Override
+            public void onResponse(Call<Place> call, Response<Place> response) {
+                data.setValue(response.body());
+                Log.i(TAG, "Created: " + place.getTitle());
+            }
+            @Override
+            public void onFailure(Call<Place> call, Throwable t) {
+                data.setValue(null);
+                Log.i(TAG, "Error: " + place.getTitle() + " - " + t.getMessage());
             }
         });
         return data;

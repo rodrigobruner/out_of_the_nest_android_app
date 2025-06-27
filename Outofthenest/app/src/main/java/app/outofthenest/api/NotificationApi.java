@@ -8,12 +8,12 @@ import retrofit2.Call;
 import retrofit2.http.*;
 
 public interface NotificationApi {
-    @POST("api/notifications/sendEventNotification")
+    @POST("notifications/sendEventNotification")
     Call<Notification> sendEventNotification(@Body SendNotificationRequest request);
 
-    @GET("api/notifications/getUserNotifications")
+    @GET("notifications/getUserNotifications")
     Call<List<Notification>> getUserNotifications(@Query("userId") String userId);
 
-    @PUT("api/notifications/markAsRead")
+    @PUT("notifications/markAsRead")
     Call<Void> markAsRead(@Path("id") String id);
 }

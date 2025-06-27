@@ -7,9 +7,9 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface TagApi {
-    @GET("api/dictionary/getTags")
+    @GET("dictionary/getTags")
     Call<List<Tag>> getTags();
 
-    @GET("api/dictionary/getPlaceTypes")
+    @GET("dictionary/getPlaceTypes")
     Call<List<String>> getPlaceTypes();
 }

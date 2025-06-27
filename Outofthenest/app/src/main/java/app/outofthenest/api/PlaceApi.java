@@ -7,10 +7,10 @@ import retrofit2.Call;
 import retrofit2.http.*;
 
 public interface PlaceApi {
-    @POST("api/places/createPlace")
+    @POST("places/createPlace")
     Call<Place> createPlace(@Body Place place);
 
-    @GET("api/places/getPlacesNear")
+    @GET("places/getPlacesNear")
     Call<List<Place>> getPlacesNearWithFilter(
             @Query("lat") double lat,
             @Query("lng") double lng,
@@ -19,6 +19,6 @@ public interface PlaceApi {
             @Query("minRating") Double minRating
     );
 
-    @GET("api/places/getPlace")
+    @GET("places/getPlace")
     Call<Place> getPlace(@Query("id") int id);
 }
