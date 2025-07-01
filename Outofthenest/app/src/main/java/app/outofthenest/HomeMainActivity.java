@@ -64,4 +64,13 @@ public class HomeMainActivity extends AppCompatActivity {
                 }
         );
     }
+
+    // Refresh token when app comes back from background
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (viewModel.getUserLoggedMLData().getValue() == Boolean.TRUE) {
+            viewModel.refreshUserToken();
+        }
+    }
 }

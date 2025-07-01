@@ -23,7 +23,7 @@ public class NewPlaceViewModel extends AndroidViewModel {
 
     public NewPlaceViewModel(@NonNull Application application) {
         super(application);
-        placeRepository = new PlaceRepository();
+        placeRepository = new PlaceRepository(application);
         createdPlace = new MutableLiveData<>();
         isLoading = new MutableLiveData<>(false);
         errorMessage = new MutableLiveData<>();

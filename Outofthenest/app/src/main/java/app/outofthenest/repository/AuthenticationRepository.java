@@ -104,7 +104,7 @@ public class AuthenticationRepository {
                     if (user != null) {
                         Log.i(TAG, "Login successful for user: " + user.getDisplayName());
                         Log.i(TAG, "User ID: " + user.getUid());
-                        getUserToken();
+                        refreshUserToken();
                     }
                 } else {
                     setErrorMessage(task.getException().getMessage());
@@ -130,8 +130,22 @@ public class AuthenticationRepository {
         }
     }
 
+
+    public void refreshUserToken() {
+        FirebaseUser user = auth.getCurrentUser();
+        if (user != null) {
+            user.getIdToken(true)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            String token = task.getResult().getToken();
+                            userTokenMLData.postValue(token);
+                        }
+                    });
+        }
+    }
+
     // Get current user's full name
-    public String getCurrentUserFullName() {
+    public String getUserFullName() {
         FirebaseUser user = auth.getCurrentUser();
         return (user != null) ? user.getDisplayName() : null;
     }

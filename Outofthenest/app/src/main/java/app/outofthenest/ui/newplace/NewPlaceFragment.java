@@ -248,6 +248,8 @@ public class NewPlaceFragment extends Fragment {
         return Arrays.asList(
                 "Washroom", "Pet Friendly", "Family Friendly", "Parking", "Wi-Fi"
         );
+
+
     }
 
     public List<String> getSelectedTags() {

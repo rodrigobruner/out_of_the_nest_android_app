@@ -46,15 +46,16 @@ public class ProfileFragment extends Fragment {
         logout();
     }
 
+//    private void getUserId() {
+//        viewModel.getUserId().observe(getViewLifecycleOwner(), userId -> {
+//            binding.txvUserId.setText(
+//                    Objects.requireNonNullElseGet(userId, () -> getString(R.string.txt_no_user_id_available)));
+//        });
+//    }
+
     private void getUserName() {
-        viewModel.getFirebaseUserMLData().observe(getViewLifecycleOwner(), firebaseUser -> {
-            if (firebaseUser != null) {
-                String fullName = firebaseUser.getDisplayName();
-                binding.txvUsername.setText(fullName != null ? fullName : getString(R.string.txt_error_no_name_set));
-            } else {
-                binding.txvUsername.setText(getString(R.string.txt_not_logged_in));
-            }
-        });
+        String fullName = viewModel.getUserFullName();
+        binding.txvUsername.setText(fullName != null ? fullName : getString(R.string.txt_error_no_name_set));
     }
 
 

@@ -1,6 +1,5 @@
 package app.outofthenest.api;
 
-import android.util.Log;
 import androidx.annotation.NonNull;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -14,54 +13,71 @@ import java.util.concurrent.TimeUnit;
 public class AuthenticationInterceptor implements Interceptor {
     private static final String TAG = "AuthInterceptor";
     private static final int TOKEN_TIMEOUT_SECONDS = 10;
+    private static final String MAX_RETRY = "1";
 
     @NonNull
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request originalRequest = chain.request();
+        Response response = auth(chain, originalRequest, false);
 
-        // get Firebase user
+        // If 401, user token refresh
+        if (response.code() == 401 && !hasRetryHeader(originalRequest)) {
+            response.close(); // close failed response
+
+            Request retryRequest = originalRequest.newBuilder()
+                    .header("X-Retry-Attempt", MAX_RETRY)
+                    .build();
+            // force refresh
+            return auth(chain, retryRequest, true);
+        }
+        return response;
+    }
+
+    private Response auth(Chain chain, Request request, boolean forceRefresh) throws IOException {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
-            Log.w(TAG, "No authenticated user, proceeding without token");
-            return chain.proceed(originalRequest);
+            return chain.proceed(request);
         }
 
-        // get token synchronously
-        String token = getTokenSync(user);
+        String token = getToken(user, forceRefresh);
         if (token == null) {
-            Log.w(TAG, "Failed to get token, proceeding without authentication");
-            return chain.proceed(originalRequest);
+            return chain.proceed(request);
         }
 
-        // Add Authorization heder
-        Request authenticatedRequest = originalRequest.newBuilder()
+        Request authenticatedRequest = request.newBuilder()
                 .header("Authorization", "Bearer " + token)
+                // Remove retry header
+                .removeHeader("X-Retry-Attempt")
                 .build();
 
-        Log.d(TAG, "Request authenticated with token");
         return chain.proceed(authenticatedRequest);
     }
 
-    private String getTokenSync(FirebaseUser user) {
+    private boolean hasRetryHeader(Request request) {
+        return request.header("X-Retry-Attempt") != null;
+    }
+
+    private String getToken(FirebaseUser user, boolean forceRefresh) {
+        //use to wait for the token
         final CountDownLatch latch = new CountDownLatch(1);
+        //use to hold the token
         final String[] tokenHolder = new String[1];
 
-        user.getIdToken(false).addOnCompleteListener(task -> {
+        // get the token async
+        user.getIdToken(forceRefresh).addOnCompleteListener(task -> {
             if (task.isSuccessful() && task.getResult() != null) {
                 tokenHolder[0] = task.getResult().getToken();
-            } else {
-                Log.e(TAG, "Failed to get token: " + task.getException());
             }
+            // signal that the token is complete
             latch.countDown();
         });
 
         try {
-            if (!latch.await(TOKEN_TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
-                Log.e(TAG, "Token request timed out");
-            }
+            // wait for the token or timeout
+            latch.await(TOKEN_TIMEOUT_SECONDS, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-            Log.e(TAG, "Token request interrupted", e);
+            //interrupt the thread
             Thread.currentThread().interrupt();
         }
 

@@ -58,8 +58,12 @@ public class AuthenticationViewModel extends AndroidViewModel {
         return repository.getUserIdMLData();
     }
 
-    public String getCurrentUserFullName() {
-        return repository.getCurrentUserFullName();
+    public String getUserFullName() {
+        return repository.getUserFullName();
+    }
+
+    public void refreshUserToken() {
+        repository.refreshUserToken();
     }
 
 }

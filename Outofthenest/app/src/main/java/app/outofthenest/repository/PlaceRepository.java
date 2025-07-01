@@ -1,5 +1,6 @@
 package app.outofthenest.repository;
 
+import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -16,9 +17,11 @@ import retrofit2.Response;
 public class PlaceRepository {
     private static final String TAG = "PlaceRepository";
     private PlaceApi placeApi;
+    private AuthenticationRepository authRepo;
 
-    public PlaceRepository() {
+    public PlaceRepository(Application application) {
         placeApi = ApiService.getRetrofit().create(PlaceApi.class);
+        authRepo = new AuthenticationRepository(application);
     }
 
     public LiveData<List<Place>> getPlacesNearWithFilter(double lat, double lng, double delta, String filter, Double minRating) {
@@ -37,6 +40,7 @@ public class PlaceRepository {
     }
 
     public LiveData<Place> createPlace(Place place) {
+        authRepo.refreshUserToken();
         Log.i(TAG, "Creating place: " + place.getTitle());
         MutableLiveData<Place> data = new MutableLiveData<>();
         placeApi.createPlace(place).enqueue(new Callback<Place>() {
