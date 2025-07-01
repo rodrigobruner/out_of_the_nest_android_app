@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -32,8 +33,8 @@ public class AuthenticationViewModel extends AndroidViewModel {
         return userLoggedMLData;
     }
 
-    public void register(String name, String email , String pass){
-        repository.register(email, pass);
+    public void register(String fullName, String email, String password) {
+        repository.register(email, password, fullName);
     }
 
     public void signIn(String email , String pass){
@@ -47,6 +48,18 @@ public class AuthenticationViewModel extends AndroidViewModel {
 
     public MutableLiveData<String> getErrorMessageMLData() {
         return repository.getErrorMessageMLData();
+    }
+
+    public LiveData<String> getUserToken() {
+        return repository.getUserTokenMLData();
+    }
+
+    public LiveData<String> getUserId() {
+        return repository.getUserIdMLData();
+    }
+
+    public String getCurrentUserFullName() {
+        return repository.getCurrentUserFullName();
     }
 
 }

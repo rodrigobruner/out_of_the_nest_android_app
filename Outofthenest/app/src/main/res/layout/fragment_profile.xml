@@ -8,6 +8,21 @@
     tools:context=".ui.profile.ProfileFragment">
 
 
+    <TextView
+        android:id="@+id/txvUsername"
+        android:layout_margin="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_username" />
+
+
+    <TextView
+        android:id="@+id/txvToken"
+        android:layout_margin="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_token" />
+
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
@@ -15,4 +30,5 @@
         android:layout_margin="16dp"
         android:backgroundTint="@color/red_400"
         android:text="@string/txt_logout" />
+
 </LinearLayout>

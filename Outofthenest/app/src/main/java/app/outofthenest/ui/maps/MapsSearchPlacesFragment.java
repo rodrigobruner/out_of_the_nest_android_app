@@ -16,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import app.outofthenest.R;
 import app.outofthenest.adapters.PlaceAdapter;
+import app.outofthenest.adapters.TagsAdapter;
 import app.outofthenest.databinding.FragmentMapsSearchPlacesBinding;
 import app.outofthenest.models.Place;
 
@@ -32,6 +34,7 @@ public class MapsSearchPlacesFragment extends Fragment {
     private FragmentMapsSearchPlacesBinding binding;
     private WindowInsetsCompat lastInsets;
     private int collapsedHeight;
+    private TagsAdapter tagsAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -68,6 +71,7 @@ public class MapsSearchPlacesFragment extends Fragment {
     private void init() {
         searchOnFocusChange();
         setButtonCancel();
+        setupTagsRecyclerView();
     }
 
     private void searchOnFocusChange() {
@@ -113,7 +117,7 @@ public class MapsSearchPlacesFragment extends Fragment {
             animator.start();
         }
         boolean showOptions = endHeight > startHeight;
-        card.findViewById(R.id.container_options).setVisibility(showOptions ? View.VISIBLE : View.GONE);
+//        card.findViewById(R.id.container_options).setVisibility(showOptions ? View.VISIBLE : View.GONE);
     }
 
     private void setButtonCancel() {
@@ -143,6 +147,37 @@ public class MapsSearchPlacesFragment extends Fragment {
         binding.placesRecyclerView.setAdapter(placeAdapter);
     }
 
+
+    private void setupTagsRecyclerView() {
+        // Lista de tags disponíveis
+        List<String> availableTags = getAvailableTags();
+
+        tagsAdapter = new TagsAdapter(availableTags);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(
+                getContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+        );
+
+        binding.recyclerTags.setLayoutManager(layoutManager);
+        binding.recyclerTags.setAdapter(tagsAdapter);
+    }
+
+    // TODO: get from API on app load and save on shared preferences, here get from shered preferences
+    public List<String> getAvailableTags() {
+        return Arrays.asList(
+                "Washroom", "Pet Friendly", "Family Friendly", "Parking", "Wi-Fi"
+        );
+    }
+
+    public List<String> getSelectedTags() {
+        if (tagsAdapter != null) {
+            return tagsAdapter.getSelectedTags();
+        }
+        return new ArrayList<>();
+    }
+
     private List<Place> getPlaces() {
 
         ArrayList<String> tags = new ArrayList<>();
@@ -157,4 +192,5 @@ public class MapsSearchPlacesFragment extends Fragment {
                 new Place(4,"Galaxy Cinemas Waterloo", "Cinema", "Indoor activity", "550 King St N, Waterloo, ON N2L 5W6", "21 min", "8.8 km", "Open", 5, 43.460867, -80.509813, 0.0f, tags)
         );
     }
+
 }

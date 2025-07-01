@@ -13,12 +13,19 @@ public class ApiService {
     //singleton pattern to provide retrofit instance
     public static Retrofit getRetrofit() {
         if (retrofit == null) {
-            // Log
+            // Log interceptor
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
+            // Authentication interceptor
+            AuthenticationInterceptor authInterceptor = new AuthenticationInterceptor();
+
             OkHttpClient client = new OkHttpClient.Builder()
+                    // Add the authentication interceptor on retrofit client
+                    .addInterceptor(authInterceptor)
                     .addInterceptor(logging)
+                    .connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+                    .readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
                     .build();
 
             retrofit = new Retrofit.Builder()

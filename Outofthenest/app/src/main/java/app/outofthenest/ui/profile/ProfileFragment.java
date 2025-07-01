@@ -11,20 +11,21 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.Objects;
+
 import app.outofthenest.HomeMainActivity;
+import app.outofthenest.R;
 import app.outofthenest.databinding.FragmentProfileBinding;
 import app.outofthenest.ui.authentication.AuthenticationViewModel;
 
 public class ProfileFragment extends Fragment {
 
-    private static final String TAG = "ProfileFragment";
+//    private static final String TAG = "ProfileFragment";
     private FragmentProfileBinding binding;
     private AuthenticationViewModel viewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ProfileViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(ProfileViewModel.class);
 
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -39,9 +40,30 @@ public class ProfileFragment extends Fragment {
     }
 
     private void init() {
-//        Log.i(TAG, "Init "+TAG);
         setupAuthenticationViewModel();
+        getUserName();
+        getUserToken();
         logout();
+    }
+
+    private void getUserName() {
+        viewModel.getFirebaseUserMLData().observe(getViewLifecycleOwner(), firebaseUser -> {
+            if (firebaseUser != null) {
+                String fullName = firebaseUser.getDisplayName();
+                binding.txvUsername.setText(fullName != null ? fullName : getString(R.string.txt_error_no_name_set));
+            } else {
+                binding.txvUsername.setText(getString(R.string.txt_not_logged_in));
+            }
+        });
+    }
+
+
+    private void getUserToken() {
+        viewModel.getUserToken().observe(getViewLifecycleOwner(), token -> {
+            //                Log.i(TAG, "User token: " + token);
+            binding.txvToken.setText(
+                    Objects.requireNonNullElseGet(token, () -> getString(R.string.txt_no_token_available)));
+        });
     }
 
 

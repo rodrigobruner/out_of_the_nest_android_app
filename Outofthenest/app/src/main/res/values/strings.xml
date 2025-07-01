@@ -31,6 +31,7 @@
     <string name="txt_email">Email</string>
     <string name="txt_password">Password</string>
     <string name="txt_confirm_password">Confirm Password</string>
+    <string name="txt_not_logged_in">Not logged in</string>
 
     <string name="txt_password_not_match">Passwords do not match</string>
     <string name="txt_invalid_name">Inform a valid name</string>
@@ -89,5 +90,12 @@
     <string name="title_activity_navegation">NavegationActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
+
+
+    <!-- profile screen -->
+    <string name="txt_username">Username</string>
+    <string name="txt_token">Token</string>
+    <string name="txt_error_no_name_set">No name set</string>
+    <string name="txt_no_token_available">No token available</string>
 
 </resources>
