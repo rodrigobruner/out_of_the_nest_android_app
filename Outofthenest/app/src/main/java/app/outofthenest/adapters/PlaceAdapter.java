@@ -15,6 +15,9 @@ import java.util.List;
 import app.outofthenest.R;
 import app.outofthenest.models.Place;
 
+/**
+ * This adapter is to deal with the place Recycle View
+ */
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHolder> {
 
     private static final String TAG = "PlaceAdapter";
@@ -34,6 +37,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
 
     @Override
     public void onBindViewHolder(@NonNull PlaceViewHolder holder, int position) {
+        //Bind the values on the view
         Place place = placeList.get(position);
         holder.title.setText(place.getTitle());
         holder.address.setText(place.getAddress());

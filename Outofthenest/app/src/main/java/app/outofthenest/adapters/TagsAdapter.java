@@ -9,11 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import app.outofthenest.R;
 
+
+
 public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder> {
 
     private static final String TAG = "TagsAdapter";
     private List<String> tags;
     private List<String> selectedTags;
+    private OnTagSelectedListener listener;
 
     public TagsAdapter(List<String> tags) {
         this.tags = tags;
@@ -32,15 +35,18 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
     public void onBindViewHolder(@NonNull TagViewHolder holder, int position) {
         String tag = tags.get(position);
         holder.chip.setText(tag);
+        holder.chip.setOnCheckedChangeListener(null);
         holder.chip.setChecked(selectedTags.contains(tag));
 
         holder.chip.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             if (isChecked) {
                 if (!selectedTags.contains(tag)) {
                     selectedTags.add(tag);
+                    if (listener != null) listener.onTagSelected(tag);
                 }
             } else {
                 selectedTags.remove(tag);
+                if (listener != null) listener.onTagDeselected(tag);
             }
         });
     }
@@ -54,6 +60,11 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
         return new ArrayList<>(selectedTags);
     }
 
+    public interface OnTagSelectedListener {
+        void onTagSelected(String tag);
+        void onTagDeselected(String tag);
+    }
+
     static class TagViewHolder extends RecyclerView.ViewHolder {
         Chip chip;
 
@@ -61,5 +72,9 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
             super(chip);
             this.chip = chip;
         }
+    }
+
+    public void setOnTagSelectedListener(OnTagSelectedListener listener) {
+        this.listener = listener;
     }
 }

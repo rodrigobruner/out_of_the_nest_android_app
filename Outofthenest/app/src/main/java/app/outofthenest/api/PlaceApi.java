@@ -11,12 +11,12 @@ public interface PlaceApi {
     Call<Place> createPlace(@Body Place place);
 
     @GET("places/getPlacesNear")
-    Call<List<Place>> getPlacesNearWithFilter(
+    Call<List<Place>> getPlacesNear(
             @Query("lat") double lat,
             @Query("lng") double lng,
             @Query("delta") double delta,
             @Query("filter") String filter,
-            @Query("minRating") Double minRating
+            @Query("tags") List<String> tags
     );
 
     @GET("places/getPlace")

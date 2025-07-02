@@ -228,28 +228,21 @@ public class NewPlaceFragment extends Fragment {
 
 
     private void setupTagsRecyclerView() {
-        // Lista de tags disponíveis
         List<String> availableTags = getAvailableTags();
-
         tagsAdapter = new TagsAdapter(availableTags);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 getContext(),
                 LinearLayoutManager.HORIZONTAL,
                 false
         );
-
         binding.recyclerTags.setLayoutManager(layoutManager);
         binding.recyclerTags.setAdapter(tagsAdapter);
     }
 
     // TODO: get from API on app load and save on shared preferences, here get from shered preferences
     public List<String> getAvailableTags() {
-        return Arrays.asList(
-                "Washroom", "Pet Friendly", "Family Friendly", "Parking", "Wi-Fi"
-        );
-
-
+        String[] tags = getResources().getStringArray(R.array.tags);
+        return Arrays.asList(tags);
     }
 
     public List<String> getSelectedTags() {
@@ -301,27 +294,27 @@ public class NewPlaceFragment extends Fragment {
 
 
     private void setupObservers() {
-        // Observer para lugar criado com sucesso
-        mViewModel.getCreatedPlace().observe(this, place -> {
+        // Observer to created place
+        mViewModel.getCreatedPlace().observe(getViewLifecycleOwner(), place -> {
             if (place != null) {
                 Toast.makeText(requireContext(), getString(R.string.txt_place_created), Toast.LENGTH_SHORT).show();
                 requireActivity().onBackPressed();
-                mViewModel.clearCreatedPlace(); // Limpa o estado
+                mViewModel.clearCreatedPlace(); // clear cache
             }
         });
 
-        // Observer para erros
-        mViewModel.getErrorMessage().observe(this, error -> {
+        // Observer to erros
+        mViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             if (error != null) {
                 Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
-                mViewModel.clearErrorMessage(); // Limpa o erro
+                mViewModel.clearErrorMessage(); // Clear cache
             }
         });
 
-        // Observer para loading (opcional)
-        mViewModel.getIsLoading().observe(this, isLoading -> {
-            binding.btnSave.setEnabled(!isLoading);
-            // Você pode adicionar um ProgressBar aqui se quiser
-        });
+        // Observer to create place loading state
+//        mViewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
+//            binding.btnSave.setEnabled(!isLoading);
+//            //TODO: Show loading state in UI
+//        });
     }
 }

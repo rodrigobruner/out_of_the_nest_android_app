@@ -10,10 +10,13 @@ import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This class deal with Authorization on retrofit
+ */
 public class AuthenticationInterceptor implements Interceptor {
     private static final String TAG = "AuthInterceptor";
     private static final int TOKEN_TIMEOUT_SECONDS = 10;
-    private static final String MAX_RETRY = "1";
+    private static final String MAX_RETRY = "3";
 
     @NonNull
     @Override
@@ -33,18 +36,21 @@ public class AuthenticationInterceptor implements Interceptor {
         }
         return response;
     }
-
+    //Add the auth on request
     private Response auth(Chain chain, Request request, boolean forceRefresh) throws IOException {
+        // Get User from firebase
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
             return chain.proceed(request);
         }
 
+        // Get token
         String token = getToken(user, forceRefresh);
         if (token == null) {
             return chain.proceed(request);
         }
 
+        //Change request to add auth
         Request authenticatedRequest = request.newBuilder()
                 .header("Authorization", "Bearer " + token)
                 // Remove retry header

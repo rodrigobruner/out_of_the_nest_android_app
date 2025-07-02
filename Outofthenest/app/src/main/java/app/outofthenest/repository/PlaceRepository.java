@@ -5,6 +5,8 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import app.outofthenest.api.ApiService;
@@ -24,9 +26,9 @@ public class PlaceRepository {
         authRepo = new AuthenticationRepository(application);
     }
 
-    public LiveData<List<Place>> getPlacesNearWithFilter(double lat, double lng, double delta, String filter, Double minRating) {
+    public LiveData<List<Place>> getPlacesNear(double lat, double lng, double delta, String filter, ArrayList<String> tags) {
         MutableLiveData<List<Place>> data = new MutableLiveData<>();
-        placeApi.getPlacesNearWithFilter(lat, lng, delta, filter, minRating).enqueue(new Callback<List<Place>>() {
+        placeApi.getPlacesNear(lat, lng, delta, filter, tags).enqueue(new Callback<List<Place>>() {
             @Override
             public void onResponse(Call<List<Place>> call, Response<List<Place>> response) {
                 data.setValue(response.body());

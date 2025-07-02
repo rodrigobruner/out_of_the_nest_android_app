@@ -1,5 +1,8 @@
 package app.outofthenest.api.request;
 
+/**
+ * This class is used to create a Review Request
+ */
 public class CreateReviewRequest {
     private String title;
     private String description;
