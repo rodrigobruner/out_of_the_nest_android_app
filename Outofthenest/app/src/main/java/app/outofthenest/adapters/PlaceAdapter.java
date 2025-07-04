@@ -1,9 +1,9 @@
 package app.outofthenest.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -15,16 +15,37 @@ import java.util.List;
 import app.outofthenest.R;
 import app.outofthenest.models.Place;
 
-/**
- * This adapter is to deal with the place Recycle View
- */
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHolder> {
 
-    private static final String TAG = "PlaceAdapter";
     private List<Place> placeList;
+    private OnPlaceClickListener onPlaceClickListener;
+    private OnGoClickListener onGoClickListener;
 
     public PlaceAdapter(List<Place> placeList) {
         this.placeList = placeList;
+    }
+
+    public interface OnPlaceClickListener {
+        void onPlaceClick(Place place);
+    }
+
+    public void setOnPlaceClickListener(OnPlaceClickListener listener) {
+        this.onPlaceClickListener = listener;
+    }
+
+    public interface OnGoClickListener {
+        void onGoClick(Place place);
+    }
+
+    public void setOnGoClickListener(OnGoClickListener listener) {
+        this.onGoClickListener = listener;
+    }
+
+    // CORRECTED: Use placeList instead of places
+    public void updatePlaces(List<Place> newPlaces) {
+        this.placeList.clear();
+        this.placeList.addAll(newPlaces);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -37,34 +58,42 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
 
     @Override
     public void onBindViewHolder(@NonNull PlaceViewHolder holder, int position) {
-        //Bind the values on the view
         Place place = placeList.get(position);
         holder.title.setText(place.getTitle());
         holder.address.setText(place.getAddress());
-        holder.time.setText(place.getDatetime());
-        holder.distance.setText(place.getDistance());
         holder.status.setText(place.getStatus());
         holder.ratingBar.setRating(place.getRating());
+
+        holder.itemView.setOnClickListener(v -> {
+            if (onPlaceClickListener != null) {
+                onPlaceClickListener.onPlaceClick(place);
+            }
+        });
+
+        holder.btnGo.setOnClickListener(v -> {
+            if (onGoClickListener != null) {
+                onGoClickListener.onGoClick(place);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-//        Log.i(TAG, "getItemCount: " + placeList.size());
         return placeList.size();
     }
 
     static class PlaceViewHolder extends RecyclerView.ViewHolder {
-        TextView title, address, time, distance, status;
+        TextView title, address, status;
         RatingBar ratingBar;
+        Button btnGo;
 
         PlaceViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.place_name);
             address = itemView.findViewById(R.id.place_address);
-            time = itemView.findViewById(R.id.place_time);
-            distance = itemView.findViewById(R.id.place_distance);
             status = itemView.findViewById(R.id.text_status);
             ratingBar = itemView.findViewById(R.id.place_rating);
+            btnGo = itemView.findViewById(R.id.btnGo);
         }
     }
 }

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import app.outofthenest.databinding.ActivityHomeMainBinding;
+import app.outofthenest.models.Place;
 import app.outofthenest.ui.authentication.AuthenticationActivity;
 import app.outofthenest.ui.authentication.AuthenticationViewModel;
 
@@ -21,7 +22,6 @@ public class HomeMainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         homeBinding = ActivityHomeMainBinding.inflate(getLayoutInflater());
         setContentView(homeBinding.getRoot());
         init();

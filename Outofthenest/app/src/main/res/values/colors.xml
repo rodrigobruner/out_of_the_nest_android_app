@@ -34,4 +34,6 @@
     <color name="chip_unselected">#F5F5F5</color>
     <color name="chip_stroke_selected">#2196F3</color>
     <color name="chip_stroke_unselected">#CCCCCC</color>
+
+    <color name="route_color">#FF4081</color>
 </resources>

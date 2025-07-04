@@ -1,5 +1,6 @@
 package app.outofthenest.models;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +10,7 @@ import java.util.Locale;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Place {
+public class Place implements Serializable {
 
     // UID
     @SerializedName("id")

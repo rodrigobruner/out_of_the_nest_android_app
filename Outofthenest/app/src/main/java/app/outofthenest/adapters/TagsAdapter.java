@@ -18,6 +18,8 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
     private List<String> selectedTags;
     private OnTagSelectedListener listener;
 
+    private boolean isSelectionEnabled = true;
+
     public TagsAdapter(List<String> tags) {
         this.tags = tags;
         this.selectedTags = new ArrayList<>();
@@ -37,18 +39,23 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
         holder.chip.setText(tag);
         holder.chip.setOnCheckedChangeListener(null);
         holder.chip.setChecked(selectedTags.contains(tag));
+        holder.chip.setEnabled(isSelectionEnabled);
 
-        holder.chip.setOnCheckedChangeListener((compoundButton, isChecked) -> {
-            if (isChecked) {
-                if (!selectedTags.contains(tag)) {
-                    selectedTags.add(tag);
-                    if (listener != null) listener.onTagSelected(tag);
+        if (isSelectionEnabled) {
+            holder.chip.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+                if (isChecked) {
+                    if (!selectedTags.contains(tag)) {
+                        selectedTags.add(tag);
+                        if (listener != null) listener.onTagSelected(tag);
+                    }
+                } else {
+                    selectedTags.remove(tag);
+                    if (listener != null) listener.onTagDeselected(tag);
                 }
-            } else {
-                selectedTags.remove(tag);
-                if (listener != null) listener.onTagDeselected(tag);
-            }
-        });
+            });
+        } else {
+            holder.chip.setOnCheckedChangeListener(null);
+        }
     }
 
     @Override
@@ -76,5 +83,10 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
 
     public void setOnTagSelectedListener(OnTagSelectedListener listener) {
         this.listener = listener;
+    }
+
+    public void setSelectionEnabled(boolean enabled) {
+        this.isSelectionEnabled = enabled;
+        notifyDataSetChanged(); //Notify the adapter to refresh the view
     }
 }

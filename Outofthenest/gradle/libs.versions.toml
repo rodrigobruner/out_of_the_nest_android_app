@@ -20,6 +20,9 @@ converterGson = "3.0.0"
 playServicesLocation = "21.3.0"
 places = "4.3.1"
 loggingInterceptor = "4.12.0"
+androidMapsUtils = "3.14.0"
+googleMapsServices = "2.2.0"
+slf4jSimple = "2.0.17"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -40,6 +43,9 @@ converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", ve
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
 logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingInterceptor" }
+android-maps-utils = { group = "com.google.maps.android", name = "android-maps-utils", version.ref = "androidMapsUtils" }
+google-maps-services = { group = "com.google.maps", name = "google-maps-services", version.ref = "googleMapsServices" }
+slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4jSimple" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

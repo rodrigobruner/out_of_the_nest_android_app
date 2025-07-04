@@ -10,7 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+
 import app.outofthenest.databinding.FragmentNotificationsBinding;
+import app.outofthenest.models.Notification;
+import app.outofthenest.models.Place;
 
 public class NotificationsFragment extends Fragment {
 
@@ -23,9 +29,6 @@ public class NotificationsFragment extends Fragment {
 
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
@@ -34,4 +37,12 @@ public class NotificationsFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+
+//    private ArrayList<Notification> getNotifications(){
+//        Date date = new Date();
+//        return new ArrayList<Place>(Arrays.asList(
+//            new Notification("1", "2", "Test", "New event", date, true)
+//        ));
+//    }
 }

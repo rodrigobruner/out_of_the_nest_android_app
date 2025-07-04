@@ -23,7 +23,6 @@ public class AuthenticationActivity extends AppCompatActivity {
         setContentView(authenticationBinding.getRoot());
         EdgeToEdge.enable(this);
         init();
-
     }
 
 

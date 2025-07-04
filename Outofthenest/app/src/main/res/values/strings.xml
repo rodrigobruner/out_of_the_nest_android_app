@@ -85,8 +85,6 @@
     </string-array>
 
 
-
-
     <string-array name="tags">
         <item>Washroom</item>
         <item>Pet friendly</item>
@@ -94,6 +92,18 @@
         <item>Parking</item>
         <item>Wi-fi</item>
     </string-array>
+
+    <!-- Places screen -->
+    <string name="txt_places_title">No places found</string>
+    <string name="txt_places_address">No places address found</string>
+    <string name="txt_tab_detail">About</string>
+    <string name="txt_tab_comments">Rating</string>
+    <string name="txt_places_distance">Distance</string>
+    <string name="txt_places_distance_unit">km</string>
+    <string name="txt_places_time">Time</string>
+    <string name="txt_places_status">Status</string>
+    <string name="btn_go_to_place">Go to place</string>
+    <string name="btn_add_review">Add a review</string>
 
 
     <!-- Settings screen -->
