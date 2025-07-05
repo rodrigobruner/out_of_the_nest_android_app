@@ -17,7 +17,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PlaceRepository {
-    private static final String TAG = "PlaceRepository";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
     private PlaceApi placeApi;
     private AuthenticationRepository authRepo;
 
@@ -49,12 +50,12 @@ public class PlaceRepository {
             @Override
             public void onResponse(Call<Place> call, Response<Place> response) {
                 data.setValue(response.body());
-                Log.i(TAG, "Created: " + place.getTitle());
+//                Log.i(TAG, "Created: " + place.getTitle());
             }
             @Override
             public void onFailure(Call<Place> call, Throwable t) {
                 data.setValue(null);
-                Log.i(TAG, "Error: " + place.getTitle() + " - " + t.getMessage());
+//                Log.i(TAG, "Error: " + place.getTitle() + " - " + t.getMessage());
             }
         });
         return data;

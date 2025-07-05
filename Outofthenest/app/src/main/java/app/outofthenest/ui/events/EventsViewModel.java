@@ -6,7 +6,8 @@ import androidx.lifecycle.ViewModel;
 
 public class EventsViewModel extends ViewModel {
 
-    private static final String TAG = "EventsViewModel";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
     private final MutableLiveData<String> mText;
 
     public EventsViewModel() {

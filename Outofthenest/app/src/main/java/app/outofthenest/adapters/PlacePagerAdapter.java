@@ -9,29 +9,31 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import app.outofthenest.models.Place;
-import app.outofthenest.ui.authentication.LoginFragment;
-import app.outofthenest.ui.authentication.RegisterFragment;
 import app.outofthenest.ui.place.PlaceCommentsFragment;
 import app.outofthenest.ui.place.PlaceDetailFragment;
 
+/**
+ * Adapter to deal with tabs on Page detail screen
+ */
+
 public class PlacePagerAdapter extends FragmentStateAdapter {
 
-        private static final String TAG = "AuthenticationPagerAdapter";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
 
-        private final Context context;
+    private final Context context;
 
-        private final Place place;
+    private final Place place;
 
-        public PlacePagerAdapter(@NonNull FragmentActivity fragmentActivity, Context context, Place place) {
-            super(fragmentActivity);
-            this.context = context;
-            this.place = place;
-        }
-
+    public PlacePagerAdapter(@NonNull FragmentActivity fragmentActivity, Context context, Place place) {
+        super(fragmentActivity);
+        this.context = context;
+        this.place = place;
+    }
 
     @Override
     public Fragment createFragment(int position) {
-        // I need to pass place as a parameter to the fragments
+        // To pass place as a parameter to the fragments
         Bundle args = new Bundle();
         args.putSerializable("place", place);
         Fragment fragment;
@@ -45,9 +47,9 @@ public class PlacePagerAdapter extends FragmentStateAdapter {
         return fragment;
     }
 
-        @Override
-        public int getItemCount() {
-            return 2; //2 tabs
-        }
+    @Override
+    public int getItemCount() {
+        return 2; //2 tabs
+    }
 
 }

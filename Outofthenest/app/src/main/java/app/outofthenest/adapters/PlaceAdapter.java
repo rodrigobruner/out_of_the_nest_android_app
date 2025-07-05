@@ -15,37 +15,23 @@ import java.util.List;
 import app.outofthenest.R;
 import app.outofthenest.models.Place;
 
+/**
+ * This adapter is to deal with places on place search
+ */
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHolder> {
 
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
+
     private List<Place> placeList;
+
     private OnPlaceClickListener onPlaceClickListener;
+
+    //Click listener
     private OnGoClickListener onGoClickListener;
 
     public PlaceAdapter(List<Place> placeList) {
         this.placeList = placeList;
-    }
-
-    public interface OnPlaceClickListener {
-        void onPlaceClick(Place place);
-    }
-
-    public void setOnPlaceClickListener(OnPlaceClickListener listener) {
-        this.onPlaceClickListener = listener;
-    }
-
-    public interface OnGoClickListener {
-        void onGoClick(Place place);
-    }
-
-    public void setOnGoClickListener(OnGoClickListener listener) {
-        this.onGoClickListener = listener;
-    }
-
-    // CORRECTED: Use placeList instead of places
-    public void updatePlaces(List<Place> newPlaces) {
-        this.placeList.clear();
-        this.placeList.addAll(newPlaces);
-        notifyDataSetChanged();
     }
 
     @NonNull
@@ -81,6 +67,33 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     public int getItemCount() {
         return placeList.size();
     }
+
+    public void updatePlaces(List<Place> newPlaces) {
+        this.placeList.clear();
+        this.placeList.addAll(newPlaces);
+        notifyDataSetChanged(); //from parent
+    }
+
+
+    // Implementation of the click listner
+    public interface OnPlaceClickListener {
+        void onPlaceClick(Place place);
+    }
+
+    public void setOnPlaceClickListener(OnPlaceClickListener listener) {
+        this.onPlaceClickListener = listener;
+    }
+
+    public interface OnGoClickListener {
+        void onGoClick(Place place);
+    }
+
+    public void setOnGoClickListener(OnGoClickListener listener) {
+        this.onGoClickListener = listener;
+    }
+
+
+    // Implemetention of Holder
 
     static class PlaceViewHolder extends RecyclerView.ViewHolder {
         TextView title, address, status;

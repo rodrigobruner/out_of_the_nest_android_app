@@ -13,7 +13,8 @@ import app.outofthenest.repository.AuthenticationRepository;
 
 public class AuthenticationViewModel extends AndroidViewModel {
 
-    private static final String TAG = "AuthenticationViewModel";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
     private AuthenticationRepository repository;
     private MutableLiveData<FirebaseUser> firebaseUserMLData;
     private MutableLiveData<Boolean> userLoggedMLData;

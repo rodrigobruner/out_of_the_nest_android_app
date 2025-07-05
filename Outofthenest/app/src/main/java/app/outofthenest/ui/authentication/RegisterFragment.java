@@ -21,7 +21,8 @@ import app.outofthenest.databinding.FragmentRegisterBinding;
 
 public class RegisterFragment extends Fragment {
 
-    private static final String TAG = "RegisterFragment";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
     private FragmentRegisterBinding registerBinding;
     private AuthenticationViewModel viewModel;
     private boolean buttonPressed = false;
@@ -71,10 +72,10 @@ public class RegisterFragment extends Fragment {
                 if (!buttonPressed) return;
 
                 if (firebaseUser != null) {
-                    Toast.makeText(getContext(), getString(R.string.txt_registration_success), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.success_registration), Toast.LENGTH_SHORT).show();
                     changeTab();
                 } else {
-                    Toast.makeText(getContext(), getString(R.string.txt_registration_failed), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.error_registration), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -104,22 +105,22 @@ public class RegisterFragment extends Fragment {
                 String confirmPassword = registerBinding.inpConfirmPassword.getText().toString();
 
                 if(name.isEmpty() || name.length() < 3) {
-                    Toast.makeText(getContext(), getString(R.string.txt_invalid_name), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.invalid_name), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(email.length() < 3 || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(getContext(), getString(R.string.txt_invalid_email), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.invalid_email), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(password.isEmpty() || password.length() < 6) {
-                    Toast.makeText(getContext(), getString(R.string.txt_invalid_password), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.invalid_password), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (!password.equals(confirmPassword)) {
-                    Toast.makeText(getContext(), getString(R.string.txt_password_not_match), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.invalid_password_not_match), Toast.LENGTH_SHORT).show();
                     return;
                 }
 

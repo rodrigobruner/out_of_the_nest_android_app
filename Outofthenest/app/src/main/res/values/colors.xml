@@ -35,5 +35,6 @@
     <color name="chip_stroke_selected">#2196F3</color>
     <color name="chip_stroke_unselected">#CCCCCC</color>
 
-    <color name="route_color">#FF4081</color>
+    <color name="route_color">#FFFF6D01</color>
+    <color name="progress_bar_color">#FFFF6D01</color>
 </resources>

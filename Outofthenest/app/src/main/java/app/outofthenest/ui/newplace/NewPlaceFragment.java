@@ -44,7 +44,8 @@ import app.outofthenest.models.PlaceAddress;
 
 public class NewPlaceFragment extends Fragment {
 
-    private static final String TAG = "NewPlaceFragment";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
     private NewPlaceViewModel mViewModel;
     private FragmentNewPlaceBinding binding;
     private FusedLocationProviderClient fusedLocationClient;
@@ -77,6 +78,7 @@ public class NewPlaceFragment extends Fragment {
     }
 
     private void init() {
+        showProgressBar(false);
         cAddress = new PlaceAddress(null, 0.0, 0.0);
         setUpSpinner();
         setupCurrentLocationButton();
@@ -92,7 +94,7 @@ public class NewPlaceFragment extends Fragment {
                     if (isGranted) {
                         getCurrentLocationAddress();
                     } else {
-                        Toast.makeText(requireContext(), getString(R.string.txt_location_permission_denied), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), getString(R.string.permission_location_denied), Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -100,6 +102,7 @@ public class NewPlaceFragment extends Fragment {
 
     private void setupCurrentLocationButton() {
         binding.btnCurrentLocation.setOnClickListener(v -> {
+            showProgressBar(true);
             binding.btnCurrentLocation.setEnabled(false);
             if (hasLocationPermission()) {
                 getCurrentLocationAddress();
@@ -120,7 +123,7 @@ public class NewPlaceFragment extends Fragment {
 
     private void getCurrentLocationAddress() {
         if (!hasLocationPermission()) return;
-
+        showProgressBar(true);
         CurrentLocationRequest request = new CurrentLocationRequest.Builder()
                 .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
                 .build();
@@ -135,13 +138,15 @@ public class NewPlaceFragment extends Fragment {
             if (location != null) {
                 getAddressFromLocation(location.getLatitude(), location.getLongitude());
             } else {
-                Toast.makeText(requireContext(), getString(R.string.txt_location_permission_denied), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.permission_location_denied), Toast.LENGTH_SHORT).show();
             }
             binding.btnCurrentLocation.setEnabled(true);
+            showProgressBar(false);
         });
     }
 
     private void getAddressFromLocation(double latitude, double longitude) {
+        showProgressBar(true);
         Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
 
         try {
@@ -219,7 +224,7 @@ public class NewPlaceFragment extends Fragment {
     private void setUpSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 getContext(),
-                R.array.place_types,
+                R.array.list_place_types,
                 android.R.layout.simple_spinner_item
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -241,7 +246,7 @@ public class NewPlaceFragment extends Fragment {
 
     // TODO: get from API on app load and save on shared preferences, here get from shered preferences
     public List<String> getAvailableTags() {
-        String[] tags = getResources().getStringArray(R.array.tags);
+        String[] tags = getResources().getStringArray(R.array.list_tags);
         return Arrays.asList(tags);
     }
 
@@ -292,6 +297,14 @@ public class NewPlaceFragment extends Fragment {
         });
     }
 
+    private void showProgressBar(boolean show) {
+
+        if (binding != null && binding.progressBar != null) {
+            Log.i(TAG, "showProgressBar: " + show);
+            binding.progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+    }
+
 
     private void setupObservers() {
         // Observer to created place
@@ -310,11 +323,5 @@ public class NewPlaceFragment extends Fragment {
                 mViewModel.clearErrorMessage(); // Clear cache
             }
         });
-
-        // Observer to create place loading state
-//        mViewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
-//            binding.btnSave.setEnabled(!isLoading);
-//            //TODO: Show loading state in UI
-//        });
     }
 }

@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 public class ProfileViewModel extends ViewModel {
 
-    private static final String TAG = "MainActivity";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
+
     private final MutableLiveData<String> mText;
 
     public ProfileViewModel() {

@@ -1,6 +1,5 @@
 package app.outofthenest.ui.place;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +14,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.List;
 
-import app.outofthenest.MainActivity;
 import app.outofthenest.R;
 import app.outofthenest.adapters.TagsAdapter;
 import app.outofthenest.databinding.FragmentPlaceDetailBinding;
 import app.outofthenest.models.Place;
 
 public class PlaceDetailFragment extends Fragment {
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
+
+    static String PLACE_PARAMATER = "place";
 
     private FragmentPlaceDetailBinding placeBinding;
 
@@ -46,7 +48,7 @@ public class PlaceDetailFragment extends Fragment {
 
     private void setUpPlace() {
         if (getArguments() != null) {
-            place = getArguments().getSerializable("place", Place.class);
+            place = getArguments().getSerializable(PLACE_PARAMATER, Place.class);
             placeBinding.txvPlacesTitle.setText(place.getTitle());
             placeBinding.txvAddress.setText(place.getAddress());
             placeBinding.txvDistance.setText(place.getDistance());

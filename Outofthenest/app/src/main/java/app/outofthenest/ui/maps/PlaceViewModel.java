@@ -11,7 +11,8 @@ import app.outofthenest.models.Place;
 import app.outofthenest.repository.PlaceRepository;
 
 public class PlaceViewModel extends AndroidViewModel {
-    private static final String TAG = "PlaceViewModel";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
     private PlaceRepository placeRepository;
 
     public PlaceViewModel(@NonNull Application application) {

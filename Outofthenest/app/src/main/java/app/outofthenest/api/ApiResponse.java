@@ -1,6 +1,10 @@
 package app.outofthenest.api;
 
 public class ApiResponse<T> {
+
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
+    
     private boolean success;
     private String message;
     private T data;

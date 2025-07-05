@@ -4,60 +4,63 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 import app.outofthenest.api.ApiService;
-import app.outofthenest.api.ReviewsApi;
-import app.outofthenest.models.Reviews;
-import app.outofthenest.api.request.CreateReviewRequest;
+import app.outofthenest.api.ReviewApi;
+import app.outofthenest.models.Review;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ReviewsRepository {
-    private ReviewsApi reviewsApi;
+
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
+
+    private ReviewApi reviewApi;
 
     public ReviewsRepository() {
-        reviewsApi = ApiService.getRetrofit().create(ReviewsApi.class);
+        reviewApi = ApiService.getRetrofit().create(ReviewApi.class);
     }
 
-    public LiveData<Reviews> createReview(String title, String description, int rating, String userId, int placeId) {
-        MutableLiveData<Reviews> data = new MutableLiveData<>();
-        CreateReviewRequest request = new CreateReviewRequest(title, description, rating, userId, placeId);
-        reviewsApi.createReview(request).enqueue(new Callback<Reviews>() {
+    public LiveData<Review> createReview(String title, String description, int rating, String userId, String placeId) {
+        MutableLiveData<Review> data = new MutableLiveData<>();
+        Review request = new Review(null, title, description, rating, null, userId, placeId);
+        reviewApi.createReview(request).enqueue(new Callback<Review>() {
             @Override
-            public void onResponse(Call<Reviews> call, Response<Reviews> response) {
+            public void onResponse(Call<Review> call, Response<Review> response) {
                 data.setValue(response.body());
             }
             @Override
-            public void onFailure(Call<Reviews> call, Throwable t) {
+            public void onFailure(Call<Review> call, Throwable t) {
                 data.setValue(null);
             }
         });
         return data;
     }
 
-    public LiveData<List<Reviews>> getReviewsByPlace(int placeId) {
-        MutableLiveData<List<Reviews>> data = new MutableLiveData<>();
-        reviewsApi.getReviewsByPlace(placeId).enqueue(new Callback<List<Reviews>>() {
+    public LiveData<List<Review>> getReviewsByPlace(int placeId) {
+        MutableLiveData<List<Review>> data = new MutableLiveData<>();
+        reviewApi.getReviewsByPlace(placeId).enqueue(new Callback<List<Review>>() {
             @Override
-            public void onResponse(Call<List<Reviews>> call, Response<List<Reviews>> response) {
+            public void onResponse(Call<List<Review>> call, Response<List<Review>> response) {
                 data.setValue(response.body());
             }
             @Override
-            public void onFailure(Call<List<Reviews>> call, Throwable t) {
+            public void onFailure(Call<List<Review>> call, Throwable t) {
                 data.setValue(null);
             }
         });
         return data;
     }
 
-    public LiveData<List<Reviews>> getReviewsByUser(String userId) {
-        MutableLiveData<List<Reviews>> data = new MutableLiveData<>();
-        reviewsApi.getReviewsByUser(userId).enqueue(new Callback<List<Reviews>>() {
+    public LiveData<List<Review>> getReviewsByUser(String userId) {
+        MutableLiveData<List<Review>> data = new MutableLiveData<>();
+        reviewApi.getReviewsByUser(userId).enqueue(new Callback<List<Review>>() {
             @Override
-            public void onResponse(Call<List<Reviews>> call, Response<List<Reviews>> response) {
+            public void onResponse(Call<List<Review>> call, Response<List<Review>> response) {
                 data.setValue(response.body());
             }
             @Override
-            public void onFailure(Call<List<Reviews>> call, Throwable t) {
+            public void onFailure(Call<List<Review>> call, Throwable t) {
                 data.setValue(null);
             }
         });

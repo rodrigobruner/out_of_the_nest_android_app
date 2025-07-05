@@ -38,9 +38,9 @@ import com.google.maps.model.DirectionsRoute;
 import java.util.List;
 
 import app.outofthenest.BuildConfig;
-import app.outofthenest.NewPlaceActivity;
+import app.outofthenest.Activities.NewPlaceActivity;
 import app.outofthenest.R;
-import app.outofthenest.SearchPlaceActivity;
+import app.outofthenest.Activities.SearchPlaceActivity;
 import app.outofthenest.databinding.FragmentMapsBinding;
 import app.outofthenest.models.Place;
 
@@ -48,7 +48,8 @@ import app.outofthenest.models.Place;
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     //Constants
-    private static final String TAG = "MapsFragment";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
     private static final float DEFAULT_ZOOM = 15f;
 
     //binding
@@ -70,7 +71,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             if (isGranted) {
                 checkLocationPermission();
             } else {
-                Toast.makeText(getContext(), "Location permission is required to show your position on the map.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.permission_location_denied), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -108,39 +109,42 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         setAddButtonListener();
         setSearchButtonListener();
         setCancelButtonListener();
+        setGoButtonListener();
         initMap();
-
     }
 
 
     private void initMap(){
-        Log.d(TAG, "Initializing map...");
+//        Log.d(TAG, "Initializing map...");
 
         if (destination == null) {
+            hideShowNavigationBar(false);
             checkLocationPermission();
         } else {
             Log.i(TAG, destination.getTitle());
+            hideShowNavigationBar(true);
             traceRoute(destination);
         }
     }
 
     // Set a Route on the map
     private void traceRoute(Place destination) {
-        Log.i(TAG, "Tracing route to destination: " + destination.getTitle());
+        showProgressBar(true);
+//        Log.i(TAG, "Tracing route to destination: " + destination.getTitle());
         if (mMap != null && destination != null && currentLocation != null) {
-            Log.d(TAG, "Tracing route to: " + destination.getTitle());
+//            Log.d(TAG, "Tracing route to: " + destination.getTitle());
 
             LatLng origin = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             LatLng dest = new LatLng(destination.getLatitude(), destination.getLongitude());
 
-            Log.i(TAG, "Origin: " + origin.latitude + ", " + origin.longitude);
-            Log.i(TAG, "Destination: " + dest.latitude + ", " + dest.longitude);
+//            Log.i(TAG, "Origin: " + origin.latitude + ", " + origin.longitude);
+//            Log.i(TAG, "Destination: " + dest.latitude + ", " + dest.longitude);
 
             // Add markers for origin and destination
             mMap.addMarker(new MarkerOptions().position(origin).title("Your Location"));
             mMap.addMarker(new MarkerOptions().position(dest).title(destination.getTitle()));
 
-            // Use a separate thread for the network request
+            // Use a separate thread for the request data on Mps API
             new Thread(() -> {
                 try {
                     GeoApiContext context = new GeoApiContext.Builder()
@@ -174,16 +178,18 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                                 LatLngBounds bounds = builder.build();
                                 int padding = 100; // offset from edges of the map in pixels
                                 mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
+                                showProgressBar(false);
                             });
                         }
                     }
                 } catch (Exception e) {
-                    Log.e(TAG, "Error tracing route", e);
+                    Toast.makeText(getContext(), getString(R.string.error_unexpected), Toast.LENGTH_SHORT).show();
+//                    Log.e(TAG, "Error tracing route", e);
                 }
             }).start();
 
         } else {
-            Log.w(TAG, "Map, destination, or current location is null. Cannot trace route.");
+//            Log.w(TAG, "Map, destination, or current location is null. Cannot trace route.");
         }
     }
 
@@ -194,7 +200,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             mMap.addMarker(new MarkerOptions().position(userLatLng).title("Your Location"));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, DEFAULT_ZOOM));
         } else {
-            Log.w(TAG, "Map or current location is null. Cannot set user location on map.");
+            Toast.makeText(getContext(), getString(R.string.error_unexpected), Toast.LENGTH_SHORT).show();
+//            Log.w(TAG, "Map or current location is null. Cannot set user location on map.");
         }
     }
 
@@ -203,12 +210,18 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         mapViewModel.getDestination().observe(getViewLifecycleOwner(), place -> {
             if (place != null) {
                 this.destination = new Place(
-                        String.valueOf(place.getId()),
+                        place.getId(),
                         place.getTitle(),
                         place.getDescription(),
                         place.getType(),
+                        place.getAddress(),
+                        place.getDatetime(),
+                        place.getDistance(),
+                        place.getStatus(),
+                        place.getRating(),
                         place.getLatitude(),
                         place.getLongitude(),
+                        place.getDelta(),
                         place.getTags()
                 );
                 if (currentLocation != null) {
@@ -216,10 +229,27 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 } else {
                     checkLocationPermission();
                 }
-                // Only clear when you are sure you don't need it anymore
-                // mapViewModel.clearDestination();
             }
         });
+    }
+
+    //UI Controls
+
+    private void showProgressBar(boolean show) {
+
+        if (binding != null && binding.progressBar != null) {
+//            Log.i(TAG, "showProgressBar: " + show);
+            binding.progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    private void hideShowNavigationBar(boolean show) {
+        if (show) {
+            binding.txtTitlePlace.setText(destination.getTitle());
+            binding.navegationBar.setVisibility(View.VISIBLE);
+        } else {
+            binding.navegationBar.setVisibility(View.GONE);
+        }
     }
 
 
@@ -241,17 +271,28 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private void setCancelButtonListener() {
         binding.btnCancel.setOnClickListener(v -> {
             destination = null;
+            hideShowNavigationBar(false);
             mapViewModel.clearDestination();
-            //Clear the map and set the current location
+            if (mMap != null) {
+                mMap.clear();
+                setUserCurrentLocationOnMap();
+            }
         });
     }
 
     private void setGoButtonListener() {
         binding.btnGo.setOnClickListener(v -> {
             if (destination != null) {
-                // start the navigation to the destination
+                String uri = "google.navigation:q=" + destination.getLatitude() + "," + destination.getLongitude();
+                Intent intent = new Intent(Intent.ACTION_VIEW, android.net.Uri.parse(uri));
+                intent.setPackage("com.google.android.apps.maps");
+                if (intent.resolveActivity(requireContext().getPackageManager()) != null) {
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(requireContext(), getString(R.string.error_maps_not_found), Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(requireContext(), "Please select a destination first.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.error_set_destination), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -278,7 +319,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 .addOnSuccessListener(requireActivity(), location -> {
                     if (location != null) {
                         currentLocation = location;
-                        Log.d(TAG, "Current Location: " + currentLocation.getLatitude() + ", " + currentLocation.getLongitude());
+//                        Log.d(TAG, "Current Location: " + currentLocation.getLatitude() + ", " + currentLocation.getLongitude());
 
                         if (destination != null) {
                             traceRoute(destination);

@@ -14,7 +14,8 @@ import java.util.concurrent.TimeUnit;
  * This class deal with Authorization on retrofit
  */
 public class AuthenticationInterceptor implements Interceptor {
-    private static final String TAG = "AuthInterceptor";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
     private static final int TOKEN_TIMEOUT_SECONDS = 10;
     private static final String MAX_RETRY = "3";
 

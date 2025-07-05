@@ -9,15 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 import app.outofthenest.R;
 
-
+/**
+ * Adapter to deal with Tags list
+ */
 
 public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder> {
 
-    private static final String TAG = "TagsAdapter";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
+
     private List<String> tags;
+
     private List<String> selectedTags;
+
+    //Listener
     private OnTagSelectedListener listener;
 
+    //Enable/disable selection of tags, default enable
     private boolean isSelectionEnabled = true;
 
     public TagsAdapter(List<String> tags) {
@@ -31,6 +39,11 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
         Chip chip = (Chip) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_tag, parent, false);
         return new TagViewHolder(chip);
+    }
+
+    @Override
+    public int getItemCount() {
+        return tags.size();
     }
 
     @Override
@@ -58,20 +71,6 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return tags.size();
-    }
-
-    public List<String> getSelectedTags() {
-        return new ArrayList<>(selectedTags);
-    }
-
-    public interface OnTagSelectedListener {
-        void onTagSelected(String tag);
-        void onTagDeselected(String tag);
-    }
-
     static class TagViewHolder extends RecyclerView.ViewHolder {
         Chip chip;
 
@@ -81,12 +80,24 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
         }
     }
 
+    //Implementation of the selection
+
+    public interface OnTagSelectedListener {
+        void onTagSelected(String tag);
+        void onTagDeselected(String tag);
+    }
+
     public void setOnTagSelectedListener(OnTagSelectedListener listener) {
         this.listener = listener;
     }
 
+    public List<String> getSelectedTags() {
+        return new ArrayList<>(selectedTags);
+    }
+
+    //Enable/Disable selection
     public void setSelectionEnabled(boolean enabled) {
         this.isSelectionEnabled = enabled;
-        notifyDataSetChanged(); //Notify the adapter to refresh the view
+        notifyDataSetChanged();
     }
 }

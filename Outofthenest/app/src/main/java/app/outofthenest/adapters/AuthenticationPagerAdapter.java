@@ -15,8 +15,8 @@ import app.outofthenest.ui.authentication.RegisterFragment;
  * This adapter is to deal with tab on authentication Page
  */
 public class AuthenticationPagerAdapter extends FragmentStateAdapter {
-
-    private static final String TAG = "AuthenticationPagerAdapter";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
 
     private final Context context;
 
@@ -28,15 +28,13 @@ public class AuthenticationPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-
-        if (position == 0) { //If first tab
+        if (position == 0) {
 //            Log.d(TAG, "RegisterFragment");
             return new RegisterFragment();
         } else {
 //            Log.d(TAG, "LoginFragment");
             return new LoginFragment();
         }
-
     }
 
     @Override

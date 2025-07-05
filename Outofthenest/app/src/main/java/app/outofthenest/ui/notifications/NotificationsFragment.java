@@ -19,6 +19,8 @@ import app.outofthenest.models.Notification;
 import app.outofthenest.models.Place;
 
 public class NotificationsFragment extends Fragment {
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
 
     private FragmentNotificationsBinding binding;
 
@@ -37,12 +39,4 @@ public class NotificationsFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
-
-//    private ArrayList<Notification> getNotifications(){
-//        Date date = new Date();
-//        return new ArrayList<Place>(Arrays.asList(
-//            new Notification("1", "2", "Test", "New event", date, true)
-//        ));
-//    }
 }

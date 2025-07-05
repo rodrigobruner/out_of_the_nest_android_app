@@ -13,6 +13,8 @@ import app.outofthenest.models.Place;
 
 
 public class PlaceCardFragment extends Fragment {
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

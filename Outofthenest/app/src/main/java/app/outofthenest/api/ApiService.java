@@ -10,6 +10,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * This class deals with API communication
  */
 public class ApiService {
+
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
     private static final String BASE_URL = Constants.URL_API;
     private static Retrofit retrofit;
 

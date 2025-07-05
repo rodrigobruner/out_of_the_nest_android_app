@@ -1,14 +1,16 @@
 package app.outofthenest.models;
 
+import static android.provider.Settings.System.getString;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 
 public class Place implements Serializable {
 
@@ -72,6 +74,14 @@ public class Place implements Serializable {
     @Expose
     private float delta;
 
+    public float getDelta() {
+        return delta;
+    }
+
+    public void setDelta(float delta) {
+        this.delta = delta;
+    }
+
     // Tags associated with the place
     @SerializedName("tags")
     @Expose
@@ -109,8 +119,8 @@ public class Place implements Serializable {
         String datetime = sdf.format(currentDate);
         this.datetime = datetime;
         //Default
-        this.distance = "0.0 km";
-        this.status = "open";
+       this.distance = "";
+        this.status = "";
         this.rating = 0.0f;
         this.id = 0;
         this.delta = 0.0f;

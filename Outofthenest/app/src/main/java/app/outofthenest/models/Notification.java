@@ -8,16 +8,16 @@ public class Notification {
     private String message;
     private String type; // "EVENT", "REVIEW", "GENERAL"
     private Date scheduledTime;
-    private boolean sent;
+    private boolean read;
 
 
-    public Notification(String id, String userId, String message, String type, Date scheduledTime, boolean sent) {
+    public Notification(String id, String userId, String message, String type, Date scheduledTime, boolean read) {
         this.id = id;
         this.userId = userId;
         this.message = message;
         this.type = type;
         this.scheduledTime = scheduledTime;
-        this.sent = sent;
+        this.read = read;
     }
 
     public String getId() {
@@ -60,11 +60,11 @@ public class Notification {
         this.scheduledTime = scheduledTime;
     }
 
-    public boolean isSent() {
-        return sent;
+    public boolean isRead() {
+        return read;
     }
 
-    public void setSent(boolean sent) {
-        this.sent = sent;
+    public void setRead(boolean read) {
+        this.read = read;
     }
 }

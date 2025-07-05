@@ -1,75 +1,77 @@
 <resources>
     <string name="app_name">Out of the nest</string>
-    <string name="app_slogan">Out of the nest</string>
-    <string name="title_events">Events</string>
-    <string name="title_profile">Profile</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_maps">Maps</string>
 
+    <!-- General -->
+    <string name="btn_cancel">Cancel</string>
+    <string name="error_unexpected">Ops! An unexpected error occurred. Please try again later.</string>
 
-    <!-- Family Members -->
-    <string name="family_member_male">Men</string>
-    <string name="family_member_female">Woman</string>
-    <string name="family_member_boy">Boy</string>
-    <string name="family_member_girl">Girl</string>
-    <string name="family_member_dog">Dog</string>
-    <string name="family_member_cat">Cat</string>
-    <string name="family_member_other">Others</string>
+    <!-- App defaults -->
+    <string name="default_place_status">Closed</string>
 
+    <!-- Permissions -->
+    <string name="permission_location_denied">Please enable location permission in settings to use this feature</string>
+
+    <!-- Navigation -->
+    <string name="nav_title_maps">Maps</string>
+    <string name="nav_title_events">Events</string>
+    <string name="nav_title_notifications">Notifications</string>
+    <string name="nav_title_profile">Profile</string>
 
     <!-- Home screen -->
-    <string name="welcome_to">WELCOME TO</string>
+    <string name="txt_welcome_to">WELCOME TO</string>
     <string name="btn_get_started">Get Started</string>
     <string name="btn_login">Sign in</string>
 
     <!-- Register and authentication screen -->
-    <string name="authentication_pager_desc">Authentication pages</string>
-    <string name="btn_register">Register</string>
-    <string name="txt_login_title">Login in your account</string>
+    <string name="txt_authentication_pager_desc">Authentication pages</string>
+    <string name="txt_login_title">Log in to your account</string>
     <string name="txt_register_title">Create your account</string>
     <string name="txt_name">Name</string>
     <string name="txt_email">Email</string>
     <string name="txt_password">Password</string>
     <string name="txt_confirm_password">Confirm Password</string>
-    <string name="txt_not_logged_in">Not logged in</string>
+    <string name="btn_register">Register</string>
 
-    <string name="txt_password_not_match">Passwords do not match</string>
-    <string name="txt_invalid_name">Inform a valid name</string>
-    <string name="txt_invalid_email">Inform a valid e-mail</string>
-    <string name="txt_invalid_password">Inform a valid password</string>
-    <string name="txt_registration_success">User created successfully</string>
-    <string name="txt_registration_failed">The user could not be registered</string>
-    <string name="txt_login_failed">Incorrect username or password</string>
+    <string name="success_registration">User created successfully</string>
+<!--    <string name="alert_not_logged_in">Not logged in</string>-->
+    <string name="invalid_name">Inform a valid name</string>
+    <string name="invalid_email">Inform a valid e-mail</string>
+    <string name="invalid_password">Inform a valid password</string>
+    <string name="invalid_password_not_match">Passwords do not match</string>
+    <string name="error_registration">The user could not be registered</string>
+    <string name="error_login">Incorrect username or password</string>
+    <string name="error_user_token">Failed to get authentication token</string>
 
     <!-- Maps screen -->
-    <string name="search_here">Search here...</string>
-    <string name="add_place">Add Place</string>
-    <string name="btn_cancel">Cancel</string>
-    <string name="txt_location_permission_denied">Location permission denied</string>
+    <string name="btn_add_place">Add Place</string>
+    <string name="btn_go_to_place_now">Go</string>
+    <string name="error_maps_not_found">Google Maps app not found.</string>
+    <string name="error_set_destination">Please select a destination first.</string>
+
+    <!-- Map Search Screen -->
+    <string name="txt_search_here">Search here...</string>
 
     <!-- New Place screen -->
     <string name="new_place_title">New Place</string>
     <string name="txt_place_name">Place Name</string>
     <string name="txt_place_type">Choose a place type</string>
-    <string name="txt_address">Address</string>
+    <string name="txt_place_address">Address</string>
     <string name="txt_description">Description</string>
     <string name="txt_tags">Tags</string>
     <string name="btn_save">Save</string>
     <string name="btn_use_current_location">Use Current Location</string>
-    <string name="txt_place_saved">Place saved successfully</string>
-    <string name="txt_place_not_saved">Place could not be saved</string>
 
     <string name="txt_address_not_found">Address not found, showing coordinates</string>
     <string name="txt_get_address_error">Error getting address, showing coordinates</string>
-    <string name="txt_invalid_place_name">Please informe a name</string>
-    <string name="txt_invalid_address">Please informe a valid address</string>
+    <string name="txt_invalid_place_name">Please inform a name</string>
+    <string name="txt_invalid_address">Please inform a valid address</string>
     <string name="txt_invalid_place_type">Please select a place type</string>
     <string name="txt_invalid_tags">Please select one or more tags</string>
-    <string name="txt_place_created">Place create successfuly </string>
-    <string name="txt_place_creation_error">Error to create place</string>
+    <string name="txt_place_created">Place created successfully</string>
+    <string name="txt_place_creation_error">Error creating place</string>
 
     <string name="place_type_default">Select a type...</string>
-    <string-array name="place_types">
+    <string-array name="list_place_types">
         <item>Select a type...</item>
         <item>Café</item>
         <item>Library</item>
@@ -84,35 +86,26 @@
         <item>Splash Pad</item>
     </string-array>
 
-
-    <string-array name="tags">
+    <string-array name="list_tags">
         <item>Washroom</item>
         <item>Pet friendly</item>
-        <item>Family friend</item>
+        <item>Family friendly</item>
         <item>Parking</item>
         <item>Wi-fi</item>
     </string-array>
 
     <!-- Places screen -->
-    <string name="txt_places_title">No places found</string>
-    <string name="txt_places_address">No places address found</string>
+    <string name="txt_places_address">No address found for places</string>
     <string name="txt_tab_detail">About</string>
-    <string name="txt_tab_comments">Rating</string>
+    <string name="txt_tab_comments">Reviews</string>
     <string name="txt_places_distance">Distance</string>
-    <string name="txt_places_distance_unit">km</string>
     <string name="txt_places_time">Time</string>
     <string name="txt_places_status">Status</string>
-    <string name="btn_go_to_place">Go to place</string>
+    <string name="btn_go_to_place">Trace route</string>
     <string name="btn_add_review">Add a review</string>
 
-
     <!-- Settings screen -->
-    <string name="profile_title">Profille</string>
     <string name="txt_logout">Logout</string>
-    <string name="title_activity_navegation">NavegationActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-
 
     <!-- profile screen -->
     <string name="txt_username">Username</string>

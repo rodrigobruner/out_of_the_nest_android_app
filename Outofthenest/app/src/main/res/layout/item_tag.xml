@@ -6,4 +6,4 @@
     android:layout_marginEnd="8dp"
     android:checkable="true"
     android:textSize="14sp"
-    android:background="@drawable/chip_selector" />
+    android:background="@drawable/chip_selector"/>

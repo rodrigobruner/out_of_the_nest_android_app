@@ -14,7 +14,8 @@ import app.outofthenest.databinding.FragmentEventsBinding;
 
 public class EventsFragment extends Fragment {
 
-    private static final String TAG = "EventsFragment";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
     private FragmentEventsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,

@@ -13,9 +13,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import app.outofthenest.R;
+
+
+/**
+ * Communicate with Google Firabase to manage users
+ */
+
 public class AuthenticationRepository {
 
-    private static final String TAG = "AuthenticationRepo";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
     private Application app;
     private MutableLiveData<FirebaseUser> firebaseUserMLData;
     private MutableLiveData<Boolean> userLoggedMLData;
@@ -58,14 +66,14 @@ public class AuthenticationRepository {
         }
     }
 
-    // Register with full name
+    // Register new user
     public void register(String email, String pass, String fullName) {
-        Log.i(TAG, "Attempting to register user with email: " + email);
+//        Log.i(TAG, "Attempting to register user with email: " + email);
         auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Log.i(TAG, "Register - Success!");
+//                    Log.i(TAG, "Register - Success!");
                     FirebaseUser user = auth.getCurrentUser();
 
                     // Update user profile with full name
@@ -75,24 +83,26 @@ public class AuthenticationRepository {
                                 .build();
 
                         user.updateProfile(profileUpdates).addOnCompleteListener(profileTask -> {
-                            if (profileTask.isSuccessful()) {
-                                Log.i(TAG, "User profile updated with name: " + fullName);
-                            } else {
-                                Log.e(TAG, "Failed to update profile: " + profileTask.getException());
-                            }
+                            //TO Debug
+//                            if (profileTask.isSuccessful()) {
+//                                Log.i(TAG, "User profile updated with name: " + fullName);
+//                            } else {
+//                                Log.e(TAG, "Failed to update profile: " + profileTask.getException());
+//                            }
                             firebaseUserMLData.postValue(user);
                         });
                     } else {
                         firebaseUserMLData.postValue(user);
                     }
                 } else {
-                    Log.i(TAG, "Register - Fail!" + task.getException());
+//                    Log.i(TAG, "Register - Fail!" + task.getException());
                     setErrorMessage(task.getException().getMessage());
                 }
             }
         });
     }
 
+    //Sing in process
     public void login(String email, String pass) {
         auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -102,8 +112,8 @@ public class AuthenticationRepository {
                     firebaseUserMLData.postValue(user);
 
                     if (user != null) {
-                        Log.i(TAG, "Login successful for user: " + user.getDisplayName());
-                        Log.i(TAG, "User ID: " + user.getUid());
+//                        Log.i(TAG, "Login successful for user: " + user.getDisplayName());
+//                        Log.i(TAG, "User ID: " + user.getUid());
                         refreshUserToken();
                     }
                 } else {
@@ -120,11 +130,11 @@ public class AuthenticationRepository {
             user.getIdToken(true).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     String token = task.getResult().getToken();
-                    Log.i(TAG, "Token retrieved successfully");
+//                    Log.i(TAG, "Token retrieved successfully");
                     userTokenMLData.postValue(token);
                 } else {
-                    Log.e(TAG, "Failed to get token: " + task.getException());
-                    setErrorMessage("Failed to get authentication token");
+//                    Log.e(TAG, "Failed to get token: " + task.getException());
+                    setErrorMessage(app.getString(R.string.error_user_token));
                 }
             });
         }

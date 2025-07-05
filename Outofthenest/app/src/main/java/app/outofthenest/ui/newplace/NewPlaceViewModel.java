@@ -15,7 +15,8 @@ import app.outofthenest.repository.PlaceRepository;
 
 public class NewPlaceViewModel extends AndroidViewModel {
 
-    private static final String TAG = "NewPlaceViewModel";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
     private PlaceRepository placeRepository;
     private MutableLiveData<Place> createdPlace;
     private MutableLiveData<Boolean> isLoading;
@@ -39,10 +40,10 @@ public class NewPlaceViewModel extends AndroidViewModel {
                 isLoading.setValue(false);
                 if (result != null) {
                     createdPlace.setValue(result);
-                    Log.i(TAG, "Created: " + place.getTitle());
+//                    Log.i(TAG, "Created: " + place.getTitle());
                 } else {
                     errorMessage.setValue(getApplication().getString(R.string.txt_place_creation_error));
-                    Log.i(TAG, "Error: " + place.getTitle());
+//                    Log.i(TAG, "Error: " + place.getTitle());
                 }
             }
         });

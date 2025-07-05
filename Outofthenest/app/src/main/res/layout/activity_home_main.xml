@@ -7,9 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".HomeMainActivity">
-
-
+    tools:context=".Activities.HomeMainActivity">
 
         <ImageView
             android:id="@+id/imageView2"
@@ -26,7 +24,7 @@
             style="@style/TextSubtitleLight"
             android:layout_marginStart="50dp"
             android:layout_marginTop="50dp"
-            android:text="@string/welcome_to"
+            android:text="@string/txt_welcome_to"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

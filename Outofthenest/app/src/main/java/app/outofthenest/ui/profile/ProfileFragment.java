@@ -13,14 +13,15 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.util.Objects;
 
-import app.outofthenest.HomeMainActivity;
+import app.outofthenest.Activities.HomeMainActivity;
 import app.outofthenest.R;
 import app.outofthenest.databinding.FragmentProfileBinding;
 import app.outofthenest.ui.authentication.AuthenticationViewModel;
 
 public class ProfileFragment extends Fragment {
 
-//    private static final String TAG = "ProfileFragment";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
     private FragmentProfileBinding binding;
     private AuthenticationViewModel viewModel;
 

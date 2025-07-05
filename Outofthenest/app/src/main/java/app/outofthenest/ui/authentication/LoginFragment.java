@@ -15,13 +15,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.auth.FirebaseUser;
 
-import app.outofthenest.MainActivity;
+import app.outofthenest.Activities.MainActivity;
 import app.outofthenest.R;
 import app.outofthenest.databinding.FragmentLoginBinding;
 
 public class LoginFragment extends Fragment {
 
-    private static final String TAG = "LoginFragment";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
     private FragmentLoginBinding loginBinding;
     private AuthenticationViewModel viewModel;
     private boolean buttonPressed = false;
@@ -70,7 +71,7 @@ public class LoginFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getContext(), getString(R.string.txt_login_failed), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.error_login), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -87,12 +88,12 @@ public class LoginFragment extends Fragment {
                 String password = loginBinding.inpPassword.getText().toString();
 
                 if(email.length() < 3 || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(getContext(), getString(R.string.txt_invalid_email), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.invalid_email), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(password.isEmpty() || password.length() < 6) {
-                    Toast.makeText(getContext(), getString(R.string.txt_invalid_password), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.invalid_password), Toast.LENGTH_SHORT).show();
                     return;
                 }
 

@@ -13,7 +13,9 @@ import app.outofthenest.databinding.ActivityAuthenticationBinding;
 
 public class AuthenticationActivity extends AppCompatActivity {
 
-    private static final String TAG = "AuthenticationActivity";
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
+
     ActivityAuthenticationBinding authenticationBinding;
 
     @Override
@@ -25,16 +27,15 @@ public class AuthenticationActivity extends AppCompatActivity {
         init();
     }
 
-
     private void init() {
         setupTabs();
     }
-
 
     private void setupTabs(){
         AuthenticationPagerAdapter adapter = new AuthenticationPagerAdapter(this, this);
         authenticationBinding.viewPagerAuthentication.setAdapter(adapter);
 
+        //Set title for the activity
         new TabLayoutMediator(
                 authenticationBinding.tabLayoutAuthentication,
                 authenticationBinding.viewPagerAuthentication,
@@ -44,6 +45,7 @@ public class AuthenticationActivity extends AppCompatActivity {
                 }
         ).attach();
 
+        // Set the initial tab
         int action = getIntent().getIntExtra("action", -1);
 
         if (action == R.string.btn_get_started) {

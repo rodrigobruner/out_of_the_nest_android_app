@@ -11,6 +11,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class EventsRepository {
+
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
     private EventsApi eventsApi;
 
     public EventsRepository() {

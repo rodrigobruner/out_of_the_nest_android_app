@@ -8,16 +8,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import app.outofthenest.R;
-import app.outofthenest.models.Reviews;
+import app.outofthenest.models.Review;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Adapter to deal with review in the Place detail screen
+ */
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewViewHolder> {
-    private List<Reviews> reviewsList;
 
-    public ReviewsAdapter(List<Reviews> reviewsList) {
-        this.reviewsList = reviewsList;
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
+
+    private List<Review> reviewList;
+
+    public ReviewsAdapter(List<Review> reviewList) {
+        this.reviewList = reviewList;
     }
 
     @NonNull
@@ -30,7 +37,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
 
     @Override
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
-        Reviews review = reviewsList.get(position);
+        Review review = reviewList.get(position);
         holder.txvReviewTitle.setText(review.getTitle());
         holder.txvDescription.setText(review.getDescription());
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
@@ -40,7 +47,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
 
     @Override
     public int getItemCount() {
-        return reviewsList.size();
+        return reviewList.size();
     }
 
     static class ReviewViewHolder extends RecyclerView.ViewHolder {
