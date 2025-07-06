@@ -43,6 +43,7 @@
     <string name="error_user_token">Failed to get authentication token</string>
 
     <!-- Maps screen -->
+    <string name="txt_your_location">Your Location</string>
     <string name="btn_add_place">Add Place</string>
     <string name="btn_go_to_place_now">Go</string>
     <string name="error_maps_not_found">Google Maps app not found.</string>
@@ -92,6 +93,41 @@
         <item>Family friendly</item>
         <item>Parking</item>
         <item>Wi-fi</item>
+    </string-array>
+
+    <string-array name="list_target_audience">
+        <!-- Age groups -->
+        <item>Babies (0-2 years)</item>
+        <item>Early childhood (3-5 years)</item>
+        <item>Children (6-9 years)</item>
+        <item>Pre-teens (10-12 years)</item>
+        <item>Teenagers (13-17 years)</item>
+        <item>Adults</item>
+        <item>Seniors</item>
+        <item>All ages</item>
+
+        <!-- Pets -->
+        <item>Pets allowed</item>
+        <item>Pets not allowed</item>
+        <item>Pets event</item>
+
+
+        <!-- Gender -->
+        <item>Boys</item>
+        <item>Girls</item>
+        <item>All genders</item>
+
+        <!-- Interests -->
+        <item>Arts &amp; Crafts</item>
+        <item>Theater</item>
+        <item>Storytelling</item>
+        <item>Music</item>
+        <item>Outdoor Activities</item>
+        <item>Sports</item>
+        <item>Games &amp; Technology</item>
+        <item>Education</item>
+        <item>Celebrations &amp; Parties</item>
+        <item>Other</item>
     </string-array>
 
     <!-- Places screen -->

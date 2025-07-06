@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import app.outofthenest.R;
-import app.outofthenest.databinding.FragmentPlaceCardBinding;
-import app.outofthenest.models.Place;
 
 
 public class PlaceCardFragment extends Fragment {
@@ -25,6 +23,6 @@ public class PlaceCardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_place_card, container, false);
+        return inflater.inflate(R.layout.card_place, container, false);
     }
 }

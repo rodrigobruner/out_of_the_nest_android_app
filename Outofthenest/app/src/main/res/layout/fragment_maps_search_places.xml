@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:visibility="visible"
-                tools:listitem="@layout/fragment_place_card"/>
+                tools:listitem="@layout/card_place"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

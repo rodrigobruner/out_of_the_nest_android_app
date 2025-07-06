@@ -2,10 +2,12 @@ package app.outofthenest.repository;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import java.util.ArrayList;
 import java.util.List;
 import app.outofthenest.api.ApiService;
 import app.outofthenest.api.EventsApi;
-import app.outofthenest.models.Events;
+import app.outofthenest.models.Event;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,45 +22,45 @@ public class EventsRepository {
         eventsApi = ApiService.getRetrofit().create(EventsApi.class);
     }
 
-    public LiveData<Events> createEvent(Events event) {
-        MutableLiveData<Events> data = new MutableLiveData<>();
-        eventsApi.createEvent(event).enqueue(new Callback<Events>() {
+    public LiveData<Event> createEvent(Event event) {
+        MutableLiveData<Event> data = new MutableLiveData<>();
+        eventsApi.createEvent(event).enqueue(new Callback<Event>() {
             @Override
-            public void onResponse(Call<Events> call, Response<Events> response) {
+            public void onResponse(Call<Event> call, Response<Event> response) {
                 data.setValue(response.body());
             }
             @Override
-            public void onFailure(Call<Events> call, Throwable t) {
+            public void onFailure(Call<Event> call, Throwable t) {
                 data.setValue(null);
             }
         });
         return data;
     }
 
-    public LiveData<List<Events>> searchEvents(double lat, double lng, double radius, String startDate, String endDate) {
-        MutableLiveData<List<Events>> data = new MutableLiveData<>();
-        eventsApi.searchEvents(lat, lng, radius, startDate, endDate).enqueue(new Callback<List<Events>>() {
+    public LiveData<List<Event>> searchEvents(double lat, double lng, double radius, String startDate, String endDate, ArrayList<String> targetAudience) {
+        MutableLiveData<List<Event>> data = new MutableLiveData<>();
+        eventsApi.searchEvents(lat, lng, radius, startDate, endDate, targetAudience).enqueue(new Callback<List<Event>>() {
             @Override
-            public void onResponse(Call<List<Events>> call, Response<List<Events>> response) {
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 data.setValue(response.body());
             }
             @Override
-            public void onFailure(Call<List<Events>> call, Throwable t) {
+            public void onFailure(Call<List<Event>> call, Throwable t) {
                 data.setValue(null);
             }
         });
         return data;
     }
 
-    public LiveData<List<Events>> getEventsByDate(String date) {
-        MutableLiveData<List<Events>> data = new MutableLiveData<>();
-        eventsApi.getEventsByDate(date).enqueue(new Callback<List<Events>>() {
+    public LiveData<List<Event>> getEventsByDate(String date) {
+        MutableLiveData<List<Event>> data = new MutableLiveData<>();
+        eventsApi.getEventsByDate(date).enqueue(new Callback<List<Event>>() {
             @Override
-            public void onResponse(Call<List<Events>> call, Response<List<Events>> response) {
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 data.setValue(response.body());
             }
             @Override
-            public void onFailure(Call<List<Events>> call, Throwable t) {
+            public void onFailure(Call<List<Event>> call, Throwable t) {
                 data.setValue(null);
             }
         });

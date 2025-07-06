@@ -38,7 +38,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     @Override
     public PlaceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_place_card, parent, false);
+                .inflate(R.layout.card_place, parent, false);
         return new PlaceViewHolder(view);
     }
 
