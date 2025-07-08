@@ -197,4 +197,9 @@ public class AuthenticationRepository {
     public void setErrorMessage(String message) {
         errorMessageMLData.postValue(message);
     }
+
+    public String getUserEmail() {
+        FirebaseUser user = auth.getCurrentUser();
+        return (user != null) ? user.getEmail() : null;
+    }
 }

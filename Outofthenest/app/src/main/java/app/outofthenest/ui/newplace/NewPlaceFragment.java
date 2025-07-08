@@ -234,7 +234,7 @@ public class NewPlaceFragment extends Fragment {
 
     private void setupTagsRecyclerView() {
         List<String> availableTags = getAvailableTags();
-        tagsAdapter = new TagsAdapter(availableTags);
+        tagsAdapter = new TagsAdapter(availableTags, "PLACE");
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 getContext(),
                 LinearLayoutManager.HORIZONTAL,

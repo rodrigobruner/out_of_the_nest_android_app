@@ -57,7 +57,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
         ReviewViewHolder(@NonNull View itemView) {
             super(itemView);
             txvReviewTitle = itemView.findViewById(R.id.txvReviewTitle);
-            txvDescription = itemView.findViewById(R.id.txvDescription);
+            txvDescription = itemView.findViewById(R.id.txv_description);
             txvDateTime = itemView.findViewById(R.id.txvDateTime);
             ratingBar = itemView.findViewById(R.id.reviewRating);
         }

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import app.outofthenest.Activities.PlacesActivity;
+import app.outofthenest.ui.place.PlacesActivity;
 import app.outofthenest.R;
 import app.outofthenest.adapters.PlaceAdapter;
 import app.outofthenest.adapters.TagsAdapter;
@@ -51,7 +51,7 @@ public class MapsSearchPlacesFragment extends Fragment {
     }
 
     private void setupPlacesRecyclerView() {
-        placeAdapter = new PlaceAdapter(new ArrayList<>());
+        placeAdapter = new PlaceAdapter(getContext(), new ArrayList<>());
         binding.placesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.placesRecyclerView.setAdapter(placeAdapter);
         setPlaceClickListeners();

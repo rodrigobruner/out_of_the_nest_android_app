@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.auth.FirebaseUser;
 
-import app.outofthenest.Activities.MainActivity;
+import app.outofthenest.ui.maps.MainActivity;
 import app.outofthenest.R;
 import app.outofthenest.databinding.FragmentLoginBinding;
 

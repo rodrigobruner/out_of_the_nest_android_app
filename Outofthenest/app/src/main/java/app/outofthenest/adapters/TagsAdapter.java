@@ -1,5 +1,6 @@
 package app.outofthenest.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
@@ -8,6 +9,7 @@ import com.google.android.material.chip.Chip;
 import java.util.ArrayList;
 import java.util.List;
 import app.outofthenest.R;
+import app.outofthenest.utils.TagIconMap;
 
 /**
  * Adapter to deal with Tags list
@@ -20,6 +22,8 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
 
     private List<String> tags;
 
+    private String tagCategory = "NO";
+
     private List<String> selectedTags;
 
     //Listener
@@ -30,6 +34,12 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
 
     public TagsAdapter(List<String> tags) {
         this.tags = tags;
+        this.selectedTags = new ArrayList<>();
+    }
+
+    public TagsAdapter(List<String> tags, String tagCategory) {
+        this.tags = tags;
+        this.tagCategory = tagCategory.toUpperCase();
         this.selectedTags = new ArrayList<>();
     }
 
@@ -53,6 +63,11 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
         holder.chip.setOnCheckedChangeListener(null);
         holder.chip.setChecked(selectedTags.contains(tag));
         holder.chip.setEnabled(isSelectionEnabled);
+
+        if(!tagCategory.equals("NO")) {
+            Log.i(TAG, "Tag category: " + tagCategory + "position: " + position);
+            holder.chip.setChipIconResource(TagIconMap.getTagIconMap(position, tagCategory));
+        }
 
         if (isSelectionEnabled) {
             holder.chip.setOnCheckedChangeListener((compoundButton, isChecked) -> {

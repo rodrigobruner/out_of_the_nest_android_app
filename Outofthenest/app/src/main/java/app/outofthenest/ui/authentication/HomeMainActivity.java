@@ -1,4 +1,4 @@
-package app.outofthenest.Activities;
+package app.outofthenest.ui.authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,10 +6,9 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import app.outofthenest.ui.maps.MainActivity;
 import app.outofthenest.R;
 import app.outofthenest.databinding.ActivityHomeMainBinding;
-import app.outofthenest.ui.authentication.AuthenticationActivity;
-import app.outofthenest.ui.authentication.AuthenticationViewModel;
 
 
 public class HomeMainActivity extends AppCompatActivity {

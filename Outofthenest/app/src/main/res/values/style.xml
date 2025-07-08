@@ -110,15 +110,31 @@
         <item name="android:fontFamily">@font/poppins_semi_bold</item>
     </style>
 
+    <style name="DatePickerDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/blue_800</item>
+        <item name="colorPrimary">@color/blue_800</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/DatePickerDialogButton</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/DatePickerDialogButton</item>
+    </style>
+
+    <style name="DatePickerDialogButton" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/blue_800</item>
+    </style>
+
+    <style name="CircleImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
     <style name="Email" parent="TextField">
         <item name="endIconMode">clear_text</item>
-        <item name="startIconDrawable">@drawable/ic_email</item>
+        <item name="startIconDrawable">@drawable/ic_inp_email</item>
         <item name="android:inputType">textEmailAddress</item>
     </style>
 
     <style name="Password" parent="TextField">
         <item name="endIconMode">clear_text</item>
-        <item name="startIconDrawable">@drawable/ic_password2</item>
+        <item name="startIconDrawable">@drawable/ic_inp_password</item>
         <item name="android:inputType">textPassword</item>
     </style>
 

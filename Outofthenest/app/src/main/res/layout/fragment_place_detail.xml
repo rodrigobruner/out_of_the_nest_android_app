@@ -43,12 +43,41 @@
             android:layout_height="wrap_content"
             android:text="@string/txt_places_address" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/txv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutAddress" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_tags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txv_description"/>
+
+    <Button
+        android:id="@+id/btnGoToPlace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="@string/btn_go_to_place"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
     <LinearLayout
         android:id="@+id/linearLayoutDistance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutAddress">
+        app:layout_constraintTop_toBottomOf="@+id/btnGoToPlace">
         <TextView
             android:id="@+id/txvDistance"
             android:layout_weight="1"
@@ -72,34 +101,6 @@
         />
 
     </LinearLayout>
-    <TextView
-        android:id="@+id/txvDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutDistance" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_tags"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:clipToPadding="false"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txvDescription"/>
-
-    <Button
-        android:id="@+id/btnGoToPlace"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:text="@string/btn_go_to_place"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

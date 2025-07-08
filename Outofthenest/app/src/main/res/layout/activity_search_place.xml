@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".Activities.SearchPlaceActivity">
+    tools:context=".ui.place.SearchPlaceActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/search_input_layout"

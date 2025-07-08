@@ -55,7 +55,6 @@ public class PlaceDetailFragment extends Fragment {
             placeBinding.txvStatus.setText(place.getStatus());
             placeBinding.txvDescription.setText(place.getDescription());
             setupTagsRecyclerView(place.getTags());
-
         }
     }
 
@@ -70,7 +69,7 @@ public class PlaceDetailFragment extends Fragment {
 
 
     private void setupTagsRecyclerView(List<String> availableTags) {
-        tagsAdapter = new TagsAdapter(availableTags);
+        tagsAdapter = new TagsAdapter(availableTags, "PLACE");
         tagsAdapter.setSelectionEnabled(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 getContext(),

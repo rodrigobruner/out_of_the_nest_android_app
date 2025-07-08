@@ -5,6 +5,7 @@
     android:id="@+id/activity_authentication"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.authentication.AuthenticationActivity">
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -16,13 +17,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:background="?attr/colorPrimary"
-                android:padding="20dp"
-                android:id="@+id/backgroundArea">
-            </FrameLayout>
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayoutAuthentication"
                 style="@style/TabMenu"

@@ -1,11 +1,10 @@
-package app.outofthenest.Activities;
+package app.outofthenest.ui.newplace;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import app.outofthenest.R;
-import app.outofthenest.ui.newplace.NewPlaceFragment;
 
 public class NewPlaceActivity extends AppCompatActivity {
 

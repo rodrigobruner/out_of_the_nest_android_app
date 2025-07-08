@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:padding="10dp"
+    tools:context=".ui.events.EventActivity">
+
+    <TextView
+        android:id="@+id/txv_event_title"
+        style="@style/TextH1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="65dp"
+        tools:layout_editor_absoluteY="20dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/imgCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_address" />
+
+        <TextView
+            android:id="@+id/txv_event_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_places_address" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLayoutAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/imgAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_address" />
+
+        <TextView
+            android:id="@+id/txv_event_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_places_address" />
+
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/txv_event_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_tags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txv_description"/>
+
+</LinearLayout>

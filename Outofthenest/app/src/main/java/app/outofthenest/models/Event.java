@@ -1,9 +1,10 @@
 package app.outofthenest.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Event {
+public class Event  implements Serializable {
 
     String id;
 
@@ -13,17 +14,17 @@ public class Event {
 
     Date datetime;
 
-    String place;
+    Place place;
 
     ArrayList<String> targetAudience;
 
 
-    public Event(String id, String title, String description, Date datetime, String placeId, ArrayList<String> targetAudience) {
+    public Event(String id, String title, String description, Date datetime, Place place, ArrayList<String> targetAudience) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.datetime = datetime;
-        this.place = placeId;
+        this.place = place;
         this.targetAudience = targetAudience;
     }
 
@@ -67,11 +68,11 @@ public class Event {
         this.datetime = datetime;
     }
 
-    public String getPlace() {
+    public Place getPlace() {
         return place;
     }
 
-    public void setPlace(String place) {
+    public void setPlace(Place place) {
         this.place = place;
     }
 

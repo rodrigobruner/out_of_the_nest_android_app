@@ -8,6 +8,7 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="grey">#FFD2D5D8</color>
 
     <!-- Custom colors for the app -->
     <color name="blue_1000">#FF03045E</color>

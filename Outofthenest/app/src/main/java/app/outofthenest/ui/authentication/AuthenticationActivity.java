@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -24,6 +26,7 @@ public class AuthenticationActivity extends AppCompatActivity {
         authenticationBinding = ActivityAuthenticationBinding.inflate(getLayoutInflater());
         setContentView(authenticationBinding.getRoot());
         EdgeToEdge.enable(this);
+
         init();
     }
 

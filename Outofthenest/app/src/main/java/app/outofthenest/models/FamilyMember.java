@@ -1,27 +1,29 @@
 package app.outofthenest.models;
 
-public class FamilyMember {
-    private FamilyMemberType type;
-    private int age;
+import java.util.Date;
 
-    public FamilyMember(FamilyMemberType type, int age) {
+public class FamilyMember {
+    private String type;
+    private Date birth;
+
+    public FamilyMember(String type, Date birth) {
         this.type = type;
-        this.age = age;
+        this.birth = birth;
     }
 
-    public FamilyMemberType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(FamilyMemberType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public int getAge() {
-        return age;
+    public Date getBirth() {
+        return birth;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setBirth(Date birth) {
+        this.birth = birth;
     }
 }

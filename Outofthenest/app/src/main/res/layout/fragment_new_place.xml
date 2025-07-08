@@ -21,7 +21,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Headline"
-                android:text="@string/new_place_title"/>
+                android:text="@string/new_place_title"
+                android:drawableStart="@drawable/ic_add_location"/>
 
 
 

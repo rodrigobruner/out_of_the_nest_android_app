@@ -4,19 +4,18 @@ import java.util.Date;
 
 public class Notification {
     private String id;
-    private String userId;
+    private String title;
     private String message;
-    private String type; // "EVENT", "REVIEW", "GENERAL"
-    private Date scheduledTime;
+    private String type; // "EVENT"
+    private Date date;
     private boolean read;
 
-
-    public Notification(String id, String userId, String message, String type, Date scheduledTime, boolean read) {
+    public Notification(String id, String title, String message, String type, Date date, boolean read) {
         this.id = id;
-        this.userId = userId;
+        this.title = title;
         this.message = message;
         this.type = type;
-        this.scheduledTime = scheduledTime;
+        this.date = date;
         this.read = read;
     }
 
@@ -28,12 +27,12 @@ public class Notification {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getTitle() {
+        return title;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getMessage() {
@@ -52,12 +51,12 @@ public class Notification {
         this.type = type;
     }
 
-    public Date getScheduledTime() {
-        return scheduledTime;
+    public Date getDate() {
+        return date;
     }
 
-    public void setScheduledTime(Date scheduledTime) {
-        this.scheduledTime = scheduledTime;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public boolean isRead() {

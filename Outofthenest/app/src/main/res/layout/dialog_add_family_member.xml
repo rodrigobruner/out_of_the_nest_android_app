@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:padding="16dp"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <Spinner
+        android:id="@+id/spr_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"/>
+
+    <Button
+        android:id="@+id/btn_pick_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pick Date" />
+
+    <TextView
+        android:id="@+id/txv_birth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No date selected" />
+
+</LinearLayout>

@@ -67,4 +67,8 @@ public class AuthenticationViewModel extends AndroidViewModel {
         repository.refreshUserToken();
     }
 
+    public String getEmail() {
+        return repository.getUserEmail();
+    }
+
 }

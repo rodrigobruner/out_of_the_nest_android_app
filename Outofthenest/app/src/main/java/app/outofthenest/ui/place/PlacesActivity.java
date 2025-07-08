@@ -1,4 +1,4 @@
-package app.outofthenest.Activities;
+package app.outofthenest.ui.place;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,19 +7,19 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import app.outofthenest.R;
 import app.outofthenest.adapters.PlacePagerAdapter;
-import app.outofthenest.databinding.ActivityPlacesBinding;
+import app.outofthenest.databinding.ActivityPlaceBinding;
 import app.outofthenest.models.Place;
 
 public class PlacesActivity extends AppCompatActivity {
 
-    private ActivityPlacesBinding placeBinding;
+    private ActivityPlaceBinding placeBinding;
 
     private Place place;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        placeBinding = ActivityPlacesBinding.inflate(getLayoutInflater());
+        placeBinding = ActivityPlaceBinding.inflate(getLayoutInflater());
         setContentView(placeBinding.getRoot());
         init();
     }

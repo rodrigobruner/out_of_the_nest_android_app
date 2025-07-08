@@ -2,7 +2,6 @@ package app.outofthenest.ui.maps;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +13,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -34,9 +35,9 @@ import com.google.maps.model.DirectionsRoute;
 import java.util.List;
 
 import app.outofthenest.BuildConfig;
-import app.outofthenest.Activities.NewPlaceActivity;
+import app.outofthenest.ui.newplace.NewPlaceActivity;
 import app.outofthenest.R;
-import app.outofthenest.Activities.SearchPlaceActivity;
+import app.outofthenest.ui.place.SearchPlaceActivity;
 import app.outofthenest.databinding.FragmentMapsBinding;
 import app.outofthenest.models.Place;
 import app.outofthenest.utils.LocationProvider;

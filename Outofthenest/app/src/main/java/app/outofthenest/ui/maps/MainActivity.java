@@ -1,7 +1,8 @@
-package app.outofthenest.Activities;
+package app.outofthenest.ui.maps;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toolbar;
 
 import com.google.android.libraries.places.api.Places;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -17,7 +18,6 @@ import app.outofthenest.BuildConfig;
 import app.outofthenest.R;
 import app.outofthenest.databinding.ActivityMainBinding;
 import app.outofthenest.models.Place;
-import app.outofthenest.ui.maps.MapViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mainBinding.getRoot());
         mapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
+
         init();
     }
 
