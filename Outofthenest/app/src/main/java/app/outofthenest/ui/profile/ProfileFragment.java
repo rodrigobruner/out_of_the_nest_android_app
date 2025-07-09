@@ -74,12 +74,11 @@ public class ProfileFragment extends Fragment {
 
 
     public void setUpActionBar() {
-        // Set up the action bar with a custom title and icon
         ActionBar actionbar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if(actionbar != null) {
             actionbar.setTitle(R.string.txt_profile_bar_title);
             actionbar.setDisplayShowHomeEnabled(true);
-            actionbar.setLogo(R.drawable.ic_menu_profile); // Replace with your icon
+            actionbar.setLogo(R.drawable.ic_menu_profile);
             actionbar.setDisplayUseLogoEnabled(true);
         }
     }

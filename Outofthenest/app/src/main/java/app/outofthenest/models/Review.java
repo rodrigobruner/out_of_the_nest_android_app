@@ -9,7 +9,6 @@ public class Review {
     private int rating;
     private Date datetime;
     private String userId;
-
     private String placeId;
 
     public Review(String id, String title, String description, int rating, Date datetime, String userId, String placeId) {
@@ -68,5 +67,13 @@ public class Review {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 }

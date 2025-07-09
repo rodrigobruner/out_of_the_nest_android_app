@@ -42,7 +42,7 @@ public class Place implements Serializable {
     // Date and time created
     @SerializedName("datetime")
     @Expose
-    private String datetime;
+    private Date datetime;
 
     // Use when getting places from the API
     @SerializedName("distance")
@@ -87,7 +87,7 @@ public class Place implements Serializable {
     @Expose
     private ArrayList<String> tags;
 
-    public Place(int id, String title, String description, String type, String address, String datetime, String distance, String status, float rating, double latitude, double longitude, float delta, ArrayList<String> tags) {
+    public Place(int id, String title, String description, String type, String address, Date datetime, String distance, String status, float rating, double latitude, double longitude, float delta, ArrayList<String> tags) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -114,10 +114,10 @@ public class Place implements Serializable {
         this.tags = tags;
 
         // Current date and time
-        Date currentDate = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        String datetime = sdf.format(currentDate);
-        this.datetime = datetime;
+//        Date currentDate = new Date();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+//        String datetime = sdf.format(currentDate);
+        this.datetime = new Date();
         //Default
        this.distance = "";
         this.status = "";
@@ -166,11 +166,11 @@ public class Place implements Serializable {
         this.address = address;
     }
 
-    public String getDatetime() {
+    public Date getDatetime() {
         return datetime;
     }
 
-    public void setDatetime(String datetime) {
+    public void setDatetime(Date datetime) {
         this.datetime = datetime;
     }
 

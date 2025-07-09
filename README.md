@@ -12,3 +12,10 @@ We will develop a family-friendly app to help parents find safe and enjoyable pl
 <p align="center">
   <img src="images/screen_recording.gif" alt="See what stage we are at" width="50%">
 </p>
+
+
+
+Add instructions about how to config this files.
+
+JSON FILE
+local.proprietis

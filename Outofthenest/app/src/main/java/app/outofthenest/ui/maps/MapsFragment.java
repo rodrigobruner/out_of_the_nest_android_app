@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -16,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -35,7 +39,7 @@ import com.google.maps.model.DirectionsRoute;
 import java.util.List;
 
 import app.outofthenest.BuildConfig;
-import app.outofthenest.ui.newplace.NewPlaceActivity;
+import app.outofthenest.ui.place.newplace.NewPlaceActivity;
 import app.outofthenest.R;
 import app.outofthenest.ui.place.SearchPlaceActivity;
 import app.outofthenest.databinding.FragmentMapsBinding;
@@ -59,6 +63,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                     Toast.makeText(getContext(), getString(R.string.permission_location_denied), Toast.LENGTH_SHORT).show();
                 }
             });
+
 
     @Nullable
     @Override
@@ -99,13 +104,39 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         init();
     }
 
+
     private void init() {
+        setUpActionBar();
         observeDestination();
-        setAddButtonListener();
+//        setAddButtonListener();
         setSearchButtonListener();
         setCancelButtonListener();
         setGoButtonListener();
         initMap();
+    }
+
+    public void setUpActionBar() {
+        ActionBar actionbar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        if(actionbar != null) {
+            actionbar.setTitle(R.string.txt_maps_bar_title);
+            actionbar.setDisplayShowHomeEnabled(true);
+            actionbar.setLogo(R.drawable.ic_menu_maps);
+            actionbar.setDisplayUseLogoEnabled(true);
+
+            requireActivity().addMenuProvider(new MenuProvider() {
+                @Override
+                public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                    menuInflater.inflate(R.menu.add_button, menu);
+                }
+
+                @Override
+                public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                    Intent intent = new Intent(requireContext(), NewPlaceActivity.class);
+                    startActivity(intent);
+                    return false;
+                }
+            }, getViewLifecycleOwner());
+        }
     }
 
     private void initMap() {
@@ -222,12 +253,12 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    private void setAddButtonListener() {
-        binding.btnAddPlace.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), NewPlaceActivity.class);
-            startActivity(intent);
-        });
-    }
+//    private void setAddButtonListener() {
+//        binding.btnAddPlace.setOnClickListener(v -> {
+//            Intent intent = new Intent(requireContext(), NewPlaceActivity.class);
+//            startActivity(intent);
+//        });
+//    }
 
     private void setSearchButtonListener() {
         binding.btnSearchPlace.setOnClickListener(v -> {

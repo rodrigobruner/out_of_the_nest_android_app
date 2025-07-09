@@ -7,7 +7,7 @@
 
     <!--    <fragment-->
     <!--        android:id="@+id/maps_search_places_fragment"-->
-    <!--        android:name="app.outofthenest.ui.maps.MapsSearchPlacesFragment"-->
+    <!--        android:name="app.outofthenest.ui.maps.search.MapsSearchPlacesFragment"-->
     <!--        android:layout_width="match_parent"-->
     <!--        android:layout_height="wrap_content"-->
     <!--        app:layout_constraintBottom_toBottomOf="parent"-->
@@ -27,20 +27,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_add_place"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
-        android:contentDescription="@string/btn_add_place"
-        android:src="@drawable/ic_btn_add"
-        app:backgroundTint="?attr/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/navegationBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:strokeColor="?attr/colorOnPrimary"
-        app:strokeWidth="2dp"
-        app:tint="?attr/colorOnPrimary" />
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/btn_add_place"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:contentDescription="@string/btn_add_place"-->
+<!--        android:src="@drawable/ic_btn_add"-->
+<!--        app:backgroundTint="?attr/colorPrimary"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/navegationBar"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:strokeColor="?attr/colorOnPrimary"-->
+<!--        app:strokeWidth="2dp"-->
+<!--        app:tint="?attr/colorOnPrimary" />-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_search_place"

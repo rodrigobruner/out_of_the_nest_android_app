@@ -1,4 +1,4 @@
-package app.outofthenest.ui.newplace;
+package app.outofthenest.ui.place.review;
 
 import android.app.Application;
 import android.util.Log;
@@ -11,35 +11,42 @@ import androidx.lifecycle.Observer;
 
 import app.outofthenest.R;
 import app.outofthenest.models.Place;
+import app.outofthenest.models.Review;
 import app.outofthenest.repository.PlaceRepository;
+import app.outofthenest.repository.ReviewsRepository;
 
-public class NewPlaceViewModel extends AndroidViewModel {
+public class PlaceReviewViewModel extends AndroidViewModel {
 
     // To use Log.d(TAG, "message") for debugging
     String TAG = getClass().getSimpleName();
-    private PlaceRepository placeRepository;
-    private MutableLiveData<Place> createdPlace;
+    private ReviewsRepository reviewRepository;
+    private MutableLiveData<Review> createdReview;
     private MutableLiveData<Boolean> isLoading;
     private MutableLiveData<String> errorMessage;
 
-    public NewPlaceViewModel(@NonNull Application application) {
+    public PlaceReviewViewModel(@NonNull Application application) {
         super(application);
-        placeRepository = new PlaceRepository(application);
-        createdPlace = new MutableLiveData<>();
+        reviewRepository = new ReviewsRepository();
+        createdReview = new MutableLiveData<>();
         isLoading = new MutableLiveData<>(false);
         errorMessage = new MutableLiveData<>();
     }
 
-    public void createPlace(Place place) {
-        Log.i(TAG, "Creating place: " + place.getTitle());
+    public void createReview(Review review) {
+        Log.i(TAG, "Creating place: " + review.getDatetime());
         isLoading.setValue(true);
         errorMessage.setValue(null);
-        placeRepository.createPlace(place).observeForever(new Observer<Place>() {
+        reviewRepository.createReview(review.getTitle(),
+                                        review.getDescription(),
+                                        review.getRating(),
+                                        review.getUserId(),
+                                        review.getPlaceId()
+                                    ).observeForever(new Observer<Review>() {
             @Override
-            public void onChanged(Place result) {
+            public void onChanged(Review result) {
                 isLoading.setValue(false);
                 if (result != null) {
-                    createdPlace.setValue(result);
+                    createdReview.setValue(result);
 //                    Log.i(TAG, "Created: " + place.getTitle());
                 } else {
                     errorMessage.setValue(getApplication().getString(R.string.txt_place_creation_error));
@@ -49,8 +56,8 @@ public class NewPlaceViewModel extends AndroidViewModel {
         });
     }
 
-    public LiveData<Place> getCreatedPlace() {
-        return createdPlace;
+    public LiveData<Review> getCreatedreview() {
+        return createdReview;
     }
 
     public LiveData<Boolean> getIsLoading() {
@@ -65,7 +72,7 @@ public class NewPlaceViewModel extends AndroidViewModel {
         errorMessage.setValue(null);
     }
 
-    public void clearCreatedPlace() {
-        createdPlace.setValue(null);
+    public void clearCreatedReview() {
+        createdReview.setValue(null);
     }
 }

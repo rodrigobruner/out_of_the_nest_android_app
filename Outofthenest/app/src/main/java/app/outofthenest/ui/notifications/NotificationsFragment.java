@@ -51,11 +51,22 @@ public class NotificationsFragment extends Fragment {
     }
 
     private void init(){
+        setUpActionBar();
         setupRecyclerView();
         setupAuthenticationViewModel();
         getNotifications();
         setOnNotificationClickListener();
         setupSwipeToDelete();
+    }
+
+    public void setUpActionBar() {
+        ActionBar actionbar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        if(actionbar != null) {
+            actionbar.setTitle(R.string.txt_notification_bar_title);
+            actionbar.setDisplayShowHomeEnabled(true);
+            actionbar.setLogo(R.drawable.ic_menu_notifications);
+            actionbar.setDisplayUseLogoEnabled(true);
+        }
     }
 
     private void setupRecyclerView() {

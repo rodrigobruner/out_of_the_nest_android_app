@@ -11,16 +11,20 @@ public class EventsMoc {
 
 // In EventsMoc.java
     public static ArrayList<Event> getEvents() {
-        Place place1 = new Place(1, "Community Center", "A local community center for events.", "community", "123 Main St", "2024-07-01 10:00:00", "", "open", 4.5f, -23.0, -46.0, 0.0f, new ArrayList<>(Arrays.asList("family", "kids")));
-        Place place2 = new Place(2, "Art Studio", "A creative space for workshops.", "studio", "456 Art Ave", "2024-07-01 14:00:00", "", "open", 4.2f, -23.1, -46.1, 0.0f, new ArrayList<>(Arrays.asList("art", "children")));
-        Place place3 = new Place(3, "Sports Field", "Outdoor sports and activities.", "field", "789 Field Rd", "2024-07-01 09:30:00", "", "open", 4.0f, -23.2, -46.2, 0.0f, new ArrayList<>(Arrays.asList("sports", "teens")));
-        Place place4 = new Place(4, "Library", "Public library with storytelling sessions.", "library", "101 Book Ln", "2024-07-01 11:00:00", "", "open", 4.8f, -23.3, -46.3, 0.0f, new ArrayList<>(Arrays.asList("books", "all ages")));
-        Place place5 = new Place(5, "Senior Club", "Club for senior activities.", "club", "202 Golden Years Blvd", "2024-07-01 15:00:00", "", "open", 4.7f, -23.4, -46.4, 0.0f, new ArrayList<>(Arrays.asList("seniors", "music")));
-        Place place6 = new Place(6, "Tech Hub", "Technology and coding events.", "hub", "303 Code St", "2024-07-01 16:00:00", "", "open", 4.6f, -23.5, -46.5, 0.0f, new ArrayList<>(Arrays.asList("tech", "girls")));
-        Place place7 = new Place(7, "Adventure Park", "Outdoor adventure park.", "park", "404 Adventure Pkwy", "2024-07-01 13:00:00", "", "open", 4.3f, -23.6, -46.6, 0.0f, new ArrayList<>(Arrays.asList("adventure", "boys")));
-        Place place8 = new Place(8, "City Park", "Pet-friendly city park.", "park", "505 Picnic Dr", "2024-07-01 12:00:00", "", "open", 4.1f, -23.7, -46.7, 0.0f, new ArrayList<>(Arrays.asList("pets", "all ages")));
-        Place place9 = new Place(9, "Theater Hall", "Venue for theater performances.", "theater", "606 Stage Ave", "2024-07-01 19:00:00", "", "open", 4.9f, -23.8, -46.8, 0.0f, new ArrayList<>(Arrays.asList("theater", "adults")));
-        Place place10 = new Place(10, "Event Plaza", "Plaza for celebrations and parties.", "plaza", "707 Celebration Sq", "2024-07-01 17:00:00", "", "open", 4.4f, -23.9, -46.9, 0.0f, new ArrayList<>(Arrays.asList("celebration", "all")));
+
+        Date today = new Date();
+
+
+        Place place1 = new Place(1, "Community Center", "A local community center for events.", "community", "123 Main St", today, "", "open", 4.5f, -23.0, -46.0, 0.0f, new ArrayList<>(Arrays.asList("family", "kids")));
+        Place place2 = new Place(2, "Art Studio", "A creative space for workshops.", "studio", "456 Art Ave", today, "", "open", 4.2f, -23.1, -46.1, 0.0f, new ArrayList<>(Arrays.asList("art", "children")));
+        Place place3 = new Place(3, "Sports Field", "Outdoor sports and activities.", "field", "789 Field Rd", today, "", "open", 4.0f, -23.2, -46.2, 0.0f, new ArrayList<>(Arrays.asList("sports", "teens")));
+        Place place4 = new Place(4, "Library", "Public library with storytelling sessions.", "library", "101 Book Ln", today, "", "open", 4.8f, -23.3, -46.3, 0.0f, new ArrayList<>(Arrays.asList("books", "all ages")));
+        Place place5 = new Place(5, "Senior Club", "Club for senior activities.", "club", "202 Golden Years Blvd", today, "", "open", 4.7f, -23.4, -46.4, 0.0f, new ArrayList<>(Arrays.asList("seniors", "music")));
+        Place place6 = new Place(6, "Tech Hub", "Technology and coding events.", "hub", "303 Code St", today, "", "open", 4.6f, -23.5, -46.5, 0.0f, new ArrayList<>(Arrays.asList("tech", "girls")));
+        Place place7 = new Place(7, "Adventure Park", "Outdoor adventure park.", "park", "404 Adventure Pkwy", today, "", "open", 4.3f, -23.6, -46.6, 0.0f, new ArrayList<>(Arrays.asList("adventure", "boys")));
+        Place place8 = new Place(8, "City Park", "Pet-friendly city park.", "park", "505 Picnic Dr", today, "", "open", 4.1f, -23.7, -46.7, 0.0f, new ArrayList<>(Arrays.asList("pets", "all ages")));
+        Place place9 = new Place(9, "Theater Hall", "Venue for theater performances.", "theater", "606 Stage Ave", today, "", "open", 4.9f, -23.8, -46.8, 0.0f, new ArrayList<>(Arrays.asList("theater", "adults")));
+        Place place10 = new Place(10, "Event Plaza", "Plaza for celebrations and parties.", "plaza", "707 Celebration Sq", today, "", "open", 4.4f, -23.9, -46.9, 0.0f, new ArrayList<>(Arrays.asList("celebration", "all")));
 
         return new ArrayList<>(Arrays.asList(
                 new Event("1", "Baby Playdate", "A fun morning for babies and their parents.", new Date(2024-1900, 6, 15, 10, 0), place1, new ArrayList<>(Arrays.asList("Babies (0-2 years)", "Parents"))),

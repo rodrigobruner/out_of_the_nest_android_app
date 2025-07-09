@@ -17,7 +17,7 @@
             android:id="@+id/txvEventTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Event Title"
+            android:text="@string/txt_new_event_title"
             android:textAppearance="?attr/textAppearanceHeadline6"
             style="@style/TextH2" />
 
@@ -25,7 +25,7 @@
             android:id="@+id/txvEventDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Date"
+            android:text="@string/txt_new_event_date"
             android:textAppearance="?attr/textAppearanceBody2"
             android:paddingTop="4dp" />
 
@@ -33,7 +33,7 @@
             android:id="@+id/txvEventDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Event description goes here."
+            android:text="@string/txt_new_event_description"
             android:textAppearance="?attr/textAppearanceBody2"
             android:paddingTop="8dp" />
 
@@ -41,7 +41,7 @@
             android:id="@+id/txvEventAudience"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Target Audience"
+            android:text="@string/txt_new_event_audience"
             android:textAppearance="?attr/textAppearanceCaption"
             android:paddingTop="8dp"
             android:textColor="?android:attr/textColorSecondary" />

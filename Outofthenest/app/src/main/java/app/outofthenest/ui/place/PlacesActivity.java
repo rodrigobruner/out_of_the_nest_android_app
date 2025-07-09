@@ -12,6 +12,9 @@ import app.outofthenest.models.Place;
 
 public class PlacesActivity extends AppCompatActivity {
 
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
+
     private ActivityPlaceBinding placeBinding;
 
     private Place place;

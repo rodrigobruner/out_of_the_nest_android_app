@@ -1,5 +1,6 @@
-package app.outofthenest.ui.place;
+package app.outofthenest.ui.place.review;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,22 +11,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import app.outofthenest.adapters.ReviewsAdapter;
-import app.outofthenest.databinding.FragmentPlaceCommentsBinding;
+import app.outofthenest.databinding.FragmentPlaceReviewsBinding;
 import app.outofthenest.mocs.ReviewsMoc;
 import app.outofthenest.models.Place;
 import app.outofthenest.models.Review;
+import app.outofthenest.ui.maps.MainActivity;
 
-public class PlaceCommentsFragment extends Fragment {
+public class PlaceReviewFragment extends Fragment {
 
     // To use Log.d(TAG, "message") for debugging
     String TAG = getClass().getSimpleName();
 
-    private FragmentPlaceCommentsBinding placeCommentsBinding;
+    private FragmentPlaceReviewsBinding binding;
+
+
 
     private Place place;
 
@@ -33,36 +35,51 @@ public class PlaceCommentsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        placeCommentsBinding = placeCommentsBinding.inflate(inflater, container, false);
+        binding = binding.inflate(inflater, container, false);
 
         init();
-        return placeCommentsBinding.getRoot();
+        return binding.getRoot();
     }
 
     private void init(){
         setUpPlaceTitle();
         setUpRecyclerView();
+        setUpReviewButton();
     }
+
+
 
     private void setUpPlaceTitle() {
         if (getArguments() != null) {
             place = getArguments().getSerializable("place", Place.class);
-            placeCommentsBinding.txvPlacesTitle.setText(place.getTitle());
-            placeCommentsBinding.ratingBar.setRating(place.getRating());
+            binding.txvPlacesTitle.setText(place.getTitle());
+            binding.ratingBar.setRating(place.getRating());
         }
     }
 
     private void setUpRecyclerView() {
         List<Review> reviewList = getReviews();
         ReviewsAdapter adapter = new ReviewsAdapter(reviewList);
-        placeCommentsBinding.recyclerViewComments.setAdapter(adapter);
-        placeCommentsBinding.recyclerViewComments.setLayoutManager(
+        binding.recyclerViewComments.setAdapter(adapter);
+        binding.recyclerViewComments.setLayoutManager(
                 new LinearLayoutManager(getContext())
         );
     }
 
     private List<Review> getReviews() {
         return ReviewsMoc.getReviews();
+    }
+
+    private void setUpReviewButton(){
+        binding.btnAddReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), NewReviewActivity.class); // or the Activity hosting MapsFragment
+                intent.putExtra("destination", place);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
     }
 
 }

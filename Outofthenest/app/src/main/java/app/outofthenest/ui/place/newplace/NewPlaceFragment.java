@@ -1,7 +1,9 @@
-package app.outofthenest.ui.newplace;
+package app.outofthenest.ui.place.newplace;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -79,12 +81,23 @@ public class NewPlaceFragment extends Fragment {
 
     private void init() {
         showProgressBar(false);
+        setUpActionBar();
         cAddress = new PlaceAddress(null, 0.0, 0.0);
         setUpSpinner();
         setupCurrentLocationButton();
         setupTagsRecyclerView();
         setupObservers();
         setupSaveButton();
+    }
+
+    public void setUpActionBar() {
+        ActionBar actionbar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        if(actionbar != null) {
+            actionbar.setTitle(R.string.txt_event_bar_new_place);
+            actionbar.setDisplayShowHomeEnabled(true);
+            actionbar.setLogo(R.drawable.ic_add_location);
+            actionbar.setDisplayUseLogoEnabled(true);
+        }
     }
 
     private void initLocationPermissionLauncher() {

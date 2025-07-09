@@ -44,7 +44,18 @@ public class EventActivity extends AppCompatActivity {
 
 
     private void init() {
+        setUpActionBar();
         setUpEvent();
+    }
+
+    public void setUpActionBar() {
+        ActionBar actionbar = getSupportActionBar();
+        if(actionbar != null) {
+            actionbar.setTitle(R.string.txt_event_detail);
+            actionbar.setDisplayShowHomeEnabled(true);
+            actionbar.setLogo(R.drawable.ic_menu_event);
+            actionbar.setDisplayUseLogoEnabled(true);
+        }
     }
 
     private void setUpEvent() {

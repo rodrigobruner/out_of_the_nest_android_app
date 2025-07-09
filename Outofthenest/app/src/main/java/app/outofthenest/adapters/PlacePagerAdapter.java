@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import app.outofthenest.models.Place;
-import app.outofthenest.ui.place.PlaceCommentsFragment;
+import app.outofthenest.ui.place.review.PlaceReviewFragment;
 import app.outofthenest.ui.place.PlaceDetailFragment;
 
 /**
@@ -41,7 +41,7 @@ public class PlacePagerAdapter extends FragmentStateAdapter {
         if (position == 0) {
             fragment = new PlaceDetailFragment();
         } else {
-            fragment = new PlaceCommentsFragment();
+            fragment = new PlaceReviewFragment();
         }
         fragment.setArguments(args);
         return fragment;

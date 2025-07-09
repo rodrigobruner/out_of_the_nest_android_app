@@ -15,54 +15,31 @@
         style="@style/TextH1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
         tools:layout_editor_absoluteX="65dp"
-        tools:layout_editor_absoluteY="20dp" />
+        tools:layout_editor_absoluteY="20dp"
+        android:text="@string/txt_places_address"/>
 
-    <LinearLayout
-        android:id="@+id/linearLayoutDate"
+    <TextView
+        android:id="@+id/txv_event_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/imgCalendar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_address" />
+        android:text="@string/txt_places_address"
+        app:drawableStartCompat="@drawable/ic_menu_event"
+        app:drawableTint="@color/black"
+        />
 
-        <TextView
-            android:id="@+id/txv_event_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_places_address" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/linearLayoutAddress"
+    <TextView
+        android:id="@+id/txv_event_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/imgAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_address" />
+        android:text="@string/txt_places_address"
+        app:drawableStartCompat="@drawable/ic_address"
+        app:drawableTint="@color/black"/>
 
-        <TextView
-            android:id="@+id/txv_event_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_places_address" />
-
-
-    </LinearLayout>
     <TextView
         android:id="@+id/txv_event_description"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_tags"

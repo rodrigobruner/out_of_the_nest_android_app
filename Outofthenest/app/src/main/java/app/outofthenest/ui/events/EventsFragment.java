@@ -8,6 +8,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -17,6 +20,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -77,11 +81,34 @@ public class EventsFragment extends Fragment {
     }
 
     private void init(){
+        setUpActionBar();
         requestPermission();
         getUserLocation();
     }
 
+    public void setUpActionBar() {
+        ActionBar actionbar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        if(actionbar != null) {
+            actionbar.setTitle(R.string.txt_event_bar_title);
+            actionbar.setDisplayShowHomeEnabled(true);
+            actionbar.setLogo(R.drawable.ic_menu_event);
+            actionbar.setDisplayUseLogoEnabled(true);
 
+            requireActivity().addMenuProvider(new MenuProvider() {
+                @Override
+                public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                    menuInflater.inflate(R.menu.add_button, menu);
+                }
+
+                @Override
+                public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                    Intent intent = new Intent(requireContext(), NewEventActivity.class);
+                    startActivity(intent);
+                    return false;
+                }
+            }, getViewLifecycleOwner());
+        }
+    }
 
     // Deal with Location
     private void requestPermission() {

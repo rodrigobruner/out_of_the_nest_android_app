@@ -1,35 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".NewEventActivity">
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ui.events.NewEventActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:fitsSystemWindows="true"
-        >
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width = "match_parent"
-            android:layout_height = "?attr/actionBarSize" />
+  <EditText
+      android:id="@+id/inp_event_title"
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:hint="@string/txt_new_event_title"
+      android:autofillHints="@string/txt_new_event_title"
+      android:inputType="textCapSentences" />
 
-  </com.google.android.material.appbar.AppBarLayout>
+  <EditText
+      android:id="@+id/inp_event_description"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:inputType="textMultiLine"
+      android:gravity="top"
+      android:lines="8"
+      android:maxLines="10"
+      android:minLines="6"
+      android:scrollbars="vertical"
+      android:hint="@string/txt_rating_description"
+      android:autofillHints="@string/txt_rating_description"
+      />
 
-  <include layout="@layout/content_new_event"/>
+  <EditText
+      android:id="@+id/inp_event_address"
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:ems="10"
+      android:inputType="textCapSentences"
+      android:hint="@string/txt_new_event_address"
+      android:autofillHints="postalAddress"
+      />
 
-  <com.google.android.material.floatingactionbutton.FloatingActionButton
-  android:id="@+id/fab"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:layout_gravity="bottom|end"
-  android:layout_marginEnd="@dimen/fab_margin"
-  android:layout_marginBottom="16dp"
-  app:srcCompat="@android:drawable/ic_dialog_email" />
+  <EditText
+      android:id="@+id/inp_event_date"
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:ems="10"
+      android:inputType="textCapSentences"
+      android:hint="@string/txt_new_event_date"
+      />
 
-  </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+  <EditText
+      android:id="@+id/inp_event_audience"
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:ems="10"
+      android:inputType="textCapSentences"
+      android:hint="@string/txt_new_event_audience"
+      android:autofillHints="postalAddress"
+      />
+
+  <Button
+      android:id="@+id/button"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/btn_new_event_save" />
+
+</LinearLayout>

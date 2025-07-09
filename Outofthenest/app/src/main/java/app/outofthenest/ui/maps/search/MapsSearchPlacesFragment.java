@@ -1,4 +1,4 @@
-package app.outofthenest.ui.maps;
+package app.outofthenest.ui.maps.search;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import app.outofthenest.ui.maps.MapViewModel;
 import app.outofthenest.ui.place.PlacesActivity;
 import app.outofthenest.R;
 import app.outofthenest.adapters.PlaceAdapter;
@@ -49,6 +50,7 @@ public class MapsSearchPlacesFragment extends Fragment {
         setTagListener();
         setSearchListener();
     }
+
 
     private void setupPlacesRecyclerView() {
         placeAdapter = new PlaceAdapter(getContext(), new ArrayList<>());

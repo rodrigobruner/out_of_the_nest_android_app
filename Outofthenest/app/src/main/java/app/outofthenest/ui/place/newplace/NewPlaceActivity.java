@@ -1,4 +1,4 @@
-package app.outofthenest.ui.newplace;
+package app.outofthenest.ui.place.newplace;
 
 import android.os.Bundle;
 

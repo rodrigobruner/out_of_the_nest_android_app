@@ -1,5 +1,6 @@
 package app.outofthenest.ui.place;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +22,9 @@ import app.outofthenest.R;
 import app.outofthenest.adapters.TagsAdapter;
 import app.outofthenest.databinding.FragmentPlaceDetailBinding;
 import app.outofthenest.models.Place;
+import app.outofthenest.ui.events.NewEventActivity;
+import app.outofthenest.ui.maps.MainActivity;
+import app.outofthenest.ui.maps.MapViewModel;
 
 public class PlaceDetailFragment extends Fragment {
     // To use Log.d(TAG, "message") for debugging
@@ -31,6 +38,7 @@ public class PlaceDetailFragment extends Fragment {
 
     private TagsAdapter tagsAdapter;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -42,8 +50,19 @@ public class PlaceDetailFragment extends Fragment {
     }
 
     private void init(){
+        setUpActionBar();
         setUpPlace();
         setUpButton();
+    }
+
+    public void setUpActionBar() {
+        ActionBar actionbar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        if(actionbar != null) {
+            actionbar.setTitle(R.string.txt_place_detail_search_place);
+            actionbar.setDisplayShowHomeEnabled(true);
+            actionbar.setLogo(R.drawable.ic_menu_maps);
+            actionbar.setDisplayUseLogoEnabled(true);
+        }
     }
 
     private void setUpPlace() {
@@ -60,10 +79,10 @@ public class PlaceDetailFragment extends Fragment {
 
     private void setUpButton(){
         placeBinding.btnGoToPlace.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("destination", place);
-            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigate(R.id.navigation_maps, bundle);
+            Intent intent = new Intent(getContext(), MainActivity.class); // or the Activity hosting MapsFragment
+            intent.putExtra("destination", place);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
         });
     }
 

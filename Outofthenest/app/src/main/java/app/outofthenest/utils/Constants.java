@@ -3,7 +3,7 @@ package app.outofthenest.utils;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Constants {
-    public static final String URL_API = "https://0d076df3-7165-4262-86ab-086c1f7f820a.mock.pstmn.io/api/";
+    public static final String URL_API = "https://out-of-the-nest-android-api.onrender.com/api/";
 
     public static final int NUMBER_OF_DAYS_TO_LIST_EVENTS = 45; // 45 days from today
 

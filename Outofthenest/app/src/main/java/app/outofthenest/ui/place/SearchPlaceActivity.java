@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,10 +42,21 @@ public class SearchPlaceActivity extends AppCompatActivity {
     }
 
     private void init() {
+        setUpActionBar();
         setupTagsRecyclerView();
         setupPlacesRecyclerView();
         setTagListener();
         setSearchListener();
+    }
+
+    public void setUpActionBar() {
+        ActionBar actionbar = getSupportActionBar();
+        if(actionbar != null) {
+            actionbar.setTitle(R.string.txt_event_bar_search_place);
+            actionbar.setDisplayShowHomeEnabled(true);
+            actionbar.setLogo(R.drawable.ic_menu_maps);
+            actionbar.setDisplayUseLogoEnabled(true);
+        }
     }
 
     private void setupPlacesRecyclerView() {
