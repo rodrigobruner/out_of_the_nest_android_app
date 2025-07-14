@@ -82,8 +82,15 @@ public class EventsFragment extends Fragment {
 
     private void init(){
         setUpActionBar();
+        sertUpAdapters();
         requestPermission();
         getUserLocation();
+    }
+
+
+    private void sertUpAdapters() {
+        adapter = new EventAdapter(new ArrayList<>());
+        binding.recyclerEvents.setAdapter(adapter);
     }
 
     public void setUpActionBar() {
@@ -213,7 +220,7 @@ public class EventsFragment extends Fragment {
 
         LocalDate today = LocalDate.now();
         LocalDate until = today.plusDays(Constants.NUMBER_OF_DAYS_TO_LIST_EVENTS);
-        int radius = Constants.DEFAULT_SEARCH_RADIUS;
+        int radius = Constants.DEFAULT_SEARCH_EVENT_RADIUS;
         ArrayList<String> targetAudience = new ArrayList<>();
 
         viewModel.searchEvents(

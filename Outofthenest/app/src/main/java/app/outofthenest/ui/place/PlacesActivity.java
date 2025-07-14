@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import app.outofthenest.R;
-import app.outofthenest.adapters.PlacePagerAdapter;
+import app.outofthenest.adapters.PlaceTabAdapter;
 import app.outofthenest.databinding.ActivityPlaceBinding;
 import app.outofthenest.models.Place;
 
@@ -37,7 +37,7 @@ public class PlacesActivity extends AppCompatActivity {
     }
 
     private void setupTabs(){
-        PlacePagerAdapter adapter = new PlacePagerAdapter(this, this, place);
+        PlaceTabAdapter adapter = new PlaceTabAdapter(this, this, place);
         placeBinding.viewPagerPlace.setAdapter(adapter);
 
         new TabLayoutMediator(

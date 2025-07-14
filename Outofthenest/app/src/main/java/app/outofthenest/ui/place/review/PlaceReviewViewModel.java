@@ -9,15 +9,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import java.util.Date;
+
 import app.outofthenest.R;
-import app.outofthenest.models.Place;
 import app.outofthenest.models.Review;
-import app.outofthenest.repository.PlaceRepository;
 import app.outofthenest.repository.ReviewsRepository;
+import app.outofthenest.utils.Constants;
 
 public class PlaceReviewViewModel extends AndroidViewModel {
 
-    // To use Log.d(TAG, "message") for debugging
     String TAG = getClass().getSimpleName();
     private ReviewsRepository reviewRepository;
     private MutableLiveData<Review> createdReview;
@@ -33,30 +33,32 @@ public class PlaceReviewViewModel extends AndroidViewModel {
     }
 
     public void createReview(Review review) {
-        Log.i(TAG, "Creating place: " + review.getDatetime());
+
         isLoading.setValue(true);
         errorMessage.setValue(null);
-        reviewRepository.createReview(review.getTitle(),
-                                        review.getDescription(),
-                                        review.getRating(),
-                                        review.getUserId(),
-                                        review.getPlaceId()
-                                    ).observeForever(new Observer<Review>() {
+
+        reviewRepository.createReview(
+                review.getTitle(),
+                review.getDescription(),
+                review.getRating(),
+                review.getUserId(),
+                review.getPlaceId()
+        ).observeForever(new Observer<Review>() {
             @Override
             public void onChanged(Review result) {
                 isLoading.setValue(false);
                 if (result != null) {
                     createdReview.setValue(result);
-//                    Log.i(TAG, "Created: " + place.getTitle());
+                    Log.i(TAG, "API Review created: " + result.getTitle());
                 } else {
                     errorMessage.setValue(getApplication().getString(R.string.txt_place_creation_error));
-//                    Log.i(TAG, "Error: " + place.getTitle());
+                    Log.e(TAG, "Error creating review via API");
                 }
             }
         });
     }
 
-    public LiveData<Review> getCreatedreview() {
+    public LiveData<Review> getCreatedReview() {
         return createdReview;
     }
 

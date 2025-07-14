@@ -16,7 +16,7 @@ import app.outofthenest.ui.place.PlaceDetailFragment;
  * Adapter to deal with tabs on Page detail screen
  */
 
-public class PlacePagerAdapter extends FragmentStateAdapter {
+public class PlaceTabAdapter extends FragmentStateAdapter {
 
     // To use Log.d(TAG, "message") for debugging
     String TAG = getClass().getSimpleName();
@@ -25,7 +25,7 @@ public class PlacePagerAdapter extends FragmentStateAdapter {
 
     private final Place place;
 
-    public PlacePagerAdapter(@NonNull FragmentActivity fragmentActivity, Context context, Place place) {
+    public PlaceTabAdapter(@NonNull FragmentActivity fragmentActivity, Context context, Place place) {
         super(fragmentActivity);
         this.context = context;
         this.place = place;

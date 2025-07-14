@@ -1,4 +1,4 @@
-package app.outofthenest.ui.place;
+package app.outofthenest.ui.place.search;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;

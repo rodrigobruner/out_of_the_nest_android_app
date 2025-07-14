@@ -5,6 +5,7 @@
     <string name="btn_cancel">Cancel</string>
     <string name="error_unexpected">Ops! An unexpected error occurred. Please try again later.</string>
     <string name="txt_search_here">Search here...</string>
+    <string name="txt_saving">Saving...</string>
 
     <!-- App defaults -->
     <string name="default_place_status">Closed</string>
@@ -52,6 +53,7 @@
 
     <!-- Map Search Screen -->
     <string name="txt_event_bar_search_place">New Place</string>
+    <string name="txt_place_fetch_error">Place not found</string>
 
     <!-- New Place screen -->
     <string name="txt_event_bar_new_place">New Place</string>
@@ -71,6 +73,74 @@
     <string name="txt_invalid_tags">Please select one or more tags</string>
     <string name="txt_place_created">Place created successfully</string>
     <string name="txt_place_creation_error">Error creating place</string>
+
+
+
+    <!-- Places screen -->
+    <string name="txt_place_detail_search_place">Place detail</string>
+    <string name="txt_places_address">No address found for places</string>
+    <string name="txt_tab_detail">About</string>
+    <string name="txt_tab_comments">Reviews</string>
+    <string name="txt_places_distance">Distance</string>
+    <string name="txt_places_time">Time</string>
+    <string name="txt_places_status">Status</string>
+    <string name="btn_go_to_place">Trace route</string>
+    <string name="btn_add_review">Add a review</string>
+
+    <!-- Place review /new review -->
+    <string name="txt_event_bar_review_place">Review place</string>
+    <string name="txt_rating_title">Title</string>
+    <string name="txt_rating_description">Description</string>
+    <string name="alert_review_field_validate">Please fill all fields and provide a rating"</string>
+    <string name="txt_success">Review created successfully!</string>
+    <string name="btn_review">Submit review</string>
+
+
+    <!-- Events -->
+    <string name="txt_event_bar_title">Events list</string>
+    <string name="txt_event_detail">Event detail</string>
+    <string name="txt_new_event">New Event</string>
+    <string name="txt_event_bar_title_details">Event Details</string>
+    <string name="txt_event_search_error">Error fetching events. Please try again.</string>
+
+
+    <!-- New Event -->
+    <string name="txt_new_event_title">Title</string>
+    <string name="txt_new_event_date">Date</string>
+    <string name="txt_new_event_description">Description</string>
+    <string name="txt_new_event_address">Address</string>
+    <string name="btn_new_event_save">Save event</string>
+    <string name="txt_new_event_audience">Audience</string>
+
+    <string name="txt_event_creation_error">Error creating event. Please try again.</string>
+    <string name="txt_event_created">Event created successfully!</string>
+    <string name="txt_invalid_event_title">Please enter a valid event title.</string>
+    <string name="txt_invalid_event_description">Please enter a valid event description.</string>
+    <string name="txt_invalid_event_date">Please enter a valid event date.</string>
+    <string name="txt_invalid_event_audience">Please enter a valid event audience.</string>
+
+    <!-- Notifications -->
+    <string name="txt_notification_bar_title">Notifications list</string>
+
+    <!-- profile screen -->
+    <string name="txt_profile_bar_title">Profile</string>
+    <string name="txt_username">Username</string>
+    <string name="txt_family_members">Family Members</string>
+    <string name="txt_token">Token</string>
+    <string name="txt_error_no_name_set">No name set</string>
+    <string name="txt_error_no_email_set">No email set</string>
+    <string name="txt_no_token_available">No token available</string>
+    <string name="txt_add_family_member">Add Family Member</string>
+    <string name="btn_logout">Logout</string>
+    <string name="btn_remove">Remove</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+
 
 
     <string name="place_type_default">Select a type...</string>
@@ -150,58 +220,5 @@
         <item>Pet</item>
     </string-array>
 
-    <!-- Places screen -->
-    <string name="txt_place_detail_search_place">Place detail</string>
-    <string name="txt_places_address">No address found for places</string>
-    <string name="txt_tab_detail">About</string>
-    <string name="txt_tab_comments">Reviews</string>
-    <string name="txt_places_distance">Distance</string>
-    <string name="txt_places_time">Time</string>
-    <string name="txt_places_status">Status</string>
-    <string name="btn_go_to_place">Trace route</string>
-    <string name="btn_add_review">Add a review</string>
-
-
-    <!-- Place reating -->
-    <string name="txt_event_bar_review_place">Review place</string>
-    <string name="txt_rating_title">Title</string>
-    <string name="txt_rating_description">Descption</string>
-    <string name="btn_review">Submit review</string>
-
-
-    <!-- Events -->
-    <string name="txt_event_bar_title">Events list</string>
-    <string name="txt_event_detail">Event detail</string>
-    <string name="txt_new_event">New Event</string>
-    <string name="txt_event_bar_title_details">Event Details</string>
-
-    <!-- New Event -->
-    <string name="txt_new_event_title">Title</string>
-    <string name="txt_new_event_date">Date</string>
-    <string name="txt_new_event_description">Description</string>
-    <string name="txt_new_event_address">Address</string>
-    <string name="btn_new_event_save">Save event</string>
-    <string name="txt_new_event_audience">Audience</string>
-
-    <!-- Notifications -->
-    <string name="txt_notification_bar_title">Notifications list</string>
-
-    <!-- profile screen -->
-    <string name="txt_profile_bar_title">Profile</string>
-    <string name="txt_username">Username</string>
-    <string name="txt_family_members">Family Members</string>
-    <string name="txt_token">Token</string>
-    <string name="txt_error_no_name_set">No name set</string>
-    <string name="txt_error_no_email_set">No email set</string>
-    <string name="txt_no_token_available">No token available</string>
-    <string name="txt_add_family_member">Add Family Member</string>
-    <string name="btn_logout">Logout</string>
-    <string name="btn_remove">Remove</string>
-
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
 </resources>

@@ -41,7 +41,7 @@ import java.util.List;
 import app.outofthenest.BuildConfig;
 import app.outofthenest.ui.place.newplace.NewPlaceActivity;
 import app.outofthenest.R;
-import app.outofthenest.ui.place.SearchPlaceActivity;
+import app.outofthenest.ui.place.search.SearchPlaceActivity;
 import app.outofthenest.databinding.FragmentMapsBinding;
 import app.outofthenest.models.Place;
 import app.outofthenest.utils.LocationProvider;

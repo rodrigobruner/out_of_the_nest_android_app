@@ -19,7 +19,7 @@
         android:theme="@style/Theme.OutOfTheNest"
         tools:targetApi="31">
         <activity
-            android:name=".ui.place.review.NewReviewActivity"
+            android:name=".ui.place.review.NewPlaceReviewActivity"
             android:exported="false" />
         <activity
             android:name=".ui.events.NewEventActivity"
@@ -30,7 +30,7 @@
             android:exported="false"
             android:theme="@style/Theme.OutOfTheNest" />
         <activity
-            android:name=".ui.place.SearchPlaceActivity"
+            android:name=".ui.place.search.SearchPlaceActivity"
             android:exported="false"
             android:theme="@style/Theme.OutOfTheNest" />
         <activity

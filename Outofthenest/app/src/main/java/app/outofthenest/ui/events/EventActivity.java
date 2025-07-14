@@ -63,7 +63,7 @@ public class EventActivity extends AppCompatActivity {
             Event event = getIntent().getSerializableExtra(EVENT_PARAMETER_NAME, Event.class);
             binding.txvEventTitle.setText(event.getTitle());
             binding.txvEventDate.setText(event.getDatetime().toString());
-            binding.txvEventLocation.setText(event.getPlace().getAddress());
+            binding.txvEventLocation.setText(event.getAddress());
             binding.txvEventDescription.setText(event.getDescription());
             setupTagsRecyclerView(event.getTargetAudience());
         }

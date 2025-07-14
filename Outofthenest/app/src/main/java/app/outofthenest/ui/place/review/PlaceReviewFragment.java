@@ -18,9 +18,10 @@ import app.outofthenest.databinding.FragmentPlaceReviewsBinding;
 import app.outofthenest.mocs.ReviewsMoc;
 import app.outofthenest.models.Place;
 import app.outofthenest.models.Review;
-import app.outofthenest.ui.maps.MainActivity;
 
 public class PlaceReviewFragment extends Fragment {
+
+    private static final String PLACE_PARAMETER = "place";
 
     // To use Log.d(TAG, "message") for debugging
     String TAG = getClass().getSimpleName();
@@ -74,8 +75,8 @@ public class PlaceReviewFragment extends Fragment {
         binding.btnAddReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), NewReviewActivity.class); // or the Activity hosting MapsFragment
-                intent.putExtra("destination", place);
+                Intent intent = new Intent(getContext(), NewPlaceReviewActivity.class); // or the Activity hosting MapsFragment
+                intent.putExtra(PLACE_PARAMETER, place);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }

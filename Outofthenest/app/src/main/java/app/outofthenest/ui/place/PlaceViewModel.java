@@ -1,4 +1,4 @@
-package app.outofthenest.ui.place.newplace;
+package app.outofthenest.ui.place;
 
 import android.app.Application;
 import android.util.Log;
@@ -9,11 +9,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import app.outofthenest.R;
+import app.outofthenest.mocs.PlacesMoc;
 import app.outofthenest.models.Place;
 import app.outofthenest.repository.PlaceRepository;
+import app.outofthenest.utils.Constants;
 
-public class NewPlaceViewModel extends AndroidViewModel {
+public class PlaceViewModel extends AndroidViewModel {
 
     // To use Log.d(TAG, "message") for debugging
     String TAG = getClass().getSimpleName();
@@ -21,8 +26,9 @@ public class NewPlaceViewModel extends AndroidViewModel {
     private MutableLiveData<Place> createdPlace;
     private MutableLiveData<Boolean> isLoading;
     private MutableLiveData<String> errorMessage;
+    private MutableLiveData<List<Place>> places = new MutableLiveData<>();
 
-    public NewPlaceViewModel(@NonNull Application application) {
+    public PlaceViewModel(@NonNull Application application) {
         super(application);
         placeRepository = new PlaceRepository(application);
         createdPlace = new MutableLiveData<>();
@@ -45,6 +51,28 @@ public class NewPlaceViewModel extends AndroidViewModel {
                     errorMessage.setValue(getApplication().getString(R.string.txt_place_creation_error));
 //                    Log.i(TAG, "Error: " + place.getTitle());
                 }
+            }
+        });
+    }
+
+    public LiveData<List<Place>> getPlaces() {
+        return places;
+    }
+
+    public void fetchPlacesNear(double lat, double lng, double delta, String filter, ArrayList<String> tags) {
+
+        if(Constants.USE_MOC_MODE){
+            places.setValue(PlacesMoc.getPlaces());
+            return;
+        }
+
+        isLoading.setValue(true);
+        placeRepository.getPlacesNear(lat, lng, delta, filter, tags).observeForever(result -> {
+            isLoading.setValue(false);
+            if (result != null) {
+                places.setValue(result);
+            } else {
+                errorMessage.setValue(getApplication().getString(R.string.txt_place_fetch_error));
             }
         });
     }

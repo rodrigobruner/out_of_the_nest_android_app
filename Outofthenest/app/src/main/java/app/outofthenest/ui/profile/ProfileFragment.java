@@ -23,18 +23,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 import app.outofthenest.adapters.FamilyMemberAdapter;
 import app.outofthenest.databinding.DialogAddFamilyMemberBinding;
 import app.outofthenest.models.FamilyMember;
+import app.outofthenest.models.User;
 import app.outofthenest.ui.authentication.HomeMainActivity;
 import app.outofthenest.R;
 import app.outofthenest.databinding.FragmentProfileBinding;
 import app.outofthenest.ui.authentication.AuthenticationViewModel;
-import app.outofthenest.utils.FamilyMemberUtils;
+import app.outofthenest.utils.UserUtils;
 
 public class ProfileFragment extends Fragment {
 
@@ -43,7 +43,6 @@ public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private DialogAddFamilyMemberBinding dialogBinding;
     private AuthenticationViewModel viewModel;
-
     private FamilyMemberAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -52,21 +51,17 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         dialogBinding = DialogAddFamilyMemberBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
         init();
         return root;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 
     private void init() {
         setUpActionBar();
         setupAuthenticationViewModel();
-        getUserName();
-        getUserToken();
+        getUser();
+        //Just To debug token
+//        getUserToken();
         logout();
         setupFamilyMembers();
         setOnClickAddFamilyMember();
@@ -85,10 +80,10 @@ public class ProfileFragment extends Fragment {
 
 
     private void setupFamilyMembers() {
-        ArrayList<FamilyMember> familyMembers = FamilyMemberUtils.getFamilyMembers(requireContext());
+        ArrayList<FamilyMember> familyMembers = UserUtils.getFamilyMembers(requireContext());
 
         adapter = new FamilyMemberAdapter(familyMembers, position -> {
-            FamilyMemberUtils.removeFamilyMember(requireContext(), position);
+            UserUtils.removeFamilyMember(requireContext(), position);
             familyMembers.remove(position);
             adapter.notifyItemRemoved(position);
         });
@@ -162,11 +157,11 @@ public class ProfileFragment extends Fragment {
                     }
                     if (type != null && birth != null) {
                         FamilyMember member = new FamilyMember(type, birth);
-                        FamilyMemberUtils.addFamilyMember(requireContext(), member);
+                        UserUtils.addFamilyMember(requireContext(), member);
                         // Update your adapter data
-                        ArrayList<FamilyMember> updatedList = FamilyMemberUtils.getFamilyMembers(requireContext());
+                        ArrayList<FamilyMember> updatedList = UserUtils.getFamilyMembers(requireContext());
                         adapter = new FamilyMemberAdapter(updatedList, position -> {
-                            FamilyMemberUtils.removeFamilyMember(requireContext(), position);
+                            UserUtils.removeFamilyMember(requireContext(), position);
                             updatedList.remove(position);
                             adapter.notifyItemRemoved(position);
                         });
@@ -177,22 +172,13 @@ public class ProfileFragment extends Fragment {
                 .show();
     }
 
-//    private void getUserId() {
-//        viewModel.getUserId().observe(getViewLifecycleOwner(), userId -> {
-//            binding.txvUserId.setText(
-//                    Objects.requireNonNullElseGet(userId, () -> getString(R.string.txt_no_user_id_available)));
-//        });
-//    }
-
-    private void getUserName() {
-        String fullName = viewModel.getUserFullName();
-        binding.txvName.setText(fullName != null ? fullName : getString(R.string.txt_error_no_name_set));
-
-        String email = viewModel.getEmail();
-        binding.txvUsername.setText(email != null ? email : getString(R.string.txt_error_no_email_set));
+    private void getUser() {
+        User user = UserUtils.getUser(requireContext());
+        binding.txvName.setText(user.getName());
+        binding.txvUsername.setText(user.getEmail());
     }
 
-
+    // Just To debug token
     private void getUserToken() {
         viewModel.getUserToken().observe(getViewLifecycleOwner(), token -> {
             //                Log.i(TAG, "User token: " + token);
@@ -222,6 +208,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
 //                Log.i(TAG, "Logout button clicked");
+                UserUtils.clearUser(getContext());
                 viewModel.signOut();
             }
         });

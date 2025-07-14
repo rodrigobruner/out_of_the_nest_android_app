@@ -80,7 +80,7 @@ public class PlaceDetailFragment extends Fragment {
     private void setUpButton(){
         placeBinding.btnGoToPlace.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), MainActivity.class); // or the Activity hosting MapsFragment
-            intent.putExtra("destination", place);
+            intent.putExtra(PLACE_PARAMATER, place);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         });

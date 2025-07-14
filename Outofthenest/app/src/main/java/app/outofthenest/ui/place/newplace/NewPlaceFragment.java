@@ -5,6 +5,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.location.Address;
@@ -43,12 +44,13 @@ import app.outofthenest.adapters.TagsAdapter;
 import app.outofthenest.databinding.FragmentNewPlaceBinding;
 import app.outofthenest.models.Place;
 import app.outofthenest.models.PlaceAddress;
+import app.outofthenest.ui.place.PlaceViewModel;
 
 public class NewPlaceFragment extends Fragment {
 
     // To use Log.d(TAG, "message") for debugging
     String TAG = getClass().getSimpleName();
-    private NewPlaceViewModel mViewModel;
+    private PlaceViewModel viewModel;
     private FragmentNewPlaceBinding binding;
     private FusedLocationProviderClient fusedLocationClient;
     private ActivityResultLauncher<String> locationPermissionLauncher;
@@ -62,12 +64,13 @@ public class NewPlaceFragment extends Fragment {
         return new NewPlaceFragment();
     }
 
+
+    // Lifecycle methods
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(NewPlaceViewModel.class);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
-        initLocationPermissionLauncher();
+
     }
 
     @Nullable
@@ -79,18 +82,25 @@ public class NewPlaceFragment extends Fragment {
         return binding.getRoot();
     }
 
+    // Initialization
     private void init() {
+        initLocationPermissionLauncher();
+        setUpViewModels();
         showProgressBar(false);
         setUpActionBar();
         cAddress = new PlaceAddress(null, 0.0, 0.0);
         setUpSpinner();
         setupCurrentLocationButton();
         setupTagsRecyclerView();
-        setupObservers();
+        observeViewModel();
         setupSaveButton();
     }
 
-    public void setUpActionBar() {
+    private void setUpViewModels() {
+        viewModel = new ViewModelProvider(this).get(PlaceViewModel.class);
+    }
+
+    private void setUpActionBar() {
         ActionBar actionbar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if(actionbar != null) {
             actionbar.setTitle(R.string.txt_event_bar_new_place);
@@ -100,7 +110,121 @@ public class NewPlaceFragment extends Fragment {
         }
     }
 
+
+    //UI
+
+
+    private void setUpSpinner() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                getContext(),
+                R.array.list_place_types,
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spnPlaceType.setAdapter(adapter);
+    }
+
+
+    private void setupTagsRecyclerView() {
+        List<String> availableTags = getAvailableTags();
+        tagsAdapter = new TagsAdapter(availableTags, "PLACE");
+        LinearLayoutManager layoutManager = new LinearLayoutManager(
+                getContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+        );
+        binding.recyclerTags.setLayoutManager(layoutManager);
+        binding.recyclerTags.setAdapter(tagsAdapter);
+    }
+
+
+    private void setupSaveButton() {
+        binding.btnSave.setOnClickListener(v -> {
+            String name = binding.inpPlaceName.getText().toString();
+            String address = binding.inpAddress.getText().toString();
+            String placeType = binding.spnPlaceType.getSelectedItem().toString();
+            List<String> tags = getSelectedTags();
+
+            if (name.isEmpty()) {
+                Toast.makeText(requireContext(), getString(R.string.txt_invalid_place_name), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (address.isEmpty()) {
+                Toast.makeText(requireContext(), getString(R.string.txt_invalid_address), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (placeType.equals(getString(R.string.place_type_default))) {
+                Toast.makeText(requireContext(), getString(R.string.txt_invalid_place_type), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (tags.size() == 0) {
+                Toast.makeText(requireContext(), getString(R.string.txt_invalid_tags), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            PlaceAddress placeAddress = cAddress;
+            if(!address.equals(this.cAddress.getFullAddress())) {
+                placeAddress = getLatLongFromAddress(address);
+            }
+
+            Place newPlace = new Place(name, address, placeType, placeAddress.getFullAddress(), placeAddress.getLatitude(), placeAddress.getLongitude(), new ArrayList<>(tags));
+            Log.i(TAG, "New Place: " + placeAddress.getFullAddress());
+            viewModel.createPlace(newPlace);
+
+        });
+    }
+
+    private void setupCurrentLocationButton() {
+        binding.btnCurrentLocation.setOnClickListener(v -> {
+            showProgressBar(true);
+            if (hasLocationPermission()) {
+                getCurrentLocationAddress();
+            } else {
+                requestLocationPermission();
+            }
+        });
+    }
+
+
+    //Observers
+
+    private void observeViewModel() {
+        // Observer to created place
+        viewModel.getCreatedPlace().observe(getViewLifecycleOwner(), place -> {
+            if (place != null) {
+                Toast.makeText(requireContext(), getString(R.string.txt_place_created), Toast.LENGTH_SHORT).show();
+                requireActivity().onBackPressed();
+                viewModel.clearCreatedPlace(); // clear cache
+            }
+        });
+
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoading) {
+                showProgressBar(isLoading);
+                binding.btnSave.setEnabled(!isLoading);
+                binding.btnSave.setText(isLoading ?
+                        getString(R.string.txt_saving) :
+                        getString(R.string.btn_add_place));
+            }
+        });
+
+        // Observer to erros
+        viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                viewModel.clearErrorMessage(); // Clear cache
+            }
+        });
+    }
+
+    // Location
+
     private void initLocationPermissionLauncher() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
         locationPermissionLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),
                 isGranted -> {
@@ -111,18 +235,6 @@ public class NewPlaceFragment extends Fragment {
                     }
                 }
         );
-    }
-
-    private void setupCurrentLocationButton() {
-        binding.btnCurrentLocation.setOnClickListener(v -> {
-            showProgressBar(true);
-            binding.btnCurrentLocation.setEnabled(false);
-            if (hasLocationPermission()) {
-                getCurrentLocationAddress();
-            } else {
-                requestLocationPermission();
-            }
-        });
     }
 
     private boolean hasLocationPermission() {
@@ -153,7 +265,7 @@ public class NewPlaceFragment extends Fragment {
             } else {
                 Toast.makeText(requireContext(), getString(R.string.permission_location_denied), Toast.LENGTH_SHORT).show();
             }
-            binding.btnCurrentLocation.setEnabled(true);
+
             showProgressBar(false);
         });
     }
@@ -234,28 +346,7 @@ public class NewPlaceFragment extends Fragment {
     }
 
 
-    private void setUpSpinner() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                getContext(),
-                R.array.list_place_types,
-                android.R.layout.simple_spinner_item
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.spnPlaceType.setAdapter(adapter);
-    }
-
-
-    private void setupTagsRecyclerView() {
-        List<String> availableTags = getAvailableTags();
-        tagsAdapter = new TagsAdapter(availableTags, "PLACE");
-        LinearLayoutManager layoutManager = new LinearLayoutManager(
-                getContext(),
-                LinearLayoutManager.HORIZONTAL,
-                false
-        );
-        binding.recyclerTags.setLayoutManager(layoutManager);
-        binding.recyclerTags.setAdapter(tagsAdapter);
-    }
+    //Others
 
     // TODO: get from API on app load and save on shared preferences, here get from shered preferences
     public List<String> getAvailableTags() {
@@ -270,71 +361,15 @@ public class NewPlaceFragment extends Fragment {
         return new ArrayList<>();
     }
 
-
-    private void setupSaveButton() {
-        binding.btnSave.setOnClickListener(v -> {
-            String name = binding.inpPlaceName.getText().toString();
-            String address = binding.inpAddress.getText().toString();
-            String placeType = binding.spnPlaceType.getSelectedItem().toString();
-            List<String> tags = getSelectedTags();
-
-            if (name.isEmpty()) {
-                Toast.makeText(requireContext(), getString(R.string.txt_invalid_place_name), Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (address.isEmpty()) {
-                Toast.makeText(requireContext(), getString(R.string.txt_invalid_address), Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (placeType.equals(getString(R.string.place_type_default))) {
-                Toast.makeText(requireContext(), getString(R.string.txt_invalid_place_type), Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (tags.size() == 0) {
-                Toast.makeText(requireContext(), getString(R.string.txt_invalid_tags), Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            PlaceAddress placeAddress = cAddress;
-            if(!address.equals(this.cAddress.getFullAddress())) {
-                placeAddress = getLatLongFromAddress(address);
-            }
-
-            Place newPlace = new Place(name, address, placeType, placeAddress.getFullAddress(), placeAddress.getLatitude(), placeAddress.getLongitude(), new ArrayList<>(tags));
-            Log.i(TAG, "New Place: " + placeAddress.getFullAddress());
-            mViewModel.createPlace(newPlace);
-
-        });
-    }
-
     private void showProgressBar(boolean show) {
-
         if (binding != null && binding.progressBar != null) {
             Log.i(TAG, "showProgressBar: " + show);
             binding.progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+            binding.btnSave.setEnabled(!show);
+            binding.btnCurrentLocation.setEnabled(!show);
         }
     }
 
 
-    private void setupObservers() {
-        // Observer to created place
-        mViewModel.getCreatedPlace().observe(getViewLifecycleOwner(), place -> {
-            if (place != null) {
-                Toast.makeText(requireContext(), getString(R.string.txt_place_created), Toast.LENGTH_SHORT).show();
-                requireActivity().onBackPressed();
-                mViewModel.clearCreatedPlace(); // clear cache
-            }
-        });
 
-        // Observer to erros
-        mViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) {
-                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
-                mViewModel.clearErrorMessage(); // Clear cache
-            }
-        });
-    }
 }

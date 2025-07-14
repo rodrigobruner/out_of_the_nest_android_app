@@ -15,9 +15,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
+import app.outofthenest.models.User;
 import app.outofthenest.ui.maps.MainActivity;
 import app.outofthenest.R;
 import app.outofthenest.databinding.FragmentLoginBinding;
+import app.outofthenest.utils.UserUtils;
 
 public class LoginFragment extends Fragment {
 
@@ -68,6 +72,16 @@ public class LoginFragment extends Fragment {
                 if(!buttonPressed) return;
 
                 if (firebaseUser != null) {
+
+                    User user = new User(
+                            firebaseUser.getUid(),
+                            firebaseUser.getDisplayName(),
+                            firebaseUser.getEmail(),
+                            null,
+                            new ArrayList<>()
+                    );
+                    UserUtils.saveUser(requireContext(), user);
+
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                 } else {

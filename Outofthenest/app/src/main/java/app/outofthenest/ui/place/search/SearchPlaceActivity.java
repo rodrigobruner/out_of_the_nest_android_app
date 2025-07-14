@@ -1,14 +1,20 @@
-package app.outofthenest.ui.place;
+package app.outofthenest.ui.place.search;
 
+import android.Manifest;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
@@ -20,8 +26,11 @@ import app.outofthenest.R;
 import app.outofthenest.adapters.PlaceAdapter;
 import app.outofthenest.adapters.TagsAdapter;
 import app.outofthenest.databinding.ActivitySearchPlaceBinding;
-import app.outofthenest.mocs.PlacesMoc;
 import app.outofthenest.models.Place;
+import app.outofthenest.ui.place.PlaceViewModel;
+import app.outofthenest.ui.place.PlacesActivity;
+import app.outofthenest.utils.Constants;
+import app.outofthenest.utils.LocationProvider;
 
 public class SearchPlaceActivity extends AppCompatActivity {
 
@@ -29,8 +38,18 @@ public class SearchPlaceActivity extends AppCompatActivity {
     private ActivitySearchPlaceBinding binding;
     private TagsAdapter tagsAdapter;
     private PlaceAdapter placeAdapter;
+    private PlaceViewModel viewModel;
+    private Location currentLocation;
 
-    ArrayList<Place> placesList;
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    LocationProvider.getInstance(this).fetchLocation(this);
+                } else {
+                    Toast.makeText(this, getString(R.string.permission_location_denied), Toast.LENGTH_SHORT).show();
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +58,18 @@ public class SearchPlaceActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.blue_800));
         setContentView(binding.getRoot());
         init();
+        requestPermission();
     }
 
     private void init() {
+        viewModel = new ViewModelProvider(this).get(PlaceViewModel.class);
         setUpActionBar();
         setupTagsRecyclerView();
         setupPlacesRecyclerView();
         setTagListener();
         setSearchListener();
+        observeViewModel();
+        getUserLocation();
     }
 
     public void setUpActionBar() {
@@ -67,42 +90,59 @@ public class SearchPlaceActivity extends AppCompatActivity {
     }
 
     private void setPlaceClickListeners() {
-        placeAdapter.setOnPlaceClickListener(new PlaceAdapter.OnPlaceClickListener() {
-            @Override
-            public void onPlaceClick(Place place) {
-                Log.i(TAG, "Place clicked: " + place.getTitle());
-                Intent intent = new Intent(getBaseContext(), PlacesActivity.class);
-                intent.putExtra("place", place);
-                startActivity(intent);
-            }
+        placeAdapter.setOnPlaceClickListener(place -> {
+            Log.i(TAG, "Place clicked: " + place.getTitle());
+            Intent intent = new Intent(getBaseContext(), PlacesActivity.class);
+            intent.putExtra("place", place);
+            startActivity(intent);
         });
 
-        placeAdapter.setOnGoClickListener(new PlaceAdapter.OnGoClickListener() {
-            @Override
-            public void onGoClick(Place place) {
-                Intent intent = new Intent(SearchPlaceActivity.this, MainActivity.class); // or the Activity hosting MapsFragment
-                intent.putExtra("destination", place);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-                finish();
+        placeAdapter.setOnGoClickListener(place -> {
+            Intent intent = new Intent(SearchPlaceActivity.this, MainActivity.class);
+            intent.putExtra("destination", place);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    private void observeViewModel() {
+        viewModel.getPlaces().observe(this, places -> {
+            ArrayList<String> selectedTags = new ArrayList<>(getSelectedTags());
+            String searchText = binding.searchEditText.getText().toString().trim();
+
+            if (searchText.isEmpty() && selectedTags.isEmpty()) {
+                placeAdapter.updatePlaces(new ArrayList<>());
+                return;
+            }
+
+            List<Place> filteredPlaces = filterPlaces(searchText, selectedTags, places != null ? places : new ArrayList<>());
+            placeAdapter.updatePlaces(filteredPlaces);
+        });
+
+        viewModel.getIsLoading().observe(this, isLoading -> {
+            Log.d(TAG, "Loading: " + isLoading);
+        });
+
+        viewModel.getErrorMessage().observe(this, errorMessage -> {
+            if (errorMessage != null) {
+                Log.e(TAG, "Error: " + errorMessage);
+                viewModel.clearErrorMessage();
             }
         });
     }
 
-    // Search functions
     private void setSearchListener() {
         binding.searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
-                searchPlaces(); // ADDED: Search when text changes
+                searchPlaces();
             }
         });
     }
@@ -112,7 +152,7 @@ public class SearchPlaceActivity extends AppCompatActivity {
             @Override
             public void onTagSelected(String tag) {
                 Log.i(TAG, "Tag selected: " + tag);
-                searchPlaces(); // ADDED: Search when tag is selected
+                searchPlaces();
             }
 
             @Override
@@ -127,23 +167,27 @@ public class SearchPlaceActivity extends AppCompatActivity {
         ArrayList<String> selectedTags = new ArrayList<>(getSelectedTags());
         String searchText = binding.searchEditText.getText().toString().trim();
 
-        // MODIFIED: Only search if there's text or selected tags
         if (searchText.isEmpty() && selectedTags.isEmpty()) {
-            // Clear results if no search criteria
             placeAdapter.updatePlaces(new ArrayList<>());
             return;
         }
 
         Log.i(TAG, "Search text: " + searchText);
         Log.i(TAG, "Selected tags: " + selectedTags.toString());
+        double lat = 0;
+        double lng = 0;
 
-        List<Place> filteredPlaces = filterPlaces(searchText, selectedTags);
-        placeAdapter.updatePlaces(filteredPlaces);
+        if(currentLocation != null) {
+            lat = currentLocation.getLatitude();
+            lng = currentLocation.getLongitude();
+        } else {
+            Toast.makeText(getBaseContext(), getString(R.string.permission_location_denied), Toast.LENGTH_SHORT).show();
+        }
+
+        viewModel.fetchPlacesNear(lat, lng, Constants.DEFAULT_SEARCH_PLACE_DELTA, searchText, selectedTags);
     }
 
-    // ADDED: Filter places based on search text and selected tags
-    private List<Place> filterPlaces(String searchText, List<String> selectedTags) {
-        List<Place> allPlaces = getPlaces();
+    private List<Place> filterPlaces(String searchText, List<String> selectedTags, List<Place> allPlaces) {
         List<Place> filteredPlaces = new ArrayList<>();
 
         for (Place place : allPlaces) {
@@ -153,8 +197,7 @@ public class SearchPlaceActivity extends AppCompatActivity {
                     place.getType().toLowerCase().contains(searchText.toLowerCase());
 
             boolean matchesTags = selectedTags.isEmpty() ||
-                    place.getTags().stream().anyMatch(tag ->
-                            selectedTags.contains(tag));
+                    place.getTags().stream().anyMatch(selectedTags::contains);
 
             if (matchesText && matchesTags) {
                 filteredPlaces.add(place);
@@ -164,7 +207,6 @@ public class SearchPlaceActivity extends AppCompatActivity {
         return filteredPlaces;
     }
 
-    // Config recyclerView for tags
     private void setupTagsRecyclerView() {
         List<String> availableTags = getAvailableTags();
         tagsAdapter = new TagsAdapter(availableTags);
@@ -189,7 +231,24 @@ public class SearchPlaceActivity extends AppCompatActivity {
         return new ArrayList<>();
     }
 
-    private ArrayList<Place> getPlaces() {
-        return PlacesMoc.getPlaces();
+    private void requestPermission() {
+        requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
+    }
+
+    private void getUserLocation() {
+        LocationProvider.getInstance(this).getLocationLiveData()
+                .observe(this, location -> {
+                    if (location != null) {
+                        Log.d(TAG, "Current location: " + location.getLatitude() + ", " + location.getLongitude());
+                        currentLocation = location;
+                        onGetLocation();
+                    }
+                });
+    }
+
+    private void onGetLocation() {
+        Log.i(TAG, "Location obtained, ready to search places");
+        // Você pode fazer uma busca automática aqui se desejar
+        // searchPlaces();
     }
 }

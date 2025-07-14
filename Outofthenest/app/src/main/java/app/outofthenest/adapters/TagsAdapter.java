@@ -32,6 +32,7 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
     //Enable/disable selection of tags, default enable
     private boolean isSelectionEnabled = true;
 
+
     public TagsAdapter(List<String> tags) {
         this.tags = tags;
         this.selectedTags = new ArrayList<>();
@@ -66,7 +67,10 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
 
         if(!tagCategory.equals("NO")) {
             Log.i(TAG, "Tag category: " + tagCategory + "position: " + position);
-            holder.chip.setChipIconResource(TagIconMap.getTagIconMap(position, tagCategory));
+
+            if(TagIconMap.getTagIconMap(position, tagCategory) != null) {
+                holder.chip.setChipIconResource(TagIconMap.getTagIconMap(position, tagCategory));
+            }
         }
 
         if (isSelectionEnabled) {
