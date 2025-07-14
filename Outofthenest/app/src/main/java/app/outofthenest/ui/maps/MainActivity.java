@@ -21,7 +21,8 @@ import app.outofthenest.models.Place;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    private static String PLACE_PARAMATER = "place";
+    private static final String EVENT_PARAMETER_NAME = "event";
     private ActivityMainBinding mainBinding;
     private MapViewModel mapViewModel;
     private NavController navController; // Add NavController variable
@@ -39,15 +40,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if (intent.hasExtra("destination")) {
+        if (intent.hasExtra(PLACE_PARAMATER)) {
             // Navigate to the maps fragment first
             navController.navigate(R.id.navigation_maps);
 
-            Place place = (Place) intent.getSerializableExtra("destination", Place.class);
+            Place place = (Place) intent.getSerializableExtra(PLACE_PARAMATER, Place.class);
             if (place != null) {
                 // Then set the destination in the ViewModel
                 mapViewModel.setDestination(place);
             }
+        }
+
+        if(intent.hasExtra(EVENT_PARAMETER_NAME)){
+            navController.navigate(R.id.navigation_events);
         }
     }
 

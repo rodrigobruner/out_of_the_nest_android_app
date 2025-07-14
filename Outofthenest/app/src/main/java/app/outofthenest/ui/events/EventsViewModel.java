@@ -74,6 +74,26 @@ public class EventsViewModel extends AndroidViewModel {
                 });
     }
 
+    public void getEventById(String id) {
+        isLoading.setValue(true);
+
+        if (Constants.USE_MOC_MODE){
+            Event event = EventsMoc.getEventById(id);
+            createdEvent.setValue(event);
+            isLoading.setValue(false);
+            return;
+        }
+
+        repository.getEventById(id).observeForever(result -> {
+            isLoading.setValue(false);
+            if (result != null) {
+                createdEvent.setValue(result);
+            } else {
+                errorMessage.setValue(getApplication().getString(R.string.txt_event_search_error));
+            }
+        });
+    }
+
     public LiveData<List<Event>> getEvents() {
         return events;
     }

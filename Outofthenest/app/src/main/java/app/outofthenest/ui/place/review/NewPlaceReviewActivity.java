@@ -23,14 +23,14 @@ import app.outofthenest.utils.UserUtils;
 
 public class NewPlaceReviewActivity extends AppCompatActivity {
 
-    String TAG = getClass().getSimpleName();
+    private String TAG = getClass().getSimpleName();
 
     private static final String PLACE_PARAMETER = "place";
 
     ActivityNewReviewBinding binding;
     PlaceReviewViewModel viewModel;
 
-    private AuthenticationViewModel authViewModel;
+//    private AuthenticationViewModel authViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +50,8 @@ public class NewPlaceReviewActivity extends AppCompatActivity {
 
     private void setUpViewModels(){
         viewModel = new ViewModelProvider(this).get(PlaceReviewViewModel.class);
-        authViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
-                .getInstance(getApplication())).get(AuthenticationViewModel.class);
+//        authViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
+//                .getInstance(getApplication())).get(AuthenticationViewModel.class);
     }
 
 

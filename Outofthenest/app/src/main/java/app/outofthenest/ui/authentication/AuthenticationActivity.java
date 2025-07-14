@@ -1,6 +1,9 @@
 package app.outofthenest.ui.authentication;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +36,7 @@ public class AuthenticationActivity extends AppCompatActivity {
     private void init() {
         setupTabs();
     }
+
 
     private void setupTabs(){
         AuthenticationPagerAdapter adapter = new AuthenticationPagerAdapter(this, this);

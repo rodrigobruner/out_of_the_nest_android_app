@@ -192,15 +192,15 @@ public class ProfileFragment extends Fragment {
         viewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getActivity().getApplication())).get(AuthenticationViewModel.class);
 
-        viewModel.getUserLoggedMLData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean login) {
-                if (!login) {
-                    Intent intent = new Intent(getActivity(), HomeMainActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
+//        viewModel.getUserLoggedMLData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(Boolean login) {
+//                if (!login) {
+//                    Intent intent = new Intent(getActivity(), HomeMainActivity.class);
+//                    startActivity(intent);
+//                }
+//            }
+//        });
     }
 
     private void logout(){

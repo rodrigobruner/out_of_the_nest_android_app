@@ -23,6 +23,7 @@ loggingInterceptor = "4.12.0"
 androidMapsUtils = "3.14.0"
 googleMapsServices = "2.2.0"
 slf4jSimple = "2.0.17"
+firebaseMessaging = "24.1.2"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -46,6 +47,7 @@ logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-intercep
 android-maps-utils = { group = "com.google.maps.android", name = "android-maps-utils", version.ref = "androidMapsUtils" }
 google-maps-services = { group = "com.google.maps", name = "google-maps-services", version.ref = "googleMapsServices" }
 slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4jSimple" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

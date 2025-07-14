@@ -23,6 +23,7 @@ import app.outofthenest.adapters.NotificationAdapter;
 import app.outofthenest.databinding.FragmentNotificationsBinding;
 import app.outofthenest.ui.authentication.AuthenticationViewModel;
 import app.outofthenest.ui.authentication.HomeMainActivity;
+import app.outofthenest.utils.UserUtils;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public class NotificationsFragment extends Fragment {
     private NotificationAdapter adapter;
     private NotificationViewModel viewModel;
 
-    private AuthenticationViewModel authViewModel;
+//    private AuthenticationViewModel authViewModel;
 
     @Nullable
     @Override
@@ -53,7 +54,7 @@ public class NotificationsFragment extends Fragment {
     private void init(){
         setUpActionBar();
         setupRecyclerView();
-        setupAuthenticationViewModel();
+//        setupAuthenticationViewModel();
         getNotifications();
         setOnNotificationClickListener();
         setupSwipeToDelete();
@@ -74,20 +75,20 @@ public class NotificationsFragment extends Fragment {
         binding.recyclerNotifications.setAdapter(adapter);
     }
 
-    private void setupAuthenticationViewModel(){
-        authViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
-                .getInstance(getActivity().getApplication())).get(AuthenticationViewModel.class);
-
-        authViewModel.getUserLoggedMLData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean login) {
-                if (!login) {
-                    Intent intent = new Intent(getActivity(), HomeMainActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-    }
+//    private void setupAuthenticationViewModel(){
+//        authViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
+//                .getInstance(getActivity().getApplication())).get(AuthenticationViewModel.class);
+//
+//        authViewModel.getUserLoggedMLData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(Boolean login) {
+//                if (!login) {
+//                    Intent intent = new Intent(getActivity(), HomeMainActivity.class);
+//                    startActivity(intent);
+//                }
+//            }
+//        });
+//    }
 
     private void getNotifications() {
         // Observe notifications
@@ -105,8 +106,10 @@ public class NotificationsFragment extends Fragment {
         });
 
         // Fetch notifications (replace with actual userId)
-        String userId = authViewModel.getUserId().toString();
+//        String userId = authViewModel.getUserId().toString();
+        String userId = UserUtils.getUser(getContext()).getId();
         viewModel.fetchNotifications(userId);
+
     }
 
 

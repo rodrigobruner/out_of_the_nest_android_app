@@ -26,6 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/txt_new_event_date"
+            app:drawableStartCompat="@drawable/ic_menu_event"
+            app:drawableTint="@color/black"
             android:textAppearance="?attr/textAppearanceBody2"
             android:paddingTop="4dp" />
 

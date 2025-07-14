@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.android.maps.utils)
     implementation(libs.google.maps.services)
     implementation(libs.slf4j.simple)
+    implementation(libs.firebase.messaging)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

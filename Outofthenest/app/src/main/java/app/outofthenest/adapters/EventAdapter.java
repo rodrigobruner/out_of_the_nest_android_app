@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import app.outofthenest.R;
 import app.outofthenest.models.Event;
 import app.outofthenest.models.Place;
+import app.outofthenest.utils.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,8 +46,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
         Event event = eventList.get(position);
         holder.txvEventTitle.setText(event.getTitle());
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-        holder.txvEventDate.setText(sdf.format(event.getDatetime()));
+        holder.txvEventDate.setText(DateUtils.formatDateTime(
+                holder.itemView.getResources(),
+                event.getDatetime()));
         holder.txvEventDescription.setText(event.getDescription());
         holder.txvEventAudience.setText(android.text.TextUtils.join(", ", event.getTargetAudience()));
 

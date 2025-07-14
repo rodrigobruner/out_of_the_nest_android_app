@@ -8,6 +8,10 @@ public class Constants {
 
     public static final double DEFAULT_SEARCH_PLACE_LAT = 43.4794047;
     public static final double DEFAULT_SEARCH_PLACE_LON = -80.5205838;
+
+    public static final String DEFAULT_DATETIME_FORMAT = "EEE, MMM d, yyyy - HH:mm";
+
+    public static final float DEFAULT_ZOOM = 15f;
     // How many days in the future to list events
     public static final int NUMBER_OF_DAYS_TO_LIST_EVENTS = 45; // 45 days from today
 

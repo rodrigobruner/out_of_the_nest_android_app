@@ -35,6 +35,7 @@ import app.outofthenest.utils.LocationProvider;
 public class SearchPlaceActivity extends AppCompatActivity {
 
     private static final String TAG = "SearchPlaceActivity";
+    static String PLACE_PARAMATER = "place";
     private ActivitySearchPlaceBinding binding;
     private TagsAdapter tagsAdapter;
     private PlaceAdapter placeAdapter;
@@ -99,7 +100,7 @@ public class SearchPlaceActivity extends AppCompatActivity {
 
         placeAdapter.setOnGoClickListener(place -> {
             Intent intent = new Intent(SearchPlaceActivity.this, MainActivity.class);
-            intent.putExtra("destination", place);
+            intent.putExtra(PLACE_PARAMATER, place);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
             finish();

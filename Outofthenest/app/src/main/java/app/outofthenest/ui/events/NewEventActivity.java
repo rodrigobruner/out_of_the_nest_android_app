@@ -25,7 +25,10 @@ import java.util.Locale;
 
 public class NewEventActivity extends AppCompatActivity {
 
+    private String TAG = getClass().getSimpleName();
+
     private ActivityNewEventBinding binding;
+
     private EventsViewModel viewModel;
 
     private TagsAdapter tagsAdapter;

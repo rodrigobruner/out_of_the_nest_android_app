@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import app.outofthenest.ui.maps.MainActivity;
 import app.outofthenest.R;
 import app.outofthenest.databinding.ActivityHomeMainBinding;
+import app.outofthenest.utils.UserUtils;
 
 
 public class HomeMainActivity extends AppCompatActivity {
@@ -36,8 +37,7 @@ public class HomeMainActivity extends AppCompatActivity {
                 .getInstance(getApplication())).get(AuthenticationViewModel.class);
 
         viewModel.getUserLoggedMLData().observe(this, isLogged -> {
-//            Log.d(TAG, "isLogged: " + isLogged);
-            if (isLogged) {
+            if (isLogged || UserUtils.hasUser(getBaseContext())) {
                 Intent intent = new Intent(HomeMainActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();

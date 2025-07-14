@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragmentLogin"
-    android:windowSoftInputMode="adjustResize"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -27,6 +26,7 @@
             android:layout_height="wrap_content"
             android:focusedByDefault="true"
             android:hint="@string/txt_email"
+            android:textSize="16sp"
             android:inputType="textEmailAddress"
             android:keyboardNavigationCluster="true" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/txt_password"
             android:inputType="textPassword"
+            android:textSize="16sp"
             android:keyboardNavigationCluster="true" />
     </com.google.android.material.textfield.TextInputLayout>
 

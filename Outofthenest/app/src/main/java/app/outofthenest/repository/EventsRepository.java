@@ -52,6 +52,21 @@ public class EventsRepository {
         return data;
     }
 
+    public LiveData<Event> getEventById(String eventId) {
+        MutableLiveData<Event> data = new MutableLiveData<>();
+        eventsApi.getEvent(eventId).enqueue(new Callback<Event>() {
+            @Override
+            public void onResponse(Call<Event> call, Response<Event> response) {
+                data.setValue(response.body());
+            }
+            @Override
+            public void onFailure(Call<Event> call, Throwable t) {
+                data.setValue(null);
+            }
+        });
+        return data;
+    }
+
     public LiveData<List<Event>> getEventsByDate(String date) {
         MutableLiveData<List<Event>> data = new MutableLiveData<>();
         eventsApi.getEventsByDate(date).enqueue(new Callback<List<Event>>() {

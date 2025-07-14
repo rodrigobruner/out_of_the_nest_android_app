@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,11 +45,13 @@ import app.outofthenest.R;
 import app.outofthenest.ui.place.search.SearchPlaceActivity;
 import app.outofthenest.databinding.FragmentMapsBinding;
 import app.outofthenest.models.Place;
+import app.outofthenest.utils.Constants;
 import app.outofthenest.utils.LocationProvider;
 
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
-
-    private static final float DEFAULT_ZOOM = 15f;
+    // To use Log.d(TAG, "message") for debugging
+    String TAG = getClass().getSimpleName();
+    private static final float DEFAULT_ZOOM = Constants.DEFAULT_ZOOM;
     private FragmentMapsBinding binding;
     private MapViewModel mapViewModel;
     private Place destination;
@@ -142,7 +145,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private void initMap() {
         if (destination == null) {
             hideShowNavigationBar(false);
-            requestLocationPermission();
+            requestPermissions();
         } else {
             hideShowNavigationBar(true);
             traceRoute(destination);
@@ -206,14 +209,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             LatLng userLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             mMap.addMarker(new MarkerOptions().position(userLatLng).title(getString(R.string.txt_your_location)));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, DEFAULT_ZOOM));
-        } else {
-            Toast.makeText(getContext(), getString(R.string.error_unexpected), Toast.LENGTH_SHORT).show();
         }
     }
 
     private void observeDestination() {
         mapViewModel.getDestination().observe(getViewLifecycleOwner(), place -> {
             if (place != null) {
+                Log.i(TAG, "Destination updated: " + place.getTitle());
                 this.destination = new Place(
                         place.getId(),
                         place.getTitle(),
@@ -232,7 +234,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 if (currentLocation != null) {
                     traceRoute(this.destination);
                 } else {
-                    requestLocationPermission();
+                    requestPermissions();
                 }
             }
         });
@@ -296,7 +298,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
-    private void requestLocationPermission() {
+    private void requestPermissions() {
         requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
+        requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+
     }
 }

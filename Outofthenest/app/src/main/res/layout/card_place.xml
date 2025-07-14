@@ -51,14 +51,14 @@
                         android:layout_height="wrap_content"
                         android:text="@string/txt_place_name"
                         android:textStyle="bold"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/place_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/txt_place_address"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                          />
                 </LinearLayout>
 
@@ -90,7 +90,7 @@
                         android:id="@+id/btnGo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="13sp"
+                        android:textSize="12sp"
                         android:text="@string/btn_go_to_place" />
                 </LinearLayout>
             </LinearLayout>

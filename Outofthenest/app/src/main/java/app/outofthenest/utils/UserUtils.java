@@ -41,6 +41,11 @@ public class UserUtils {
         return null;
     }
 
+    public static boolean hasUser(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return prefs.contains(KEY_USER);
+    }
+
     public static void clearUser(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
