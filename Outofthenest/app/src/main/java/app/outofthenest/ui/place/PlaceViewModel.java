@@ -61,16 +61,18 @@ public class PlaceViewModel extends AndroidViewModel {
 
     public void fetchPlacesNear(double lat, double lng, double delta, String filter, ArrayList<String> tags) {
 
-        if(Constants.USE_MOC_MODE){
-            places.setValue(PlacesMoc.getPlaces());
-            return;
-        }
+//        if(Constants.USE_MOC_MODE){
+//            places.setValue(PlacesMoc.getPlaces());
+//            return;
+//        }
 
         isLoading.setValue(true);
         placeRepository.getPlacesNear(lat, lng, delta, filter, tags).observeForever(result -> {
             isLoading.setValue(false);
             if (result != null) {
+                Log.i(TAG, "Fetched places" + result.size());
                 places.setValue(result);
+                Log.i(TAG, "Places on places: " + places.getValue().size());
             } else {
                 errorMessage.setValue(getApplication().getString(R.string.txt_place_fetch_error));
             }

@@ -1,37 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="6dp"
     tools:context=".ui.events.EventsFragment">
 
-    <EditText
-        android:id="@+id/edtSearch"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/txt_search_here" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <RadioGroup
+            android:id="@+id/rad_periods"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <RadioButton
+                android:id="@+id/option1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/txt_periods_all"
+                android:checked="true"/>
 
+            <RadioButton
+                android:id="@+id/option2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/txt_periods_today" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_events"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            <RadioButton
+                android:id="@+id/option3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/txt_periods_this_week" />
 
-    <ImageView
-        android:id="@+id/imgNoEvents"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/img_home_page"
-        android:layout_margin="30dp"
-        android:visibility="gone"
-        tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="566dp" />
+            <RadioButton
+                android:id="@+id/option4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/txt_periods_this_month" />
+        </RadioGroup>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@string/txt_new_event_audience"
+            android:textStyle="bold"
+            android:textSize="16sp" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_tags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clipToPadding="false"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
 
-
-</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/imgNoEvents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_no_event"
+                android:layout_gravity="center_horizontal" />
+            <TextView
+                style="@style/TextH2"
+                android:id="@+id/txtNoEvents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="@string/txt_no_events_found" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

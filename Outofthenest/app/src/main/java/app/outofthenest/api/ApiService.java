@@ -5,28 +5,22 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-/**
- * This class deals with API communication
- */
 public class ApiService {
 
-    // To use Log.d(TAG, "message") for debugging
     String TAG = getClass().getSimpleName();
     private static final String BASE_URL = Constants.URL_API;
     private static Retrofit retrofit;
 
-    //singleton pattern to provide a retrofit instance
     public static Retrofit getRetrofit() {
         if (retrofit == null) {
-            // Log interceptor, show the communication on the log
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-            // Authentication interceptor
             AuthenticationInterceptor authInterceptor = new AuthenticationInterceptor();
 
-            //Add the authentication
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(authInterceptor)
                     .addInterceptor(logging)
@@ -34,11 +28,15 @@ public class ApiService {
                     .readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
                     .build();
 
-            //Call the api
+            // Custom Gson with date format
+            Gson gson = new GsonBuilder()
+                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                    .create();
+
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .client(client)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }
         return retrofit;

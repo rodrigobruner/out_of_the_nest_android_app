@@ -16,6 +16,7 @@
 
     <RatingBar
         android:id="@+id/ratingBar"
+        android:isIndicator="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,4 +45,27 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/img_no_reviews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txvPlacesTitle"
+        app:srcCompat="@drawable/img_no_review" />
+
+    <TextView
+        android:id="@+id/text_no_reviews"
+        style="@style/TextH2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/txt_no_reviews"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_no_reviews" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

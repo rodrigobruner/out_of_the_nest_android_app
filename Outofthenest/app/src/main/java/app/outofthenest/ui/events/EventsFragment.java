@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -28,12 +29,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import app.outofthenest.R;
 import app.outofthenest.adapters.EventAdapter;
+import app.outofthenest.adapters.TagsAdapter;
 import app.outofthenest.databinding.FragmentEventsBinding;
-import app.outofthenest.mocs.EventsMoc;
 import app.outofthenest.models.Event;
 import app.outofthenest.utils.Constants;
 import app.outofthenest.utils.LocationProvider;
@@ -49,11 +51,13 @@ public class EventsFragment extends Fragment {
 
     private EventsViewModel viewModel;
 
+    private TagsAdapter audienceAdapter;
+
     private EventAdapter adapter;
 
     private Location currentLocation;
 
-    private ArrayList<Event> eventsList;
+    private ArrayList<Event> eventsList = new ArrayList<>();
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -138,36 +142,14 @@ public class EventsFragment extends Fragment {
 
     //After getting the location, fetch events and set up the recyclerView
     private void onGetLocation() {
-        getEvents();
         setupRecyclerView();
-        setSearchListener();
+        setupAudienceRecyclerView();
         setOnEventClickListener();
+        observeViewModel();
+        getEvents();
+        searchEvents();
     }
 
-    // Set up the recyclerView
-    private void setupRecyclerView() {
-        RecyclerView recyclerView = binding.recyclerEvents;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new EventAdapter(eventsList);
-        recyclerView.setAdapter(adapter);
-    }
-
-    private void setSearchListener() {
-        binding.edtSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                searchEvents();
-            }
-        });
-    }
 
     private void setOnEventClickListener() {
         adapter.setOnEventClickListener(new EventAdapter.OnEventClickListener() {
@@ -182,65 +164,85 @@ public class EventsFragment extends Fragment {
     }
 
 
+    private void observeViewModel() {
+        viewModel.getEvents().observe(getViewLifecycleOwner(), events -> {
+            eventsList = (events != null) ? new ArrayList<>(events) : new ArrayList<>();
+            adapter.setEventList(eventsList);
+            binding.imgNoEvents.setVisibility(eventsList.isEmpty() ? View.VISIBLE : View.GONE);
+        });
+
+    }
 
     //Search functions
-    private void searchEvents() {
-        String searchText = binding.edtSearch.getText().toString().trim();
-
-        if (searchText.isEmpty()) {
-            adapter.setEventList(eventsList);
-            return;
-        }
-
-        List<Event> filteredEvents = filterEvents(searchText);
-        binding.imgNoEvents.setVisibility(filteredEvents.isEmpty() ? View.VISIBLE : View.GONE);
-        adapter.updateEvents(filteredEvents);
-    }
-
-    private List<Event> filterEvents(String searchText) {
-        List<Event> allEvents = eventsList;
-        List<Event> filteredEvents = new ArrayList<>();
-
-        for (Event event : allEvents) {
-            boolean matchesText = event.getTitle().toLowerCase().contains(searchText.toLowerCase()) ||
-                    event.getDescription().toLowerCase().contains(searchText.toLowerCase());
-
-            if (matchesText) {
-                filteredEvents.add(event);
-            }
-        }
-
-        return filteredEvents;
-    }
-
     private void getEvents() {
-//        Log.i(TAG, "fetch events.");
-        //Comment here to use real data
-        eventsList = EventsMoc.getEvents();
-
-        LocalDate today = LocalDate.now();
-        LocalDate until = today.plusDays(Constants.NUMBER_OF_DAYS_TO_LIST_EVENTS);
-        int radius = Constants.DEFAULT_SEARCH_EVENT_RADIUS;
-        ArrayList<String> targetAudience = new ArrayList<>();
-
-        viewModel.searchEvents(
-                currentLocation.getLatitude(),
-                currentLocation.getLongitude(),
-                radius,
-                today.toString(),
-                until.toString(),
-                targetAudience);
-
-        viewModel.getEvents().observe(getViewLifecycleOwner(), events -> {
-            if (events != null) {
-                binding.imgNoEvents.setVisibility(View.GONE);
-                eventsList = new ArrayList<>(events);
-                adapter.setEventList(eventsList);
-            } else {
-                binding.imgNoEvents.setVisibility(View.VISIBLE);
+        audienceAdapter.setOnTagSelectedListener(new TagsAdapter.OnTagSelectedListener() {
+            @Override
+            public void onTagSelected(String tag) {
+                searchEvents();
             }
+
+            @Override
+            public void onTagDeselected(String tag) {
+                searchEvents();
+            }
+        });
+
+        binding.radPeriods.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+          @Override
+          public void onCheckedChanged(RadioGroup group, int checkedId) {
+              searchEvents();
+          }
         });
     }
 
 
+    private void setupRecyclerView() {
+        RecyclerView recyclerView = binding.recyclerEvents;
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new EventAdapter(eventsList);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void searchEvents() {
+        ArrayList<String> audience = new ArrayList<>(getSelectedTags());
+
+        int numberOfDays = Constants.NUMBER_OF_DAYS_TO_LIST_EVENTS;
+        int selectedPeriodId = binding.radPeriods.getCheckedRadioButtonId();
+
+        if (selectedPeriodId == R.id.option2) {
+            numberOfDays = 0;
+        } else if (selectedPeriodId == R.id.option3) {
+            numberOfDays = 7;
+        } else if (selectedPeriodId == R.id.option4) {
+            numberOfDays = 30;
+        }
+
+        viewModel.searchEvents(
+                currentLocation.getLatitude(),
+                currentLocation.getLongitude(),
+                Constants.DEFAULT_SEARCH_EVENT_RADIUS,
+                LocalDate.now().toString(),
+                LocalDate.now().plusDays(numberOfDays).toString(),
+                audience);
+    }
+
+    private void setupAudienceRecyclerView() {
+        List<String> availableTags = Arrays.asList(getResources().getStringArray(R.array.list_target_audience));
+        audienceAdapter = new TagsAdapter(availableTags);
+        audienceAdapter.setSelectionEnabled(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(
+                getContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+        );
+        binding.recyclerTags.setLayoutManager(layoutManager);
+        binding.recyclerTags.setAdapter(audienceAdapter);
+    }
+
+    public List<String> getSelectedTags() {
+        if (audienceAdapter != null) {
+            return audienceAdapter.getSelectedTags();
+        }
+        return new ArrayList<>();
+    }
 }

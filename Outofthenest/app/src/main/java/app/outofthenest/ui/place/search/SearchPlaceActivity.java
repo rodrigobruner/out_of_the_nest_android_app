@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -109,16 +110,21 @@ public class SearchPlaceActivity extends AppCompatActivity {
 
     private void observeViewModel() {
         viewModel.getPlaces().observe(this, places -> {
+
+            Log.d(TAG, "Places fetched: " + (places != null ? places.size() : 0));
+
             ArrayList<String> selectedTags = new ArrayList<>(getSelectedTags());
             String searchText = binding.searchEditText.getText().toString().trim();
 
             if (searchText.isEmpty() && selectedTags.isEmpty()) {
                 placeAdapter.updatePlaces(new ArrayList<>());
+                setImageVisible(true);
                 return;
             }
 
             List<Place> filteredPlaces = filterPlaces(searchText, selectedTags, places != null ? places : new ArrayList<>());
             placeAdapter.updatePlaces(filteredPlaces);
+            setImageVisible(filteredPlaces.isEmpty());
         });
 
         viewModel.getIsLoading().observe(this, isLoading -> {
@@ -245,6 +251,11 @@ public class SearchPlaceActivity extends AppCompatActivity {
                         onGetLocation();
                     }
                 });
+    }
+
+    private void setImageVisible(boolean visible) {
+        binding.imgNoPlace.setVisibility(visible ? View.VISIBLE: View.GONE);
+        binding.txtNoPlace.setVisibility(visible ? View.VISIBLE: View.GONE);
     }
 
     private void onGetLocation() {

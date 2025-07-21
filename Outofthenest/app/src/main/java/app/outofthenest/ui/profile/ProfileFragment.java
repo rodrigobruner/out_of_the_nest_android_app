@@ -3,6 +3,7 @@ package app.outofthenest.ui.profile;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,7 @@ public class ProfileFragment extends Fragment {
         setupAuthenticationViewModel();
         getUser();
         //Just To debug token
-//        getUserToken();
+        getUserToken();
         logout();
         setupFamilyMembers();
         setOnClickAddFamilyMember();
@@ -181,7 +182,7 @@ public class ProfileFragment extends Fragment {
     // Just To debug token
     private void getUserToken() {
         viewModel.getUserToken().observe(getViewLifecycleOwner(), token -> {
-            //                Log.i(TAG, "User token: " + token);
+            Log.i(TAG, "User token: " + token);
             binding.txvToken.setText(
                     Objects.requireNonNullElseGet(token, () -> getString(R.string.txt_no_token_available)));
         });

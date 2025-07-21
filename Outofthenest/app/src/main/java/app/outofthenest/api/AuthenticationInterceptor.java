@@ -26,7 +26,7 @@ public class AuthenticationInterceptor implements Interceptor {
         Response response = auth(chain, originalRequest, false);
 
         // If 401, user token refresh
-        if (response.code() == 401 && !hasRetryHeader(originalRequest)) {
+        if (response.code() == 401 || response.code() == 403 && !hasRetryHeader(originalRequest)) {
             response.close(); // close failed response
 
             Request retryRequest = originalRequest.newBuilder()

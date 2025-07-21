@@ -52,7 +52,7 @@
     <string name="error_set_destination">Please select a destination first.</string>
 
     <!-- Map Search Screen -->
-    <string name="txt_event_bar_search_place">New Place</string>
+    <string name="txt_event_bar_search_place">Find a place</string>
     <string name="txt_place_fetch_error">Place not found</string>
 
     <!-- New Place screen -->
@@ -86,6 +86,8 @@
     <string name="txt_places_status">Status</string>
     <string name="btn_go_to_place">Trace route</string>
     <string name="btn_add_review">Add a review</string>
+    <string name="txt_find_a_place">Find a place</string>
+    <string name="txt_place_not_found"></string>
 
     <!-- Place review /new review -->
     <string name="txt_event_bar_review_place">Review place</string>
@@ -94,6 +96,7 @@
     <string name="alert_review_field_validate">Please fill all fields and provide a rating"</string>
     <string name="txt_success">Review created successfully!</string>
     <string name="btn_review">Submit review</string>
+    <string name="txt_no_reviews">No reviews for this place, be the first</string>
 
 
     <!-- Events -->
@@ -102,7 +105,12 @@
     <string name="txt_new_event">New Event</string>
     <string name="txt_event_bar_title_details">Event Details</string>
     <string name="txt_event_search_error">Error fetching events. Please try again.</string>
+    <string name="txt_no_events_found">No events found</string>
 
+    <string name="txt_periods_all">All</string>
+    <string name="txt_periods_today">Today</string>
+    <string name="txt_periods_this_week">This week</string>
+    <string name="txt_periods_this_month">This month</string>
 
     <!-- New Event -->
     <string name="txt_new_event_title">Title</string>
@@ -121,6 +129,7 @@
 
     <!-- Notifications -->
     <string name="txt_notification_bar_title">Notifications list</string>
+    <string name="txt_no_notifications">No notifications</string>
 
     <!-- profile screen -->
     <string name="txt_profile_bar_title">Profile</string>
@@ -147,7 +156,7 @@
 
     <string-array name="list_place_types">
         <item>Select a type...</item>
-        <item>Café</item>
+        <item>Coffee shop</item>
         <item>Library</item>
         <item>Other</item>
         <item>Park</item>

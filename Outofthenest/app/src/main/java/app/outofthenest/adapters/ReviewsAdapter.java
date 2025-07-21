@@ -9,7 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import app.outofthenest.R;
 import app.outofthenest.models.Review;
+import app.outofthenest.utils.DateUtils;
+
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -40,9 +43,10 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
         Review review = reviewList.get(position);
         holder.txvReviewTitle.setText(review.getTitle());
         holder.txvDescription.setText(review.getDescription());
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-        holder.txvDateTime.setText(sdf.format(review.getDatetime()));
         holder.ratingBar.setRating(review.getRating());
+        holder.txvDateTime.setText(DateUtils.formatDateTime(
+                holder.itemView.getResources(),
+                review.getDatetime()));
     }
 
     @Override

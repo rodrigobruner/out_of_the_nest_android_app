@@ -30,7 +30,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     // To use Log.d(TAG, "message") for debugging
     String TAG = getClass().getSimpleName();
 
-    private List<Place> placeList;
+    private List<Place> placeList = new ArrayList<>();
 
     private Context context;
 
@@ -62,13 +62,11 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
 
         // Deal with tags
         holder.tagList.removeAllViews();
-        ArrayList<String>  tags = place.getTags();
+        ArrayList<String> tags = place.getTags();
+        if (tags == null) tags = new ArrayList<>(); // Prevent NullPointerException
         String[] targetAudience = context.getResources().getStringArray(R.array.list_tags);
-        for (String tag: tags) {
-
+        for (String tag : tags) {
             int index = Arrays.asList(targetAudience).indexOf(tag);
-
-
             ImageView tagIcon = new ImageView(context);
             tagIcon.setLayoutParams(new LinearLayout.LayoutParams(
                     (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, context.getResources().getDisplayMetrics()),
@@ -101,9 +99,11 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     }
 
     public void updatePlaces(List<Place> newPlaces) {
-        this.placeList.clear();
-        this.placeList.addAll(newPlaces);
-        notifyDataSetChanged(); //from parent
+        if(newPlaces != null) {
+            this.placeList.clear();
+            this.placeList.addAll(newPlaces);
+            notifyDataSetChanged(); //from parent
+        }
     }
 
 

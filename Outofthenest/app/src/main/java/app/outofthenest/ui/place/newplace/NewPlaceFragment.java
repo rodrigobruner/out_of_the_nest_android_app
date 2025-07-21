@@ -141,6 +141,7 @@ public class NewPlaceFragment extends Fragment {
     private void setupSaveButton() {
         binding.btnSave.setOnClickListener(v -> {
             String name = binding.inpPlaceName.getText().toString();
+            String description = binding.inpDescription.getText().toString();
             String address = binding.inpAddress.getText().toString();
             String placeType = binding.spnPlaceType.getSelectedItem().toString();
             List<String> tags = getSelectedTags();
@@ -170,7 +171,7 @@ public class NewPlaceFragment extends Fragment {
                 placeAddress = getLatLongFromAddress(address);
             }
 
-            Place newPlace = new Place(name, address, placeType, placeAddress.getFullAddress(), placeAddress.getLatitude(), placeAddress.getLongitude(), new ArrayList<>(tags));
+            Place newPlace = new Place(name, description, placeType, placeAddress.getFullAddress(), placeAddress.getLatitude(), placeAddress.getLongitude(), new ArrayList<>(tags));
             Log.i(TAG, "New Place: " + placeAddress.getFullAddress());
             viewModel.createPlace(newPlace);
 

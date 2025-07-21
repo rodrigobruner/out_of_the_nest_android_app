@@ -12,8 +12,8 @@ public interface PlaceApi {
 
     @GET("places/getPlacesNear")
     Call<List<Place>> getPlacesNear(
-            @Query("lat") double lat,
-            @Query("lng") double lng,
+            @Query("latitude") double lat,
+            @Query("longitude") double lng,
             @Query("delta") double delta,
             @Query("filter") String filter,
             @Query("tags") List<String> tags

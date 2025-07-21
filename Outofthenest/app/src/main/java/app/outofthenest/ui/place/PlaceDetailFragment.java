@@ -1,7 +1,9 @@
 package app.outofthenest.ui.place;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+
 import java.util.List;
 
 import app.outofthenest.R;
@@ -25,6 +32,7 @@ import app.outofthenest.models.Place;
 import app.outofthenest.ui.events.NewEventActivity;
 import app.outofthenest.ui.maps.MainActivity;
 import app.outofthenest.ui.maps.MapViewModel;
+import app.outofthenest.utils.Constants;
 
 public class PlaceDetailFragment extends Fragment {
     // To use Log.d(TAG, "message") for debugging
@@ -68,6 +76,14 @@ public class PlaceDetailFragment extends Fragment {
     private void setUpPlace() {
         if (getArguments() != null) {
             place = getArguments().getSerializable(PLACE_PARAMATER, Place.class);
+
+//            String imageUrl = Constants.DEFAULT_IMAGE_PATH + "pool.png";
+//            Log.d(TAG, "Image URL: " + imageUrl);
+//            Glide.with(this)
+//                    .load(imageUrl)
+//                    .error(R.drawable.img_no_image)
+//                    .into(placeBinding.imageView);
+
             placeBinding.txvPlacesTitle.setText(place.getTitle());
             placeBinding.txvAddress.setText(place.getAddress());
             placeBinding.txvDistance.setText(place.getDistance());

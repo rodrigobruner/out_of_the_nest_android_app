@@ -32,7 +32,7 @@ public class TagIconMap {
 //            };
 //        }
 
-        if(tagIcons.length > 0) {
+        if (position >= 0 && position < tagIcons.length) {
             return tagIcons[position % tagIcons.length];
         }
         return null;

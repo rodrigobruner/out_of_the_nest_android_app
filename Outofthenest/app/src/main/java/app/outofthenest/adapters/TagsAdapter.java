@@ -20,7 +20,7 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
     // To use Log.d(TAG, "message") for debugging
     String TAG = getClass().getSimpleName();
 
-    private List<String> tags;
+    private List<String> tags = new ArrayList<>();
 
     private String tagCategory = "NO";
 
@@ -34,12 +34,17 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
 
 
     public TagsAdapter(List<String> tags) {
-        this.tags = tags;
+        if (tags != null) {
+            this.tags = tags;
+        }
+
         this.selectedTags = new ArrayList<>();
     }
 
     public TagsAdapter(List<String> tags, String tagCategory) {
-        this.tags = tags;
+        if (tags != null) {
+            this.tags = tags;
+        }
         this.tagCategory = tagCategory.toUpperCase();
         this.selectedTags = new ArrayList<>();
     }
@@ -54,7 +59,10 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
 
     @Override
     public int getItemCount() {
-        return tags.size();
+        if (tags != null) {
+            return tags.size();
+        }
+        return 0;
     }
 
     @Override
@@ -68,8 +76,11 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
         if(!tagCategory.equals("NO")) {
             Log.i(TAG, "Tag category: " + tagCategory + "position: " + position);
 
-            if(TagIconMap.getTagIconMap(position, tagCategory) != null) {
-                holder.chip.setChipIconResource(TagIconMap.getTagIconMap(position, tagCategory));
+            Integer iconRes = TagIconMap.getTagIconMap(position, tagCategory);
+            if(iconRes != null) {
+                holder.chip.setChipIconResource(iconRes);
+            }else {
+                holder.chip.setChipIcon(null);
             }
         }
 

@@ -9,9 +9,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import app.outofthenest.R;
+import app.outofthenest.mocs.ReviewsMoc;
 import app.outofthenest.models.Review;
 import app.outofthenest.repository.ReviewsRepository;
 import app.outofthenest.utils.Constants;
@@ -23,6 +26,7 @@ public class PlaceReviewViewModel extends AndroidViewModel {
     private MutableLiveData<Review> createdReview;
     private MutableLiveData<Boolean> isLoading;
     private MutableLiveData<String> errorMessage;
+    private MutableLiveData<List<Review>> reviews = new MutableLiveData<>();
 
     public PlaceReviewViewModel(@NonNull Application application) {
         super(application);
@@ -56,6 +60,25 @@ public class PlaceReviewViewModel extends AndroidViewModel {
                 }
             }
         });
+    }
+
+    public void fetchReviewsByPlace(int placeId) {
+
+        if(Constants.USE_MOC_MODE){
+            reviews.setValue(ReviewsMoc.getReviews());
+            isLoading.setValue(false);
+            return;
+        }
+
+        isLoading.setValue(true);
+        reviewRepository.getReviewsByPlace(placeId).observeForever(result -> {
+            isLoading.setValue(false);
+            reviews.setValue(result != null ? result : new ArrayList<>());
+        });
+    }
+
+    public LiveData<List<Review>> getReviews() {
+        return reviews;
     }
 
     public LiveData<Review> getCreatedReview() {

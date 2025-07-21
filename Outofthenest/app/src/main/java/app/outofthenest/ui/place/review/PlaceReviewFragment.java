@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.List;
@@ -22,14 +23,10 @@ import app.outofthenest.models.Review;
 public class PlaceReviewFragment extends Fragment {
 
     private static final String PLACE_PARAMETER = "place";
-
     // To use Log.d(TAG, "message") for debugging
     String TAG = getClass().getSimpleName();
-
     private FragmentPlaceReviewsBinding binding;
-
-
-
+    private PlaceReviewViewModel viewModel;
     private Place place;
 
     @Nullable
@@ -37,9 +34,16 @@ public class PlaceReviewFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = binding.inflate(inflater, container, false);
+        viewModel = new ViewModelProvider(this).get(PlaceReviewViewModel.class);
 
         init();
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUpRecyclerView();
     }
 
     private void init(){
@@ -59,12 +63,17 @@ public class PlaceReviewFragment extends Fragment {
     }
 
     private void setUpRecyclerView() {
-        List<Review> reviewList = getReviews();
-        ReviewsAdapter adapter = new ReviewsAdapter(reviewList);
-        binding.recyclerViewComments.setAdapter(adapter);
-        binding.recyclerViewComments.setLayoutManager(
-                new LinearLayoutManager(getContext())
-        );
+        int placeId = place != null ? place.getId() : 0;
+        viewModel.fetchReviewsByPlace(placeId);
+
+        viewModel.getReviews().observe(getViewLifecycleOwner(), reviews -> {
+            ReviewsAdapter adapter = new ReviewsAdapter(reviews);
+            binding.recyclerViewComments.setAdapter(adapter);
+            binding.recyclerViewComments.setLayoutManager(
+                    new LinearLayoutManager(getContext())
+            );
+            setImageVisible(reviews.isEmpty());
+        });
     }
 
     private List<Review> getReviews() {
@@ -81,6 +90,11 @@ public class PlaceReviewFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    private void setImageVisible(boolean visible) {
+        binding.imgNoReviews.setVisibility(visible ? View.VISIBLE: View.GONE);
+        binding.textNoReviews.setVisibility(visible ? View.VISIBLE: View.GONE);
     }
 
 }

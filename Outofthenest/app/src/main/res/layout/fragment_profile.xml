@@ -37,11 +37,18 @@
     <TextView
         android:id="@+id/txv_username"
         style="@style/TextH3"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/txt_username" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/txv_token"
+        android:layout_margin="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_token" />
 
     <View
         android:layout_width="match_parent"
@@ -96,14 +103,6 @@
         android:paddingEnd="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txv_description"/>
-
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/txv_token"
-        android:layout_margin="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_token" />
 
     <Button
         android:id="@+id/btn_add_family_member"

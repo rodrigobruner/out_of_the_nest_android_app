@@ -29,13 +29,21 @@ public class PlaceRepository {
 
     public LiveData<List<Place>> getPlacesNear(double lat, double lng, double delta, String filter, ArrayList<String> tags) {
         MutableLiveData<List<Place>> data = new MutableLiveData<>();
+        Log.i(TAG, "places near: lat=" + lat + ", lng=" + lng + ", delta=" + delta + ", filter=" + filter + ", tags=" + tags);
         placeApi.getPlacesNear(lat, lng, delta, filter, tags).enqueue(new Callback<List<Place>>() {
             @Override
             public void onResponse(Call<List<Place>> call, Response<List<Place>> response) {
-                data.setValue(response.body());
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.i(TAG, "response received: " + response.body().size());
+                    data.setValue(response.body());
+                } else {
+                    Log.i(TAG, "response error: " + response.code());
+                    data.setValue(new ArrayList<>()); // ou null, conforme sua lógica
+                }
             }
             @Override
             public void onFailure(Call<List<Place>> call, Throwable t) {
+                Log.i(TAG, "error: " + t.getMessage());
                 data.setValue(null);
             }
         });
@@ -44,7 +52,7 @@ public class PlaceRepository {
 
     public LiveData<Place> createPlace(Place place) {
         authRepo.refreshUserToken();
-        Log.i(TAG, "Creating place: " + place.getTitle());
+        Log.i(TAG, "creating place: " + place.getTitle());
         MutableLiveData<Place> data = new MutableLiveData<>();
         placeApi.createPlace(place).enqueue(new Callback<Place>() {
             @Override
