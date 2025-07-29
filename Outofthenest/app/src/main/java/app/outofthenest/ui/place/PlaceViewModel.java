@@ -18,6 +18,9 @@ import app.outofthenest.models.Place;
 import app.outofthenest.repository.PlaceRepository;
 import app.outofthenest.utils.Constants;
 
+/**
+ * ViewModel for places
+ */
 public class PlaceViewModel extends AndroidViewModel {
 
     // To use Log.d(TAG, "message") for debugging
@@ -36,6 +39,7 @@ public class PlaceViewModel extends AndroidViewModel {
         errorMessage = new MutableLiveData<>();
     }
 
+    // create a new place
     public void createPlace(Place place) {
         Log.i(TAG, "Creating place: " + place.getDatetime());
         isLoading.setValue(true);
@@ -59,12 +63,13 @@ public class PlaceViewModel extends AndroidViewModel {
         return places;
     }
 
-    public void fetchPlacesNear(double lat, double lng, double delta, String filter, ArrayList<String> tags) {
+    // get places near a location
+    public void getPlacesNear(double lat, double lng, double delta, String filter, ArrayList<String> tags) {
 
-//        if(Constants.USE_MOC_MODE){
-//            places.setValue(PlacesMoc.getPlaces());
-//            return;
-//        }
+        if(Constants.USE_MOC_MODE){
+            places.setValue(PlacesMoc.getPlaces());
+            return;
+        }
 
         isLoading.setValue(true);
         placeRepository.getPlacesNear(lat, lng, delta, filter, tags).observeForever(result -> {

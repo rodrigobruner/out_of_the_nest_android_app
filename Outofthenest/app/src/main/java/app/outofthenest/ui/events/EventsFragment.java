@@ -40,6 +40,9 @@ import app.outofthenest.models.Event;
 import app.outofthenest.utils.Constants;
 import app.outofthenest.utils.LocationProvider;
 
+/**
+ * Displays a list of events.
+ */
 public class EventsFragment extends Fragment {
 
     // To use Log.d(TAG, "message") for debugging
@@ -91,12 +94,13 @@ public class EventsFragment extends Fragment {
         getUserLocation();
     }
 
-
+    // set up the adapters for the RecyclerView
     private void sertUpAdapters() {
         adapter = new EventAdapter(new ArrayList<>());
         binding.recyclerEvents.setAdapter(adapter);
     }
 
+    // set up the ActionBar
     public void setUpActionBar() {
         ActionBar actionbar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if(actionbar != null) {
@@ -126,11 +130,12 @@ public class EventsFragment extends Fragment {
         requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
+    // get the user location
     private void getUserLocation() {
-//        Log.i(TAG, "Requesting user location...");
+//        Log.i(TAG, "Request user location...");
         LocationProvider.getInstance(requireContext()).getLocationLiveData()
             .observe(getViewLifecycleOwner(), location -> {
-//                Log.i(TAG, "Location updated: " + location);
+//                Log.i(TAG, "Location update: " + location);
                 if (location != null) {
 //                    Log.d(TAG, "Current location: " + location.getLatitude() + ", " + location.getLongitude());
                     currentLocation = location;
@@ -140,7 +145,7 @@ public class EventsFragment extends Fragment {
             });
     }
 
-    //After getting the location, fetch events and set up the recyclerView
+    //after getting the location, fetch events and set up the recyclerView
     private void onGetLocation() {
         setupRecyclerView();
         setupAudienceRecyclerView();
@@ -150,12 +155,12 @@ public class EventsFragment extends Fragment {
         searchEvents();
     }
 
-
+    // set up on event click listener
     private void setOnEventClickListener() {
         adapter.setOnEventClickListener(new EventAdapter.OnEventClickListener() {
             @Override
             public void OnEventClickListener(Event event) {
-                Log.i(TAG, "Event clicked: " + event.getTitle());
+//                Log.i(TAG, "Event clicked: " + event.getTitle());
                 Intent intent = new Intent(getContext(), EventActivity.class);
                 intent.putExtra(EVENT_PARAMETER_NAME, event);
                 startActivity(intent);
@@ -163,7 +168,7 @@ public class EventsFragment extends Fragment {
         });
     }
 
-
+    // Observe the ViewModel for events
     private void observeViewModel() {
         viewModel.getEvents().observe(getViewLifecycleOwner(), events -> {
             eventsList = (events != null) ? new ArrayList<>(events) : new ArrayList<>();
@@ -196,6 +201,7 @@ public class EventsFragment extends Fragment {
     }
 
 
+    // set up the RecyclerView for events
     private void setupRecyclerView() {
         RecyclerView recyclerView = binding.recyclerEvents;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -203,6 +209,7 @@ public class EventsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
+    // search for events
     private void searchEvents() {
         ArrayList<String> audience = new ArrayList<>(getSelectedTags());
 
@@ -226,6 +233,7 @@ public class EventsFragment extends Fragment {
                 audience);
     }
 
+    // set up the RecyclerView for audience tags
     private void setupAudienceRecyclerView() {
         List<String> availableTags = Arrays.asList(getResources().getStringArray(R.array.list_target_audience));
         audienceAdapter = new TagsAdapter(availableTags);
@@ -239,6 +247,7 @@ public class EventsFragment extends Fragment {
         binding.recyclerTags.setAdapter(audienceAdapter);
     }
 
+    // get selected audience tags
     public List<String> getSelectedTags() {
         if (audienceAdapter != null) {
             return audienceAdapter.getSelectedTags();

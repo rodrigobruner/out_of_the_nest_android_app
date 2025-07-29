@@ -16,19 +16,13 @@ import java.util.Locale;
 import app.outofthenest.R;
 import app.outofthenest.models.FamilyMember;
 
+/**
+ * Adapter to show family members in a RecyclerView
+ */
 public class FamilyMemberAdapter extends RecyclerView.Adapter<FamilyMemberAdapter.ViewHolder> {
 
     private List<FamilyMember> familyMembers;
     private OnDeleteClickListener onDeleteClickListener;
-
-    public interface OnDeleteClickListener {
-        void onDeleteClick(int position);
-    }
-
-    public FamilyMemberAdapter(List<FamilyMember> familyMembers, OnDeleteClickListener listener) {
-        this.familyMembers = familyMembers;
-        this.onDeleteClickListener = listener;
-    }
 
     @NonNull
     @Override
@@ -58,6 +52,17 @@ public class FamilyMemberAdapter extends RecyclerView.Adapter<FamilyMemberAdapte
         return familyMembers.size();
     }
 
+    public FamilyMemberAdapter(List<FamilyMember> familyMembers, OnDeleteClickListener listener) {
+        this.familyMembers = familyMembers;
+        this.onDeleteClickListener = listener;
+    }
+
+    // Interface to handle delete button clicks
+    public interface OnDeleteClickListener {
+        void onDeleteClick(int position);
+    }
+
+    // viewHolder class
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView typeTextView;
         TextView birthTextView;

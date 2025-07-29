@@ -11,7 +11,9 @@ import app.outofthenest.R;
 import app.outofthenest.databinding.ActivityHomeMainBinding;
 import app.outofthenest.utils.UserUtils;
 
-
+/**
+ * Is the entry point of the application.
+ */
 public class HomeMainActivity extends AppCompatActivity {
 
     private static final String TAG = "HomeMainActivity";
@@ -32,6 +34,7 @@ public class HomeMainActivity extends AppCompatActivity {
         setupButtons();
     }
 
+    // Check if the user is logged in or not
     private void checkUserLoggedIn() {
         viewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getApplication())).get(AuthenticationViewModel.class);
@@ -45,6 +48,7 @@ public class HomeMainActivity extends AppCompatActivity {
         });
     }
 
+    // setup buttons for Get Started and Login
     private void setupButtons(){
         homeBinding.btGetStarted.setOnClickListener(
                 v -> {
@@ -63,7 +67,7 @@ public class HomeMainActivity extends AppCompatActivity {
         );
     }
 
-    // Refresh token when app comes back from background
+    // refresh token when app comes back from background
     @Override
     protected void onResume() {
         super.onResume();

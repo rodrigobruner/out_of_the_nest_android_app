@@ -10,7 +10,13 @@
     <!-- App defaults -->
     <string name="default_place_status">Closed</string>
 
+    <!-- Welcome screen -->
+    <string name="txt_first_step">Before you start, set up your family members in your profile.</string>
+    <string name="bt_start">Got it, start</string>
+
+
     <!-- Permissions -->
+    <string name="txt_permition_denied">Permission denied: </string>
     <string name="permission_location_denied">Please enable location permission in settings to use this feature</string>
 
     <!-- Navigation -->
@@ -36,9 +42,10 @@
 
     <string name="success_registration">User created successfully</string>
     <string name="invalid_name">Inform a valid name</string>
-    <string name="invalid_email">Inform a valid e-mail</string>
     <string name="invalid_password">Inform a valid password</string>
+    <string name="invalid_email">Inform a valid email</string>
     <string name="invalid_password_not_match">Passwords do not match</string>
+    <string name="invalid_credential">The credentials used are incorrect</string>
     <string name="error_registration">The user could not be registered</string>
     <string name="error_login">Incorrect username or password</string>
     <string name="error_user_token">Failed to get authentication token</string>
@@ -48,8 +55,10 @@
     <string name="txt_your_location">Your Location</string>
     <string name="btn_add_place">Add Place</string>
     <string name="btn_go_to_place_now">Go</string>
+    <string name="btn_stop_to_place_now">Stop</string>
     <string name="error_maps_not_found">Google Maps app not found.</string>
     <string name="error_set_destination">Please select a destination first.</string>
+    <string name="txt_place_now">Now:</string>
 
     <!-- Map Search Screen -->
     <string name="txt_event_bar_search_place">Find a place</string>
@@ -75,19 +84,22 @@
     <string name="txt_place_creation_error">Error creating place</string>
 
 
-
     <!-- Places screen -->
     <string name="txt_place_detail_search_place">Place detail</string>
     <string name="txt_places_address">No address found for places</string>
     <string name="txt_tab_detail">About</string>
     <string name="txt_tab_comments">Reviews</string>
-    <string name="txt_places_distance">Distance</string>
+    <string name="txt_places_distance">Distance:</string>
     <string name="txt_places_time">Time</string>
     <string name="txt_places_status">Status</string>
     <string name="btn_go_to_place">Trace route</string>
     <string name="btn_add_review">Add a review</string>
     <string name="txt_find_a_place">Find a place</string>
     <string name="txt_place_not_found"></string>
+
+    <string name="text_place_status_open">Open</string>
+    <string name="text_place_status_close_soon">Close soon</string>
+    <string name="text_place_status_closed">Closed</string>
 
     <!-- Place review /new review -->
     <string name="txt_event_bar_review_place">Review place</string>
@@ -130,6 +142,10 @@
     <!-- Notifications -->
     <string name="txt_notification_bar_title">Notifications list</string>
     <string name="txt_no_notifications">No notifications</string>
+    <string name="txt_notification_deleted">Notification deleted.</string>
+    <string name="error_load_notifications">Failed to load notifications</string>
+    <string name="error_read_notifications">Failed to mark notification as read</string>
+    <string name="error_delete_notifications">Failed to delete notification</string>
 
     <!-- profile screen -->
     <string name="txt_profile_bar_title">Profile</string>
@@ -142,14 +158,16 @@
     <string name="txt_add_family_member">Add Family Member</string>
     <string name="btn_logout">Logout</string>
     <string name="btn_remove">Remove</string>
+    <string name="txt_dialog_title">Add Family Member</string>
+    <string name="btn_family_member_dialog">Add</string>
+    <string name="btn_cancel_family_member_dialog">Cancel</string>
+
 
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
-
 
 
     <string name="place_type_default">Select a type...</string>

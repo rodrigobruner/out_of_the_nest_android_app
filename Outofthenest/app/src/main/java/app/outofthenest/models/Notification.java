@@ -2,6 +2,9 @@ package app.outofthenest.models;
 
 import java.util.Date;
 
+/**
+ * Notification model class
+ */
 public class Notification {
     private String id;
     private String title;

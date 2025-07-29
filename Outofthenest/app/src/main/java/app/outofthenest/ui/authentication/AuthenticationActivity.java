@@ -16,6 +16,10 @@ import app.outofthenest.R;
 import app.outofthenest.adapters.AuthenticationPagerAdapter;
 import app.outofthenest.databinding.ActivityAuthenticationBinding;
 
+/**
+ * This class is the main activity for user authentication
+ * deal with registration and login.
+ */
 public class AuthenticationActivity extends AppCompatActivity {
 
     // To use Log.d(TAG, "message") for debugging
@@ -29,7 +33,6 @@ public class AuthenticationActivity extends AppCompatActivity {
         authenticationBinding = ActivityAuthenticationBinding.inflate(getLayoutInflater());
         setContentView(authenticationBinding.getRoot());
         EdgeToEdge.enable(this);
-
         init();
     }
 
@@ -38,6 +41,7 @@ public class AuthenticationActivity extends AppCompatActivity {
     }
 
 
+    // Set tabs for the authentication activity registration or login
     private void setupTabs(){
         AuthenticationPagerAdapter adapter = new AuthenticationPagerAdapter(this, this);
         authenticationBinding.viewPagerAuthentication.setAdapter(adapter);

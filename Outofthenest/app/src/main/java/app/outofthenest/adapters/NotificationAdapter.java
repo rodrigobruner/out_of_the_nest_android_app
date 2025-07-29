@@ -3,32 +3,26 @@ package app.outofthenest.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import app.outofthenest.R;
 import app.outofthenest.models.Notification;
 import app.outofthenest.utils.NotificationIconMapper;
+import app.outofthenest.utils.NotificationsUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Adapter to show notifications in a RecyclerView.
+ */
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
 
     private List<Notification> notificationList;
     private OnNotificationClickListener onNotificationClickListener;
-
-    public NotificationAdapter(List<Notification> notificationList) {
-        this.notificationList = notificationList;
-    }
-
-    public void setNotificationList(List<Notification> notificationList) {
-        this.notificationList = notificationList;
-        notifyDataSetChanged();
-    }
 
     @NonNull
     @Override
@@ -51,7 +45,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.txvTitle.setCompoundDrawablesWithIntrinsicBounds(
                 NotificationIconMapper.getTypeIcon(notification.getType()),
                 0,
-                NotificationIconMapper.getStatusIcon(notification.isRead()),
+                NotificationIconMapper.getStatusIcon(NotificationsUtils.isRead(holder.itemView.getContext(), notification.getId())),
                 0
         );
         holder.txvDatetime.setText(dateTime);
@@ -69,6 +63,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return notificationList != null ? notificationList.size() : 0;
     }
 
+    public NotificationAdapter(List<Notification> notificationList) {
+        this.notificationList = notificationList;
+    }
+
+    public void setNotificationList(List<Notification> notificationList) {
+        this.notificationList = notificationList;
+        notifyDataSetChanged();
+    }
 
     public ArrayList<Notification> getNotificationList() {
         return new ArrayList<>(notificationList);
@@ -79,11 +81,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         notifyItemRemoved(position);
     }
 
-    public void updateNotifications(List<Notification> newNotifications) {
-        this.notificationList = new ArrayList<>(newNotifications);
-        notifyDataSetChanged();
-    }
-
+    // deal with notification click events
     public interface OnNotificationClickListener {
         void onNotificationClick(Notification notification);
     }
@@ -92,6 +90,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         this.onNotificationClickListener = listener;
     }
 
+    // ViewHolder class
     static class NotificationViewHolder extends RecyclerView.ViewHolder {
 //        public BreakIterator txvMessage;
         TextView txvTitle, txvDatetime, txvMessage;

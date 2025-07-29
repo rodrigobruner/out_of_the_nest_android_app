@@ -26,10 +26,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
 
     private List<Review> reviewList;
 
-    public ReviewsAdapter(List<Review> reviewList) {
-        this.reviewList = reviewList;
-    }
-
     @NonNull
     @Override
     public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -53,7 +49,11 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
     public int getItemCount() {
         return reviewList.size();
     }
+    public ReviewsAdapter(List<Review> reviewList) {
+        this.reviewList = reviewList;
+    }
 
+    // ViewHolder class
     static class ReviewViewHolder extends RecyclerView.ViewHolder {
         TextView txvReviewTitle, txvDescription, txvDateTime;
         RatingBar ratingBar;

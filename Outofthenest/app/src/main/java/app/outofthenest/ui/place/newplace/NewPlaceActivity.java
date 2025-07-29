@@ -6,6 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import app.outofthenest.R;
 
+/**
+ * Activity for creating a new place.
+ * TODO: check if this activity is used in the app, if not, remove it.
+ */
 public class NewPlaceActivity extends AppCompatActivity {
 
     @Override

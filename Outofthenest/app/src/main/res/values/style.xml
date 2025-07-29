@@ -1,15 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-<!--    <style name="Theme.OutOfTheNest.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
-<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-<!--        <item name="colorPrimary">@color/primary</item>-->
-
-<!--    </style>-->
-
     <style name="TextTitleLight">
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:textSize">52sp</item>
         <item name="android:fontFamily">@font/impact</item>
-        <item name="android:shadowColor">@color/black</item>
+        <item name="boxBackgroundColor">?android:windowBackground</item>
         <item name="android:shadowDx">2</item>
         <item name="android:shadowDy">2</item>
         <item name="android:shadowRadius">4</item>
@@ -19,7 +13,7 @@
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:textSize">24sp</item>
         <item name="android:fontFamily">@font/poppins_semi_bold</item>
-        <item name="android:shadowColor">@color/black</item>
+        <item name="boxBackgroundColor">?android:windowBackground</item>
         <item name="android:shadowDx">2</item>
         <item name="android:shadowDy">2</item>
         <item name="android:shadowRadius">4</item>
@@ -78,7 +72,7 @@
         <item name="android:layout_height">60dp</item>
         <item name="android:layout_marginTop">15dp</item>
         <item name="boxBackgroundMode">outline</item>
-        <item name="boxBackgroundColor">?attr/colorOnPrimary</item>
+        <item name="boxBackgroundColor">?android:windowBackground</item>
         <item name="boxStrokeColor">?attr/colorPrimary</item>
         <item name="boxStrokeWidth">2dp</item>
         <item name="hintTextColor">?attr/colorPrimary</item>
@@ -91,7 +85,7 @@
         <item name="android:height">48dp</item>
         <item name="android:layout_marginTop">15dp</item>
         <item name="boxBackgroundMode">outline</item>
-        <item name="boxBackgroundColor">?attr/colorOnPrimary</item>
+        <item name="boxBackgroundColor">?android:windowBackground</item>
         <item name="boxStrokeColor">?attr/colorPrimary</item>
         <item name="boxStrokeWidth">2dp</item>
         <item name="hintTextColor">?attr/colorPrimary</item>
@@ -100,7 +94,6 @@
 
     <style name="Spiner">
         <item name="android:layout_width">match_parent</item>
-<!--        <item name="android:layout_height">wrap_content</item>-->
         <item name="android:spinnerMode">dropdown</item>
         <item name="android:backgroundTint">?attr/colorPrimary</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
@@ -110,15 +103,17 @@
         <item name="android:fontFamily">@font/poppins_semi_bold</item>
     </style>
 
-    <style name="DatePickerDialog" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/blue_800</item>
-        <item name="colorPrimary">@color/blue_800</item>
+    <style name="DatePickerDialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorPrimary">@color/blue_600</item>
+        <item name="colorPrimaryVariant">@color/blue_800</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorAccent">@color/blue_600</item>
         <item name="android:buttonBarPositiveButtonStyle">@style/DatePickerDialogButton</item>
         <item name="android:buttonBarNegativeButtonStyle">@style/DatePickerDialogButton</item>
     </style>
 
-    <style name="DatePickerDialogButton" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/blue_800</item>
+    <style name="DatePickerDialogButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/blue_600</item>
     </style>
 
     <style name="CircleImageView">
@@ -138,12 +133,10 @@
         <item name="android:inputType">textPassword</item>
     </style>
 
-
     <!-- TabLayout -->
-
     <style name="TabMenu">
-        <item name="android:background">@color/white</item>
-        <item name="tabTextColor">@color/secondary</item>
+        <item name="android:background">?android:windowBackground</item>
+        <item name="tabTextColor">?attr/colorOnSecondary</item>
         <item name="tabSelectedTextColor">?attr/colorPrimary</item>
         <item name="tabIndicatorColor">?attr/colorPrimary</item>
         <item name="android:layout_width">match_parent</item>

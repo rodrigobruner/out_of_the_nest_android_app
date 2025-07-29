@@ -2,6 +2,9 @@ package app.outofthenest.models;
 
 import java.util.Date;
 
+/**
+ * Review model class
+ */
 public class Review {
     private String id;
     private String title;

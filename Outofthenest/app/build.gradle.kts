@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.slf4j.simple)
     implementation(libs.firebase.messaging)
     implementation(libs.glide)
+    implementation(libs.google.places)
     annotationProcessor(libs.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

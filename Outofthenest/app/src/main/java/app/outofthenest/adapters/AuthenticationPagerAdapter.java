@@ -20,11 +20,6 @@ public class AuthenticationPagerAdapter extends FragmentStateAdapter {
 
     private final Context context;
 
-    public AuthenticationPagerAdapter(@NonNull FragmentActivity fa, Context context) {
-        super(fa);
-        this.context = context;
-    }
-
     @NonNull
     @Override
     public Fragment createFragment(int position) {
@@ -39,6 +34,11 @@ public class AuthenticationPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 2; //2 tabs
+        return 2;
+    }
+
+    public AuthenticationPagerAdapter(@NonNull FragmentActivity fa, Context context) {
+        super(fa);
+        this.context = context;
     }
 }

@@ -10,6 +10,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Communicates with the Review API to manage user reviews.
+ */
 public class ReviewsRepository {
 
     // To use Log.d(TAG, "message") for debugging
@@ -21,6 +24,7 @@ public class ReviewsRepository {
         reviewApi = ApiService.getRetrofit().create(ReviewApi.class);
     }
 
+    // create a new review
     public LiveData<Review> createReview(String title, String description, int rating, String userId, String placeId) {
         MutableLiveData<Review> data = new MutableLiveData<>();
         Review request = new Review(null, title, description, rating, null, userId, placeId);
@@ -37,24 +41,10 @@ public class ReviewsRepository {
         return data;
     }
 
+    // get reviews by place ID
     public LiveData<List<Review>> getReviewsByPlace(int placeId) {
         MutableLiveData<List<Review>> data = new MutableLiveData<>();
         reviewApi.getReviewsByPlace(placeId).enqueue(new Callback<List<Review>>() {
-            @Override
-            public void onResponse(Call<List<Review>> call, Response<List<Review>> response) {
-                data.setValue(response.body());
-            }
-            @Override
-            public void onFailure(Call<List<Review>> call, Throwable t) {
-                data.setValue(null);
-            }
-        });
-        return data;
-    }
-
-    public LiveData<List<Review>> getReviewsByUser(String userId) {
-        MutableLiveData<List<Review>> data = new MutableLiveData<>();
-        reviewApi.getReviewsByUser(userId).enqueue(new Callback<List<Review>>() {
             @Override
             public void onResponse(Call<List<Review>> call, Response<List<Review>> response) {
                 data.setValue(response.body());

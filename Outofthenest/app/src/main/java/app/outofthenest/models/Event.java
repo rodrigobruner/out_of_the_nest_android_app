@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Event model class
+ */
 public class Event  implements Serializable {
 
     String id;
@@ -14,6 +17,7 @@ public class Event  implements Serializable {
 
     Date datetime;
 
+    // should be a PlaceAddress object, but for simplicity using String
     String address;
 
     ArrayList<String> targetAudience;

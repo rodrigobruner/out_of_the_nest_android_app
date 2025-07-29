@@ -1,41 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <!-- Brand Colors -->
+    <color name="blue_1000">#03045E</color>
+    <color name="blue_800">#023E8A</color>
+    <color name="blue_600">#0277B6</color>
+    <color name="blue_400">#0096C7</color>
+    <color name="blue_200">#00B4D8</color>
+    <color name="orange_1000">#FF5400</color>
+    <color name="orange_800">#FF6D01</color>
+    <color name="orange_600">#FF8502</color>
+    <color name="orange_400">#FF9103</color>
+    <color name="orange_200">#FF9D03</color>
+    <color name="green_400">#4CAF50</color>
+    <color name="red_400">#DB6566</color>
+    <color name="red_200">#97475F</color>
 
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="grey">#FFD2D5D8</color>
+    <!-- Theme Colors -->
+    <color name="background">#FCFEFF</color>
+    <color name="background_dark">#000000</color>
+    <color name="primary">#27CBD9</color>
+    <color name="secondary">#9CE8ED</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#D2D5D8</color>
 
-    <!-- Custom colors for the app -->
-    <color name="blue_1000">#FF03045E</color>
-    <color name="blue_800">#FF023E8A</color>
-    <color name="blue_600">#FF0277B6</color>
-    <color name="blue_400">#FF0096C7</color>
-    <color name="blue_200">#FF00B4D8</color>
-
-    <color name="orange_1000">#FFFF5400</color>
-    <color name="orange_800">#FFFF6D01</color>
-    <color name="orange_600">#FFFF8502</color>
-    <color name="orange_400">#FFFF9103</color>
-    <color name="orange_200">#FFFF9D03</color>
-
-    <color name="red_400">#FFDB6566</color>
-    <color name="red_200">#FF97475F</color>
-
-    <color name="background">#FFFCFEFF</color>
-    <color name="primary">#FF27CBD9</color>
-    <color name="secondary">#FF9CE8ED</color>
-
-    <!-- Chip colors -->
+    <!-- UI Component Colors -->
     <color name="chip_selected">#E3F2FD</color>
     <color name="chip_unselected">#F5F5F5</color>
     <color name="chip_stroke_selected">#2196F3</color>
     <color name="chip_stroke_unselected">#CCCCCC</color>
-
-    <color name="route_color">#FFFF6D01</color>
-    <color name="progress_bar_color">#FFFF6D01</color>
+    <color name="route_color">#FF6D01</color>
+    <color name="progress_bar_color">#FF6D01</color>
 </resources>

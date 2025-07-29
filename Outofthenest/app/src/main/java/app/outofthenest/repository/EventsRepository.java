@@ -12,6 +12,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Communicates with the Events API to manage events.
+ */
 public class EventsRepository {
 
     // To use Log.d(TAG, "message") for debugging
@@ -22,6 +25,7 @@ public class EventsRepository {
         eventsApi = ApiService.getRetrofit().create(EventsApi.class);
     }
 
+    // create a new event
     public LiveData<Event> createEvent(Event event) {
         MutableLiveData<Event> data = new MutableLiveData<>();
         eventsApi.createEvent(event).enqueue(new Callback<Event>() {
@@ -37,9 +41,10 @@ public class EventsRepository {
         return data;
     }
 
+    // search events by location, date and target audience
     public LiveData<List<Event>> searchEvents(double lat, double lng, double radius, String startDate, String endDate, ArrayList<String> targetAudience) {
         MutableLiveData<List<Event>> data = new MutableLiveData<>();
-        eventsApi.searchEvents(lat, lng, radius, startDate, endDate, targetAudience).enqueue(new Callback<List<Event>>() {
+        eventsApi.searchEvents(startDate, endDate, targetAudience).enqueue(new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 data.setValue(response.body());
@@ -52,6 +57,7 @@ public class EventsRepository {
         return data;
     }
 
+    // get a event by ID
     public LiveData<Event> getEventById(String eventId) {
         MutableLiveData<Event> data = new MutableLiveData<>();
         eventsApi.getEvent(eventId).enqueue(new Callback<Event>() {
@@ -61,21 +67,6 @@ public class EventsRepository {
             }
             @Override
             public void onFailure(Call<Event> call, Throwable t) {
-                data.setValue(null);
-            }
-        });
-        return data;
-    }
-
-    public LiveData<List<Event>> getEventsByDate(String date) {
-        MutableLiveData<List<Event>> data = new MutableLiveData<>();
-        eventsApi.getEventsByDate(date).enqueue(new Callback<List<Event>>() {
-            @Override
-            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-                data.setValue(response.body());
-            }
-            @Override
-            public void onFailure(Call<List<Event>> call, Throwable t) {
                 data.setValue(null);
             }
         });

@@ -26,6 +26,10 @@ import app.outofthenest.databinding.FragmentMapsSearchPlacesBinding;
 import app.outofthenest.mocs.PlacesMoc;
 import app.outofthenest.models.Place;
 
+/**
+ * Fragment for searching places on the map.
+ * TODO: check if this fragment is used in the app, if not, remove it.
+ */
 public class MapsSearchPlacesFragment extends Fragment {
 
     // To use Log.d(TAG, "message") for debugging

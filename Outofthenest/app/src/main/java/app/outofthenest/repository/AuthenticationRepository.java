@@ -68,7 +68,7 @@ public class AuthenticationRepository {
 
     // Register new user
     public void register(String email, String pass, String fullName) {
-//        Log.i(TAG, "Attempting to register user with email: " + email);
+//        Log.i(TAG, "user with email: " + email);
         auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -76,7 +76,7 @@ public class AuthenticationRepository {
 //                    Log.i(TAG, "Register - Success!");
                     FirebaseUser user = auth.getCurrentUser();
 
-                    // Update user profile with full name
+                    // update user profile with full name
                     if (user != null && fullName != null && !fullName.isEmpty()) {
                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                 .setDisplayName(fullName)
@@ -112,7 +112,7 @@ public class AuthenticationRepository {
                     firebaseUserMLData.postValue(user);
 
                     if (user != null) {
-//                        Log.i(TAG, "Login successful for user: " + user.getDisplayName());
+//                        Log.i(TAG, "Login successful: " + user.getDisplayName());
 //                        Log.i(TAG, "User ID: " + user.getUid());
                         refreshUserToken();
                     }
@@ -123,7 +123,7 @@ public class AuthenticationRepository {
         });
     }
 
-    // Get Firebase ID Token for authentication
+    // get Firebase ID Token for authentication
     public void getUserToken() {
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
@@ -154,18 +154,19 @@ public class AuthenticationRepository {
         }
     }
 
-    // Get current user's full name
+    // get user full name
     public String getUserFullName() {
         FirebaseUser user = auth.getCurrentUser();
         return (user != null) ? user.getDisplayName() : null;
     }
 
-    // Get current user ID
+    // get user ID
     public String getCurrentUserId() {
         FirebaseUser user = auth.getCurrentUser();
         return (user != null) ? user.getUid() : null;
     }
 
+    // log out user
     public void signOut() {
         auth.signOut();
         userLoggedMLData.postValue(false);
@@ -173,7 +174,7 @@ public class AuthenticationRepository {
         userIdMLData.postValue(null);
     }
 
-    // Getters for new LiveData
+    // Getters
     public MutableLiveData<FirebaseUser> getFirebaseUserMLData() {
         return firebaseUserMLData;
     }

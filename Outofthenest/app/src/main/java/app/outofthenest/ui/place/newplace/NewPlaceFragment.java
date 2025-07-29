@@ -64,9 +64,7 @@ public class NewPlaceFragment extends Fragment {
         return new NewPlaceFragment();
     }
 
-
     // Lifecycle methods
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,10 +94,12 @@ public class NewPlaceFragment extends Fragment {
         setupSaveButton();
     }
 
+    //set up view models
     private void setUpViewModels() {
         viewModel = new ViewModelProvider(this).get(PlaceViewModel.class);
     }
 
+    //set up action bar
     private void setUpActionBar() {
         ActionBar actionbar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if(actionbar != null) {
@@ -113,7 +113,7 @@ public class NewPlaceFragment extends Fragment {
 
     //UI
 
-
+    // set up spinner for place types
     private void setUpSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 getContext(),
@@ -124,7 +124,7 @@ public class NewPlaceFragment extends Fragment {
         binding.spnPlaceType.setAdapter(adapter);
     }
 
-
+    // set up tags recycler view
     private void setupTagsRecyclerView() {
         List<String> availableTags = getAvailableTags();
         tagsAdapter = new TagsAdapter(availableTags, "PLACE");
@@ -137,7 +137,7 @@ public class NewPlaceFragment extends Fragment {
         binding.recyclerTags.setAdapter(tagsAdapter);
     }
 
-
+    // set up save button
     private void setupSaveButton() {
         binding.btnSave.setOnClickListener(v -> {
             String name = binding.inpPlaceName.getText().toString();
@@ -172,12 +172,13 @@ public class NewPlaceFragment extends Fragment {
             }
 
             Place newPlace = new Place(name, description, placeType, placeAddress.getFullAddress(), placeAddress.getLatitude(), placeAddress.getLongitude(), new ArrayList<>(tags));
-            Log.i(TAG, "New Place: " + placeAddress.getFullAddress());
+//            Log.i(TAG, "New Place: " + placeAddress.getFullAddress());
             viewModel.createPlace(newPlace);
 
         });
     }
 
+    //set up current location button
     private void setupCurrentLocationButton() {
         binding.btnCurrentLocation.setOnClickListener(v -> {
             showProgressBar(true);
@@ -192,8 +193,9 @@ public class NewPlaceFragment extends Fragment {
 
     //Observers
 
+    // observe ViewModel for changes
     private void observeViewModel() {
-        // Observer to created place
+        // observer created place
         viewModel.getCreatedPlace().observe(getViewLifecycleOwner(), place -> {
             if (place != null) {
                 Toast.makeText(requireContext(), getString(R.string.txt_place_created), Toast.LENGTH_SHORT).show();
@@ -202,6 +204,7 @@ public class NewPlaceFragment extends Fragment {
             }
         });
 
+        // observer loading state
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoading) {
@@ -213,7 +216,7 @@ public class NewPlaceFragment extends Fragment {
             }
         });
 
-        // Observer to erros
+        // observer to erros
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             if (error != null) {
                 Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
@@ -224,6 +227,7 @@ public class NewPlaceFragment extends Fragment {
 
     // Location
 
+    // init location permission launcher
     private void initLocationPermissionLauncher() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
         locationPermissionLauncher = registerForActivityResult(
@@ -238,15 +242,18 @@ public class NewPlaceFragment extends Fragment {
         );
     }
 
+    // check if permission is granted
     private boolean hasLocationPermission() {
         return ActivityCompat.checkSelfPermission(requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
+    // request location permission
     private void requestLocationPermission() {
         locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
+    // get current location address
     private void getCurrentLocationAddress() {
         if (!hasLocationPermission()) return;
         showProgressBar(true);
@@ -271,6 +278,7 @@ public class NewPlaceFragment extends Fragment {
         });
     }
 
+    // get address from latitude and longitude
     private void getAddressFromLocation(double latitude, double longitude) {
         showProgressBar(true);
         Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
@@ -300,6 +308,7 @@ public class NewPlaceFragment extends Fragment {
         }
     }
 
+    // get latitude and longitude from address
     private PlaceAddress getLatLongFromAddress(String address) {
         Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
         try {
@@ -316,7 +325,7 @@ public class NewPlaceFragment extends Fragment {
         return null;
     }
 
-
+    // fromat address to string
     private String formatAddress(Address address) {
         StringBuilder addressText = new StringBuilder();
 
@@ -349,12 +358,13 @@ public class NewPlaceFragment extends Fragment {
 
     //Others
 
-    // TODO: get from API on app load and save on shared preferences, here get from shered preferences
+    // TODO: get from API on app load and save on shared preferences, here get from string array
     public List<String> getAvailableTags() {
         String[] tags = getResources().getStringArray(R.array.list_tags);
         return Arrays.asList(tags);
     }
 
+    // return selected tags from adapter
     public List<String> getSelectedTags() {
         if (tagsAdapter != null) {
             return tagsAdapter.getSelectedTags();
@@ -362,9 +372,10 @@ public class NewPlaceFragment extends Fragment {
         return new ArrayList<>();
     }
 
+    //show or hide progress bar
     private void showProgressBar(boolean show) {
         if (binding != null && binding.progressBar != null) {
-            Log.i(TAG, "showProgressBar: " + show);
+//            Log.i(TAG, "showProgressBar: " + show);
             binding.progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
             binding.btnSave.setEnabled(!show);
             binding.btnCurrentLocation.setEnabled(!show);

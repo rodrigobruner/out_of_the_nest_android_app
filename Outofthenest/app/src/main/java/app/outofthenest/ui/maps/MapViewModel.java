@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 import app.outofthenest.models.Place;
 
+/**
+ * ViewModel for map
+ */
 public class MapViewModel extends ViewModel {
     // To use Log.d(TAG, "message") for debugging
     String TAG = getClass().getSimpleName();

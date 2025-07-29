@@ -23,6 +23,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Activity to create a new event.
+ */
 public class NewEventActivity extends AppCompatActivity {
 
     private String TAG = getClass().getSimpleName();
@@ -52,6 +55,7 @@ public class NewEventActivity extends AppCompatActivity {
         setupSaveButton();
     }
 
+    // set up the action bar
     private void setUpActionBar() {
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
@@ -62,15 +66,18 @@ public class NewEventActivity extends AppCompatActivity {
         }
     }
 
+    // Initializes the ViewModel
     private void setUpViewModel() {
         viewModel = new ViewModelProvider(this).get(EventsViewModel.class);
     }
 
+    // Set up the adapters for the RecyclerView
     private void setUpAdapters(){
         tagsAdapter = new TagsAdapter(getAvailableTags(), "EVENT");
         binding.recyclerTags.setAdapter(tagsAdapter);
     }
 
+    // Set up the UI
     private void observeViewModel() {
         viewModel.getCreatedEvent().observe(this, event -> {
             if (event != null) {
@@ -96,16 +103,19 @@ public class NewEventActivity extends AppCompatActivity {
         });
     }
 
+    // Set up date picker
     private void setUpDatePicker() {
         binding.inpEventDate.setFocusable(false);
         binding.inpEventDate.setClickable(true);
 
+        // initial text to datepicker
         binding.inpEventDate.setOnClickListener(v -> {
             final Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+            // create a dialog with a custom style
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     this,
                     R.style.DatePickerDialog,
@@ -121,20 +131,24 @@ public class NewEventActivity extends AppCompatActivity {
             calendar.add(Calendar.DAY_OF_MONTH, 1);
             datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
 
+            // show the date picker dialog
             datePickerDialog.show();
         });
     }
 
+    // show time picker
     private void showTimePicker(Calendar calendar) {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
+        // create a time picker dialog
         new android.app.TimePickerDialog(
                 this,
-                R.style.DatePickerDialog, // Use the same style as DatePickerDialog
+                R.style.DatePickerDialog, // use the same style as DatePickerDialog
                 (view, selectedHour, selectedMinute) -> {
                     calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                     calendar.set(Calendar.MINUTE, selectedMinute);
+                    // format the date and time
                     String dateTimeStr = String.format(Locale.getDefault(), "%04d-%02d-%02d %02d:%02d",
                             calendar.get(Calendar.YEAR),
                             calendar.get(Calendar.MONTH) + 1,
@@ -147,9 +161,11 @@ public class NewEventActivity extends AppCompatActivity {
         ).show();
     }
 
-
+    // Set up the save button
     private void setupSaveButton() {
         binding.button.setOnClickListener(v -> {
+
+            // Validate inputs
             String title = binding.inpEventTitle.getText().toString();
             String description = binding.inpEventDescription.getText().toString();
             String address = binding.inpEventAddress.getText().toString();
@@ -178,18 +194,17 @@ public class NewEventActivity extends AppCompatActivity {
                 return;
             }
 
-
-
             Date date = new Date();
             ArrayList<String> targetAudience = new ArrayList<>();
 
-
+            // create a new event
             Event newEvent = new Event(null, title, description, date, address, new ArrayList<>(audience));
             viewModel.createEvent(newEvent);
         });
     }
 
 
+    // set up the target RecyclerView
     private void setUpTargetRecyclerView() {
 
         List<String> availableTags = getAvailableTags();
@@ -203,11 +218,14 @@ public class NewEventActivity extends AppCompatActivity {
         binding.recyclerTags.setAdapter(tagsAdapter);
     }
 
+    // get target audience from string
+    // TODO: get from API
     public List<String> getAvailableTags() {
         String[] tags = getResources().getStringArray(R.array.list_target_audience);
         return Arrays.asList(tags);
     }
 
+    // get selected targets
     public List<String> getSelectedTags() {
         if (tagsAdapter != null) {
             return tagsAdapter.getSelectedTags();
@@ -215,6 +233,7 @@ public class NewEventActivity extends AppCompatActivity {
         return new ArrayList<>();
     }
 
+    // Show or hide the progress bar
     private void showProgressBar(boolean show) {
         if (binding.progressBar != null) {
             binding.progressBar.setVisibility(show ? View.VISIBLE : View.GONE);

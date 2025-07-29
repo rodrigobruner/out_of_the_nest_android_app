@@ -19,6 +19,9 @@ import app.outofthenest.models.Event;
 import app.outofthenest.repository.EventsRepository;
 import app.outofthenest.utils.Constants;
 
+/**
+ * ViewModel for events.
+ */
 public class EventsViewModel extends AndroidViewModel {
 
     String TAG = getClass().getSimpleName();
@@ -36,6 +39,7 @@ public class EventsViewModel extends AndroidViewModel {
         errorMessage = new MutableLiveData<>();
     }
 
+    // create event
     public void createEvent(Event event) {
         Log.i(TAG, "Creating event: " + event.getTitle());
         isLoading.setValue(true);
@@ -53,6 +57,7 @@ public class EventsViewModel extends AndroidViewModel {
         });
     }
 
+    // search events by positionm, peiriod and target audience
     public void searchEvents(double lat, double lng, double radius, String startDate, String endDate, ArrayList<String> targetAudience) {
         isLoading.setValue(true);
 
@@ -74,6 +79,7 @@ public class EventsViewModel extends AndroidViewModel {
                 });
     }
 
+    // get event by id
     public void getEventById(String id) {
         isLoading.setValue(true);
 

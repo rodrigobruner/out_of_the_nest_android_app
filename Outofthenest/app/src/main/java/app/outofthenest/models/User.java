@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * User model class
+ */
 public class User implements Serializable {
 
     @SerializedName("id")

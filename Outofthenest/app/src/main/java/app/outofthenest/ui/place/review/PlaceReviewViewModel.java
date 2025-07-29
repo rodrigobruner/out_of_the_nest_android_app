@@ -10,7 +10,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import app.outofthenest.R;
@@ -19,6 +18,9 @@ import app.outofthenest.models.Review;
 import app.outofthenest.repository.ReviewsRepository;
 import app.outofthenest.utils.Constants;
 
+/**
+ * ViewModel for place reviews
+ */
 public class PlaceReviewViewModel extends AndroidViewModel {
 
     String TAG = getClass().getSimpleName();
@@ -36,6 +38,7 @@ public class PlaceReviewViewModel extends AndroidViewModel {
         errorMessage = new MutableLiveData<>();
     }
 
+    // Method to create a new review
     public void createReview(Review review) {
 
         isLoading.setValue(true);
@@ -62,7 +65,8 @@ public class PlaceReviewViewModel extends AndroidViewModel {
         });
     }
 
-    public void fetchReviewsByPlace(int placeId) {
+    // Method to get reviews by place ID
+    public void getReviewsByPlace(int placeId) {
 
         if(Constants.USE_MOC_MODE){
             reviews.setValue(ReviewsMoc.getReviews());

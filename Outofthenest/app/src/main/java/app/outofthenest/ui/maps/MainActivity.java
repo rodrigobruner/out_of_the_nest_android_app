@@ -2,7 +2,6 @@ package app.outofthenest.ui.maps;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toolbar;
 
 import com.google.android.libraries.places.api.Places;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -19,10 +18,15 @@ import app.outofthenest.R;
 import app.outofthenest.databinding.ActivityMainBinding;
 import app.outofthenest.models.Place;
 
+/**
+ * Main screen of the application after user authentication.
+ */
 public class MainActivity extends AppCompatActivity {
 
-    private static String PLACE_PARAMATER = "place";
-    private static final String EVENT_PARAMETER_NAME = "event";
+    private static final String PLACE_PARAMATER = "place";
+    private static final String EVENT_PARAMETER = "event";
+    private static final String PROFILE_PARAMETER = "profile";
+
     private ActivityMainBinding mainBinding;
     private MapViewModel mapViewModel;
     private NavController navController; // Add NavController variable
@@ -37,9 +41,12 @@ public class MainActivity extends AppCompatActivity {
         init();
     }
 
+    // when receives a new intent.
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+
+        // go to places activity
         if (intent.hasExtra(PLACE_PARAMATER)) {
             // Navigate to the maps fragment first
             navController.navigate(R.id.navigation_maps);
@@ -51,8 +58,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if(intent.hasExtra(EVENT_PARAMETER_NAME)){
+        // go to events activity
+        if(intent.hasExtra(EVENT_PARAMETER)){
             navController.navigate(R.id.navigation_events);
+        }
+
+        // go to profile activity
+        if(intent.hasExtra(PROFILE_PARAMETER)){
+            navController.navigate(R.id.navigation_profile);
         }
     }
 
@@ -63,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         setupBottomNavigation();
     }
 
+    // Set up the NavController.
     private void setupBottomNavigation(){
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(

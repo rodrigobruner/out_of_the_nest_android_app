@@ -35,8 +35,12 @@ import app.outofthenest.ui.authentication.HomeMainActivity;
 import app.outofthenest.R;
 import app.outofthenest.databinding.FragmentProfileBinding;
 import app.outofthenest.ui.authentication.AuthenticationViewModel;
+import app.outofthenest.utils.Constants;
 import app.outofthenest.utils.UserUtils;
 
+/**
+ * Display user profile
+ */
 public class ProfileFragment extends Fragment {
 
     // To use Log.d(TAG, "message") for debugging
@@ -68,7 +72,7 @@ public class ProfileFragment extends Fragment {
         setOnClickAddFamilyMember();
     }
 
-
+    // set up the action bar
     public void setUpActionBar() {
         ActionBar actionbar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if(actionbar != null) {
@@ -79,7 +83,7 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-
+    // set up the family members recycler view
     private void setupFamilyMembers() {
         ArrayList<FamilyMember> familyMembers = UserUtils.getFamilyMembers(requireContext());
 
@@ -94,19 +98,21 @@ public class ProfileFragment extends Fragment {
          binding.recyclerFamilyMembers.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-
+    // set onClick listener for add family
     private void setOnClickAddFamilyMember() {
         binding.btnAddFamilyMember.setOnClickListener(v -> {
             addFamilyMemberDialog();
         });
     }
 
+    // show dialog to family member
     private void addFamilyMemberDialog() {
         dialogBinding = DialogAddFamilyMemberBinding.inflate(LayoutInflater.from(getContext()));
         Spinner spinnerType = dialogBinding.sprType;
         Button btnPickDate = dialogBinding.btnPickDate;
         TextView tvSelectedDate = dialogBinding.txvBirth;
 
+        // set up the types spinner
         ArrayAdapter<CharSequence> adapterSpinner = ArrayAdapter.createFromResource(
                 requireContext(),
                 R.array.list_family_member_types,
@@ -115,12 +121,15 @@ public class ProfileFragment extends Fragment {
         adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerType.setAdapter(adapterSpinner);
 
+        //TODO: move datePickerDialog to a separate function
+
+        // set up the date picker
         btnPickDate.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
-
+            // create a DatePickerDialog
             DatePickerDialog dialog = new DatePickerDialog(
                     getContext(),
                     R.style.DatePickerDialog,
@@ -128,7 +137,7 @@ public class ProfileFragment extends Fragment {
                         calendar.set(selectedYear, selectedMonth, selectedDay);
                         tvSelectedDate.setText(
                                 new SimpleDateFormat(
-                                        "dd/MM/yyyy",
+                                        Constants.DEFAULT_DATE_FORMAT,
                                         Locale.getDefault()).format(calendar.getTime()));
                     },
                     year, month, day
@@ -138,23 +147,24 @@ public class ProfileFragment extends Fragment {
             dialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
 
             Calendar minDate = Calendar.getInstance();
-            minDate.add(Calendar.YEAR, -120); // Minimum age 120
+            minDate.add(Calendar.YEAR, -120); // max age 120
             dialog.getDatePicker().setMinDate(minDate.getTimeInMillis());
-
+            // show the dialog
             dialog.show();
         });
 
+        // create and show the dialog
         new AlertDialog.Builder(getContext())
-                .setTitle("Add Family Member")
+                .setTitle(getString(R.string.txt_dialog_title))
                 .setView(dialogBinding.getRoot())
-                .setPositiveButton("Add", (dialog, which) -> {
+                .setPositiveButton(getString(R.string.btn_family_member_dialog), (dialog, which) -> {
                     String type = spinnerType.getSelectedItem().toString();
                     String dateStr = tvSelectedDate.getText().toString();
                     java.util.Date birth = null;
                     try {
-                        birth = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(dateStr);
+                        birth = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT, Locale.getDefault()).parse(dateStr);
                     } catch (Exception e) {
-                        // handle parse error
+                        // deal with error
                     }
                     if (type != null && birth != null) {
                         FamilyMember member = new FamilyMember(type, birth);
@@ -169,10 +179,11 @@ public class ProfileFragment extends Fragment {
                         binding.recyclerFamilyMembers.setAdapter(adapter);
                     }
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(getString(R.string.btn_cancel_family_member_dialog), null)
                 .show();
     }
 
+    // get user information
     private void getUser() {
         User user = UserUtils.getUser(requireContext());
         binding.txvName.setText(user.getName());
@@ -188,22 +199,13 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-
+    // set up the authentication view model
     private void setupAuthenticationViewModel(){
         viewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getActivity().getApplication())).get(AuthenticationViewModel.class);
-
-//        viewModel.getUserLoggedMLData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-//            @Override
-//            public void onChanged(Boolean login) {
-//                if (!login) {
-//                    Intent intent = new Intent(getActivity(), HomeMainActivity.class);
-//                    startActivity(intent);
-//                }
-//            }
-//        });
     }
 
+    // logout the user
     private void logout(){
         binding.btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,6 +213,8 @@ public class ProfileFragment extends Fragment {
 //                Log.i(TAG, "Logout button clicked");
                 UserUtils.clearUser(getContext());
                 viewModel.signOut();
+                Intent intent = new Intent(getActivity(), HomeMainActivity.class);
+                startActivity(intent);
             }
         });
     }

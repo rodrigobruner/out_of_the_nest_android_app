@@ -63,6 +63,54 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txv_description"/>
 
+    <LinearLayout
+        android:id="@+id/linearLayoutDistance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/btnGoToPlace"
+        tools:layout_editor_absoluteX="16dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/txt_places_distance"
+            android:textStyle="bold"
+            android:textSize="16dp"/>
+        <TextView
+            android:id="@+id/txvDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:textSize="16dp"
+            android:text="@string/txt_places_distance" />
+        />
+
+        <TextView
+            android:id="@+id/txvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="@string/txt_place_now"
+            android:textStyle="bold"
+            android:textSize="16dp"/>
+
+        <TextView
+            android:id="@+id/txvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="16dp"
+            android:text="@string/txt_places_status" />
+
+
+        />
+
+    </LinearLayout>
     <Button
         android:id="@+id/btnGoToPlace"
         android:layout_width="match_parent"
@@ -72,35 +120,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-    <LinearLayout
-        android:id="@+id/linearLayoutDistance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/btnGoToPlace">
-        <TextView
-            android:id="@+id/txvDistance"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_places_distance" />
 
-        <TextView
-            android:id="@+id/txvTime"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_places_time"/>
-        />
-        <TextView
-            android:id="@+id/txvStatus"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_places_status"/>
-        />
-
-    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

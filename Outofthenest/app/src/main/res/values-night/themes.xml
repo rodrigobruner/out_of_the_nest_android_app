@@ -1,53 +1,36 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme.OutOfTheNest" parent="Theme.MaterialComponents.DayNight">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue_600</item>
-        <item name="colorPrimaryVariant">@color/blue_800</item>
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="colorPrimary">@color/blue_800</item>
+        <item name="colorPrimaryVariant">@color/blue_1000</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/orange_200</item>
-        <item name="colorSecondaryVariant">@color/orange_800</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- actionBar -->
+        <item name="colorSecondary">@color/orange_800</item>
+        <item name="colorSecondaryVariant">@color/orange_1000</item>
+        <item name="colorOnSecondary">@color/white</item>
         <item name="actionBarTheme">@style/MyActionBar</item>
-        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/blue_1000</item>
         <item name="android:windowLightStatusBar">false</item>
-        <item name="android:statusBarColor">@color/blue_800</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:enforceStatusBarContrast">false</item>
-        <item name="android:enforceNavigationBarContrast">false</item>\
     </style>
 
     <style name="Theme.OutOfTheNest.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue_600</item>
-        <item name="colorPrimaryVariant">@color/blue_800</item>
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="colorPrimary">@color/blue_800</item>
+        <item name="colorPrimaryVariant">@color/blue_1000</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/orange_200</item>
-        <item name="colorSecondaryVariant">@color/orange_800</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- actionBar -->
+        <item name="colorSecondary">@color/orange_800</item>
+        <item name="colorSecondaryVariant">@color/orange_1000</item>
+        <item name="colorOnSecondary">@color/white</item>
         <item name="actionBarTheme">@style/MyActionBar</item>
-        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/blue_1000</item>
         <item name="android:windowLightStatusBar">false</item>
-        <item name="android:statusBarColor">@color/blue_800</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:enforceStatusBarContrast">false</item>
-        <item name="android:enforceNavigationBarContrast">false</item>
     </style>
 
     <style name="MyActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:textColorPrimary">@color/white</item>
-    </style>
-
-    <style name="EditTextNoZoom" parent="Widget.AppCompat.EditText">
-        <item name="android:textSize">16sp</item>
-        <item name="android:imeOptions">flagNoExtractUi</item>
-    </style>
-
-    <style name="Base.Theme.OutOfTheNest" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:textColorPrimary">@color/white</item>
     </style>
 

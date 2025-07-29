@@ -11,6 +11,9 @@ import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Date formatting.
+ */
 public class DateUtils {
 
     public static String formatDateTime(Resources resources, Date date) {

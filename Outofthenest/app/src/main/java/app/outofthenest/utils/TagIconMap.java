@@ -7,7 +7,12 @@ import java.util.Map;
 
 import app.outofthenest.R;
 
+/**
+ * Class to map tag to icons.
+ */
 public class TagIconMap {
+
+    // get the tag icon
     public static Integer getTagIconMap(int position, String tagCategory) {
 
         int[] tagIcons = new int[0];

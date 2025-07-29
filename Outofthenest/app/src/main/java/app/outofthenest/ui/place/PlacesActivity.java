@@ -10,6 +10,9 @@ import app.outofthenest.adapters.PlaceTabAdapter;
 import app.outofthenest.databinding.ActivityPlaceBinding;
 import app.outofthenest.models.Place;
 
+/**
+ * Display the details of a place and reviews
+ */
 public class PlacesActivity extends AppCompatActivity {
 
     // To use Log.d(TAG, "message") for debugging
@@ -32,10 +35,12 @@ public class PlacesActivity extends AppCompatActivity {
         setupTabs();
     }
 
+    //set up the action bar
     private void setUpPlaceTitle() {
         place = getIntent().getSerializableExtra("place", Place.class);
     }
 
+    // set up the tabs
     private void setupTabs(){
         PlaceTabAdapter adapter = new PlaceTabAdapter(this, this, place);
         placeBinding.viewPagerPlace.setAdapter(adapter);

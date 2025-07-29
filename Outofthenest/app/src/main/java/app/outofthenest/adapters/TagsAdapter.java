@@ -33,22 +33,6 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
     private boolean isSelectionEnabled = true;
 
 
-    public TagsAdapter(List<String> tags) {
-        if (tags != null) {
-            this.tags = tags;
-        }
-
-        this.selectedTags = new ArrayList<>();
-    }
-
-    public TagsAdapter(List<String> tags, String tagCategory) {
-        if (tags != null) {
-            this.tags = tags;
-        }
-        this.tagCategory = tagCategory.toUpperCase();
-        this.selectedTags = new ArrayList<>();
-    }
-
     @NonNull
     @Override
     public TagViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -73,9 +57,11 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
         holder.chip.setChecked(selectedTags.contains(tag));
         holder.chip.setEnabled(isSelectionEnabled);
 
+        // Set the tag icon
         if(!tagCategory.equals("NO")) {
-            Log.i(TAG, "Tag category: " + tagCategory + "position: " + position);
+//            Log.i(TAG, "Tag category: " + tagCategory + "position: " + position);
 
+            // get the icon based on the tag and category
             Integer iconRes = TagIconMap.getTagIconMap(position, tagCategory);
             if(iconRes != null) {
                 holder.chip.setChipIconResource(iconRes);
@@ -101,6 +87,25 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
         }
     }
 
+    // Constructor without tag category
+    public TagsAdapter(List<String> tags) {
+        if (tags != null) {
+            this.tags = tags;
+        }
+
+        this.selectedTags = new ArrayList<>();
+    }
+
+    // Constructor with tag category
+    public TagsAdapter(List<String> tags, String tagCategory) {
+        if (tags != null) {
+            this.tags = tags;
+        }
+        this.tagCategory = tagCategory.toUpperCase();
+        this.selectedTags = new ArrayList<>();
+    }
+
+    // static class to update the tags list
     static class TagViewHolder extends RecyclerView.ViewHolder {
         Chip chip;
 
@@ -111,7 +116,6 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
     }
 
     //Implementation of the selection
-
     public interface OnTagSelectedListener {
         void onTagSelected(String tag);
         void onTagDeselected(String tag);

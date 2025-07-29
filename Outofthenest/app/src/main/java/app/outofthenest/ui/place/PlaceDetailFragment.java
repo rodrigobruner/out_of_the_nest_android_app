@@ -34,6 +34,9 @@ import app.outofthenest.ui.maps.MainActivity;
 import app.outofthenest.ui.maps.MapViewModel;
 import app.outofthenest.utils.Constants;
 
+/**
+ * Fragment to display the details of a place.
+ */
 public class PlaceDetailFragment extends Fragment {
     // To use Log.d(TAG, "message") for debugging
     String TAG = getClass().getSimpleName();
@@ -61,8 +64,10 @@ public class PlaceDetailFragment extends Fragment {
         setUpActionBar();
         setUpPlace();
         setUpButton();
+        setUpStatus();
     }
 
+    //set up the action bar
     public void setUpActionBar() {
         ActionBar actionbar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if(actionbar != null) {
@@ -73,6 +78,7 @@ public class PlaceDetailFragment extends Fragment {
         }
     }
 
+    // set up ui
     private void setUpPlace() {
         if (getArguments() != null) {
             place = getArguments().getSerializable(PLACE_PARAMATER, Place.class);
@@ -84,6 +90,8 @@ public class PlaceDetailFragment extends Fragment {
 //                    .error(R.drawable.img_no_image)
 //                    .into(placeBinding.imageView);
 
+            Log.i(TAG, "Place: " + place.getRating());
+
             placeBinding.txvPlacesTitle.setText(place.getTitle());
             placeBinding.txvAddress.setText(place.getAddress());
             placeBinding.txvDistance.setText(place.getDistance());
@@ -93,6 +101,7 @@ public class PlaceDetailFragment extends Fragment {
         }
     }
 
+    // set up go button
     private void setUpButton(){
         placeBinding.btnGoToPlace.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), MainActivity.class); // or the Activity hosting MapsFragment
@@ -102,7 +111,20 @@ public class PlaceDetailFragment extends Fragment {
         });
     }
 
+    //set up status text color
+    private void setUpStatus(){
+        if(place.getStatus().equals(getString(R.string.text_place_status_closed))){
+            placeBinding.txvStatus.setTextColor(getResources().getColor(R.color.red_400, null));
+        } else if(place.getStatus().equals("Open")){
+            placeBinding.txvStatus.setTextColor(getResources().getColor(R.color.green_400, null));
+        } else if(place.getStatus().equals("Closing Soon")){
+            placeBinding.txvStatus.setTextColor(getResources().getColor(R.color.orange_400, null));
+        } else {
+            placeBinding.txvStatus.setTextColor(getResources().getColor(R.color.gray, null));
+        }
+    }
 
+    // set up tags recycler view
     private void setupTagsRecyclerView(List<String> availableTags) {
         tagsAdapter = new TagsAdapter(availableTags, "PLACE");
         tagsAdapter.setSelectionEnabled(false);

@@ -2,6 +2,9 @@ package app.outofthenest.utils;
 
 import app.outofthenest.R;
 
+/**
+ * Class to map notification types and icons.
+ */
 public class NotificationIconMapper {
     public static int getTypeIcon(String type) {
         switch (type.toUpperCase()) {

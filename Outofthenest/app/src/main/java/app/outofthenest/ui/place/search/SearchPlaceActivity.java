@@ -43,7 +43,7 @@ public class SearchPlaceActivity extends AppCompatActivity {
     private PlaceViewModel viewModel;
     private Location currentLocation;
 
-
+    // Deal with permissions
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) {
@@ -74,6 +74,7 @@ public class SearchPlaceActivity extends AppCompatActivity {
         getUserLocation();
     }
 
+    //set up the action bar
     public void setUpActionBar() {
         ActionBar actionbar = getSupportActionBar();
         if(actionbar != null) {
@@ -84,6 +85,7 @@ public class SearchPlaceActivity extends AppCompatActivity {
         }
     }
 
+    //set up the recycler view for places
     private void setupPlacesRecyclerView() {
         placeAdapter = new PlaceAdapter(getBaseContext(), new ArrayList<>());
         binding.placesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -91,6 +93,7 @@ public class SearchPlaceActivity extends AppCompatActivity {
         setPlaceClickListeners();
     }
 
+    //set up click for recycler view
     private void setPlaceClickListeners() {
         placeAdapter.setOnPlaceClickListener(place -> {
             Log.i(TAG, "Place clicked: " + place.getTitle());
@@ -108,7 +111,9 @@ public class SearchPlaceActivity extends AppCompatActivity {
         });
     }
 
+    // Observe the ViewModel for changes
     private void observeViewModel() {
+        // get places
         viewModel.getPlaces().observe(this, places -> {
 
             Log.d(TAG, "Places fetched: " + (places != null ? places.size() : 0));
@@ -122,15 +127,17 @@ public class SearchPlaceActivity extends AppCompatActivity {
                 return;
             }
 
-            List<Place> filteredPlaces = filterPlaces(searchText, selectedTags, places != null ? places : new ArrayList<>());
+            List<Place> filteredPlaces =  filterPlaces(searchText, selectedTags, places != null ? places : new ArrayList<>());
             placeAdapter.updatePlaces(filteredPlaces);
             setImageVisible(filteredPlaces.isEmpty());
         });
 
+        // loading state
         viewModel.getIsLoading().observe(this, isLoading -> {
             Log.d(TAG, "Loading: " + isLoading);
         });
 
+        // error message
         viewModel.getErrorMessage().observe(this, errorMessage -> {
             if (errorMessage != null) {
                 Log.e(TAG, "Error: " + errorMessage);
@@ -139,6 +146,7 @@ public class SearchPlaceActivity extends AppCompatActivity {
         });
     }
 
+    //set up the search listener
     private void setSearchListener() {
         binding.searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -154,6 +162,7 @@ public class SearchPlaceActivity extends AppCompatActivity {
         });
     }
 
+    // set up the tag listener
     private void setTagListener() {
         tagsAdapter.setOnTagSelectedListener(new TagsAdapter.OnTagSelectedListener() {
             @Override
@@ -170,6 +179,7 @@ public class SearchPlaceActivity extends AppCompatActivity {
         });
     }
 
+    //search for places based on text and tags
     private void searchPlaces() {
         ArrayList<String> selectedTags = new ArrayList<>(getSelectedTags());
         String searchText = binding.searchEditText.getText().toString().trim();
@@ -191,9 +201,10 @@ public class SearchPlaceActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), getString(R.string.permission_location_denied), Toast.LENGTH_SHORT).show();
         }
 
-        viewModel.fetchPlacesNear(lat, lng, Constants.DEFAULT_SEARCH_PLACE_DELTA, searchText, selectedTags);
+        viewModel.getPlacesNear(lat, lng, Constants.DEFAULT_SEARCH_PLACE_DELTA, searchText, selectedTags);
     }
 
+    // filter places
     private List<Place> filterPlaces(String searchText, List<String> selectedTags, List<Place> allPlaces) {
         List<Place> filteredPlaces = new ArrayList<>();
 
@@ -214,6 +225,7 @@ public class SearchPlaceActivity extends AppCompatActivity {
         return filteredPlaces;
     }
 
+    // set up the tags recycler view
     private void setupTagsRecyclerView() {
         List<String> availableTags = getAvailableTags();
         tagsAdapter = new TagsAdapter(availableTags);
@@ -226,11 +238,14 @@ public class SearchPlaceActivity extends AppCompatActivity {
         binding.recyclerTags.setAdapter(tagsAdapter);
     }
 
+    // get available tags from string array
+    // TODO: get tags from API
     public List<String> getAvailableTags() {
         String[] tags = getResources().getStringArray(R.array.list_tags);
         return Arrays.asList(tags);
     }
 
+    // get selected tags
     public List<String> getSelectedTags() {
         if (tagsAdapter != null) {
             return tagsAdapter.getSelectedTags();
@@ -238,10 +253,12 @@ public class SearchPlaceActivity extends AppCompatActivity {
         return new ArrayList<>();
     }
 
+    // request permission
     private void requestPermission() {
         requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
+    // get user location
     private void getUserLocation() {
         LocationProvider.getInstance(this).getLocationLiveData()
                 .observe(this, location -> {
@@ -253,14 +270,14 @@ public class SearchPlaceActivity extends AppCompatActivity {
                 });
     }
 
+    //set image visibility
     private void setImageVisible(boolean visible) {
         binding.imgNoPlace.setVisibility(visible ? View.VISIBLE: View.GONE);
         binding.txtNoPlace.setVisibility(visible ? View.VISIBLE: View.GONE);
     }
 
+    // callback when location is obtained
     private void onGetLocation() {
-        Log.i(TAG, "Location obtained, ready to search places");
-        // Você pode fazer uma busca automática aqui se desejar
         // searchPlaces();
     }
 }

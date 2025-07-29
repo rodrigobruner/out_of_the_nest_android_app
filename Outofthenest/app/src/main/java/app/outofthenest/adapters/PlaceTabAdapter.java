@@ -25,12 +25,6 @@ public class PlaceTabAdapter extends FragmentStateAdapter {
 
     private final Place place;
 
-    public PlaceTabAdapter(@NonNull FragmentActivity fragmentActivity, Context context, Place place) {
-        super(fragmentActivity);
-        this.context = context;
-        this.place = place;
-    }
-
     @Override
     public Fragment createFragment(int position) {
         // To pass place as a parameter to the fragments
@@ -50,6 +44,12 @@ public class PlaceTabAdapter extends FragmentStateAdapter {
     @Override
     public int getItemCount() {
         return 2; //2 tabs
+    }
+
+    public PlaceTabAdapter(@NonNull FragmentActivity fragmentActivity, Context context, Place place) {
+        super(fragmentActivity);
+        this.context = context;
+        this.place = place;
     }
 
 }

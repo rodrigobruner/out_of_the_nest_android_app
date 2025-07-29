@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 
 import app.outofthenest.R;
 
-
+/**
+ * Fragment for displaying a place card.
+ */
 public class PlaceCardFragment extends Fragment {
     // To use Log.d(TAG, "message") for debugging
     String TAG = getClass().getSimpleName();

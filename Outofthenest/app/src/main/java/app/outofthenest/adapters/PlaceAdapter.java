@@ -1,6 +1,7 @@
 package app.outofthenest.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,11 +40,6 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     //Click listener
     private OnGoClickListener onGoClickListener;
 
-    public PlaceAdapter(Context context, List<Place> placeList) {
-        this.context = context;
-        this.placeList = placeList;
-    }
-
     @NonNull
     @Override
     public PlaceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -60,11 +56,18 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
         holder.status.setText(place.getStatus());
         holder.ratingBar.setRating(place.getRating());
 
+        Log.i("RATING", "R:"+place.getRating());
+
         // Deal with tags
         holder.tagList.removeAllViews();
         ArrayList<String> tags = place.getTags();
-        if (tags == null) tags = new ArrayList<>(); // Prevent NullPointerException
+        // Prevent NullPointerException
+        if (tags == null) {
+            tags = new ArrayList<>();
+        }
         String[] targetAudience = context.getResources().getStringArray(R.array.list_tags);
+
+        // for each tag find the icon and add it to the list
         for (String tag : tags) {
             int index = Arrays.asList(targetAudience).indexOf(tag);
             ImageView tagIcon = new ImageView(context);
@@ -98,6 +101,12 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
         return placeList.size();
     }
 
+    public PlaceAdapter(Context context, List<Place> placeList) {
+        this.context = context;
+        this.placeList = placeList;
+    }
+
+    // to update the place list
     public void updatePlaces(List<Place> newPlaces) {
         if(newPlaces != null) {
             this.placeList.clear();
@@ -108,6 +117,8 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
 
 
     // Implementation of the click listner
+
+    // for place click events
     public interface OnPlaceClickListener {
         void onPlaceClick(Place place);
     }
@@ -116,6 +127,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
         this.onPlaceClickListener = listener;
     }
 
+    // for go button click events
     public interface OnGoClickListener {
         void onGoClick(Place place);
     }
@@ -125,8 +137,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     }
 
 
-    // Implemetention of Holder
-
+    // ViewHolder class
     static class PlaceViewHolder extends RecyclerView.ViewHolder {
         TextView title, address, status;
         RatingBar ratingBar;

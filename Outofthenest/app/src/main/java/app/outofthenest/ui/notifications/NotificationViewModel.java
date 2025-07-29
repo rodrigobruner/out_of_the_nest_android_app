@@ -1,24 +1,29 @@
 package app.outofthenest.ui.notifications;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
 import java.util.List;
 
-import app.outofthenest.api.ApiService;
-import app.outofthenest.api.NotificationApi;
-import app.outofthenest.mocs.NotificationsMoc;
+import app.outofthenest.R;
 import app.outofthenest.models.Notification;
-import app.outofthenest.utils.Constants;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import app.outofthenest.repository.NotificationRepository;
 
-public class NotificationViewModel extends ViewModel {
+/**
+ * ViewModel for notifications.
+ */
+public class NotificationViewModel extends AndroidViewModel {
+    private final NotificationRepository repository;
     private final MutableLiveData<List<Notification>> notifications = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
     private final MutableLiveData<String> error = new MutableLiveData<>(null);
+
+    public NotificationViewModel(Application application) {
+        super(application);
+        repository = new NotificationRepository();
+    }
 
     public LiveData<List<Notification>> getNotifications() {
         return notifications;
@@ -32,32 +37,34 @@ public class NotificationViewModel extends ViewModel {
         return error;
     }
 
-    public void fetchNotifications(String userId) {
-
-        // Moc mode for testing
-        if (Constants.USE_MOC_MODE){
-            notifications.setValue(NotificationsMoc.getNotifications());
-            isLoading.setValue(false);
-            return;
-        }
-
+    // get notifications for a user
+    public void getNotifications(String userId) {
         isLoading.setValue(true);
-        NotificationApi api = ApiService.getRetrofit().create(NotificationApi.class);
-        api.getUserNotifications(userId).enqueue(new Callback<List<Notification>>() {
-            @Override
-            public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {
-                isLoading.setValue(false);
-                if (response.isSuccessful() && response.body() != null) {
-                    notifications.setValue(response.body());
-                } else {
-                    error.setValue("Failed to load notifications");
-                }
+        repository.getUserNotifications(userId).observeForever(result -> {
+            isLoading.setValue(false);
+            if (result != null) {
+                notifications.setValue(result);
+                error.setValue(null);
+            } else {
+                error.setValue(getApplication().getString(R.string.error_load_notifications));
             }
+        });
+    }
 
-            @Override
-            public void onFailure(Call<List<Notification>> call, Throwable t) {
-                isLoading.setValue(false);
-                error.setValue(t.getMessage());
+    // mark a notification as read
+    public void markAsRead(String notificationId) {
+        repository.markAsRead(notificationId).observeForever(success -> {
+            if (!success) {
+                error.setValue(getApplication().getString(R.string.error_read_notifications));
+            }
+        });
+    }
+
+    // delete a notification
+    public void deleteNotification(String notificationId) {
+        repository.deleteNotification(notificationId).observeForever(success -> {
+            if (!success) {
+                error.setValue(getApplication().getString(R.string.error_delete_notifications));
             }
         });
     }

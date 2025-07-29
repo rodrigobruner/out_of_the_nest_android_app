@@ -7,6 +7,9 @@ import java.util.Date;
 
 import app.outofthenest.models.Notification;
 
+/**
+ * This class provides mock data for notifications.
+ */
 public class NotificationsMoc {
 
     public static ArrayList<Notification> getNotifications() {

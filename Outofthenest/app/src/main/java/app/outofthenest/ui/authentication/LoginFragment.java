@@ -21,8 +21,13 @@ import app.outofthenest.models.User;
 import app.outofthenest.ui.maps.MainActivity;
 import app.outofthenest.R;
 import app.outofthenest.databinding.FragmentLoginBinding;
+import app.outofthenest.ui.onboard.OnboardActivity;
 import app.outofthenest.utils.UserUtils;
+import app.outofthenest.utils.OnboardUtils;
 
+/**
+ * Fragment for log in.
+ */
 public class LoginFragment extends Fragment {
 
     // To use Log.d(TAG, "message") for debugging
@@ -47,6 +52,7 @@ public class LoginFragment extends Fragment {
         login();
     }
 
+    // observe Error LiveData
     private void errorHandling() {
         viewModel.getErrorMessageMLData().observe(getViewLifecycleOwner(), message -> {
             if (message != null && !message.trim().isEmpty()) {
@@ -55,12 +61,15 @@ public class LoginFragment extends Fragment {
         });
     }
 
+    // Set up ViewModel
     private void setUpView() {
         viewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getActivity().getApplication())).get(AuthenticationViewModel.class);
         loginBinding.inpEmail.requestFocus();
     }
 
+    // TODO: improve it, create a static method in Utils
+    // Check if the user is logged in
     private void checkIfUserIsLoggedIn(){
         viewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getActivity().getApplication())).get(AuthenticationViewModel.class);
@@ -80,9 +89,14 @@ public class LoginFragment extends Fragment {
                             null,
                             new ArrayList<>()
                     );
-                    UserUtils.saveUser(requireContext(), user);
 
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    Intent intent;
+                    UserUtils.saveUser(requireContext(), user);
+                        intent = new Intent(getActivity(), OnboardActivity.class);
+                    if(OnboardUtils.isFirstTime(getContext())){
+                        intent = new Intent(getActivity(), MainActivity.class);
+                    }
+
                     startActivity(intent);
                 } else {
                     Toast.makeText(getContext(), getString(R.string.error_login), Toast.LENGTH_SHORT).show();
@@ -91,6 +105,7 @@ public class LoginFragment extends Fragment {
         });
     }
 
+    // set up login button and validate user input
     private void login(){
         loginBinding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,12 +117,12 @@ public class LoginFragment extends Fragment {
                 String password = loginBinding.inpPassword.getText().toString();
 
                 if(email.length() < 3 || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(getContext(), getString(R.string.invalid_email), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.invalid_credential), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(password.isEmpty() || password.length() < 6) {
-                    Toast.makeText(getContext(), getString(R.string.invalid_password), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.invalid_credential), Toast.LENGTH_SHORT).show();
                     return;
                 }
 

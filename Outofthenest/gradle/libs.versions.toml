@@ -26,6 +26,7 @@ slf4jSimple = "2.0.17"
 firebaseMessaging = "24.1.2"
 glide = "5.0.0-rc01"
 compiler = "5.0.0-rc01"
+placesVersion = "4.4.1"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -52,6 +53,7 @@ slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "compiler" }
+google-places = { group = "com.google.android.libraries.places", name = "places", version.ref = "placesVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

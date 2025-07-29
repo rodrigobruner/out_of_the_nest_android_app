@@ -29,6 +29,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.common.util.DataUtils;
 
+/**
+ * Displays the details of a event.
+ */
 public class EventActivity extends AppCompatActivity {
 
     // To use Log.d(TAG, "message") for debugging
@@ -59,10 +62,12 @@ public class EventActivity extends AppCompatActivity {
         setUpEvent();
     }
 
+    // Initializes the ViewModel
     private void setUpViewModel() {
         viewModel = new ViewModelProvider(this).get(EventsViewModel.class);
     }
 
+    // set up the ActionBar
     public void setUpActionBar() {
         ActionBar actionbar = getSupportActionBar();
         if(actionbar != null) {
@@ -73,6 +78,7 @@ public class EventActivity extends AppCompatActivity {
         }
     }
 
+    // Check intent parameters and set up a event
     private void setUpEvent() {
         Event event = null;
 
@@ -92,6 +98,7 @@ public class EventActivity extends AppCompatActivity {
         }
     }
 
+    // Set up the UI
     private void setUpUi(Event event) {
         binding.txvEventTitle.setText(event.getTitle());
         binding.txvEventDate.setText(DateUtils.formatDateTime(getResources(), event.getDatetime()));
@@ -100,7 +107,7 @@ public class EventActivity extends AppCompatActivity {
         setupTagsRecyclerView(event.getTargetAudience());
     }
 
-
+    // set up the tags RecyclerView
     private void setupTagsRecyclerView(List<String> availableTags) {
         tagsAdapter = new TagsAdapter(availableTags);
         tagsAdapter.setSelectionEnabled(false);

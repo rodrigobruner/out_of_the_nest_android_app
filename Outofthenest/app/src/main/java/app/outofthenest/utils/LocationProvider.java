@@ -12,6 +12,10 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
+/**
+ * Singleton class to provide location services.
+ * TODO: apply in the screens where location is needed.
+ */
 public class LocationProvider {
     private static LocationProvider instance;
     private final FusedLocationProviderClient fusedLocationClient;

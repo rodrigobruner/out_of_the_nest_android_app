@@ -1,5 +1,8 @@
 package app.outofthenest.models;
 
+/**
+ * Tag model class
+ */
 public class Tag {
     private String name;
     private String icon;

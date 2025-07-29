@@ -1,5 +1,9 @@
 package app.outofthenest.models;
 
+/**
+ * PlaceAddress model class
+ * is used to get coordinates and/or full address of a place
+ */
 public class PlaceAddress {
 
     private String fullAddress;

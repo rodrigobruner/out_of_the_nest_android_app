@@ -11,6 +11,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import app.outofthenest.repository.AuthenticationRepository;
 
+/**
+ * ViewModel for user authentication.
+ */
 public class AuthenticationViewModel extends AndroidViewModel {
 
     // To use Log.d(TAG, "message") for debugging

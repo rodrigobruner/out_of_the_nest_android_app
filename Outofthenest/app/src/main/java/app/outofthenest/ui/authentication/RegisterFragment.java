@@ -19,6 +19,9 @@ import app.outofthenest.R;
 import app.outofthenest.databinding.ActivityAuthenticationBinding;
 import app.outofthenest.databinding.FragmentRegisterBinding;
 
+/**
+ * Fragment for user registration.
+ */
 public class RegisterFragment extends Fragment {
 
     // To use Log.d(TAG, "message") for debugging

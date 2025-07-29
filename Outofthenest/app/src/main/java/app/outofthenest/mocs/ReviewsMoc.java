@@ -6,6 +6,9 @@ import java.util.List;
 
 import app.outofthenest.models.Review;
 
+/**
+ * This class provides mock data for reviews.
+ */
 public class ReviewsMoc {
     public static List<Review> getReviews() {
         List<Review> reviews = new ArrayList<>();

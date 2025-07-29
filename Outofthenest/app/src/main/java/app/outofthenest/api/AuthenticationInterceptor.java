@@ -22,6 +22,7 @@ public class AuthenticationInterceptor implements Interceptor {
     @NonNull
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
+        // get the request
         Request originalRequest = chain.request();
         Response response = auth(chain, originalRequest, false);
 
@@ -29,16 +30,20 @@ public class AuthenticationInterceptor implements Interceptor {
         if (response.code() == 401 || response.code() == 403 && !hasRetryHeader(originalRequest)) {
             response.close(); // close failed response
 
+            // Add a retry header to the request
             Request retryRequest = originalRequest.newBuilder()
                     .header("X-Retry-Attempt", MAX_RETRY)
                     .build();
-            // force refresh
+
+            // force refresh if the token is expired
             return auth(chain, retryRequest, true);
         }
         return response;
     }
+
     //Add the auth on request
     private Response auth(Chain chain, Request request, boolean forceRefresh) throws IOException {
+
         // Get User from firebase
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {

@@ -12,13 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import java.util.List;
-
 import app.outofthenest.adapters.ReviewsAdapter;
 import app.outofthenest.databinding.FragmentPlaceReviewsBinding;
-import app.outofthenest.mocs.ReviewsMoc;
 import app.outofthenest.models.Place;
-import app.outofthenest.models.Review;
 
 public class PlaceReviewFragment extends Fragment {
 
@@ -53,7 +49,7 @@ public class PlaceReviewFragment extends Fragment {
     }
 
 
-
+    //set up ui
     private void setUpPlaceTitle() {
         if (getArguments() != null) {
             place = getArguments().getSerializable("place", Place.class);
@@ -62,9 +58,10 @@ public class PlaceReviewFragment extends Fragment {
         }
     }
 
+    //set up recycler view
     private void setUpRecyclerView() {
         int placeId = place != null ? place.getId() : 0;
-        viewModel.fetchReviewsByPlace(placeId);
+        viewModel.getReviewsByPlace(placeId);
 
         viewModel.getReviews().observe(getViewLifecycleOwner(), reviews -> {
             ReviewsAdapter adapter = new ReviewsAdapter(reviews);
@@ -76,10 +73,11 @@ public class PlaceReviewFragment extends Fragment {
         });
     }
 
-    private List<Review> getReviews() {
-        return ReviewsMoc.getReviews();
-    }
+//    private List<Review> getReviews() {
+//        return ReviewsMoc.getReviews();
+//    }
 
+    // set up review button
     private void setUpReviewButton(){
         binding.btnAddReview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +90,7 @@ public class PlaceReviewFragment extends Fragment {
         });
     }
 
+    // set image visibilit
     private void setImageVisible(boolean visible) {
         binding.imgNoReviews.setVisibility(visible ? View.VISIBLE: View.GONE);
         binding.textNoReviews.setVisibility(visible ? View.VISIBLE: View.GONE);

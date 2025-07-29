@@ -31,7 +31,6 @@ public class NewPlaceReviewActivity extends AppCompatActivity {
     PlaceReviewViewModel viewModel;
 
 //    private AuthenticationViewModel authViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +47,7 @@ public class NewPlaceReviewActivity extends AppCompatActivity {
         observeViewModel();
     }
 
+    //set up view models
     private void setUpViewModels(){
         viewModel = new ViewModelProvider(this).get(PlaceReviewViewModel.class);
 //        authViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
@@ -55,7 +55,7 @@ public class NewPlaceReviewActivity extends AppCompatActivity {
     }
 
 
-
+    //set up action bar
     public void setUpActionBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -66,6 +66,7 @@ public class NewPlaceReviewActivity extends AppCompatActivity {
         }
     }
 
+    //set up save button
     private void setUpSaveButton(){
 //        Log.i(TAG, "setUpSaveButton");
         binding.btnSave.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +78,7 @@ public class NewPlaceReviewActivity extends AppCompatActivity {
         });
     }
 
+    //set up save button
     private void saveReview(){
         String title = binding.edtTitle.getText().toString().trim();
         String description = binding.edtDescription.getText().toString().trim();
@@ -102,7 +104,9 @@ public class NewPlaceReviewActivity extends AppCompatActivity {
         viewModel.createReview(review);
     }
 
+    // observe Viewmodel for changes
     private void observeViewModel() {
+        // observe created review
         viewModel.getCreatedReview().observe(this, new Observer<Review>() {
             @Override
             public void onChanged(Review review) {
@@ -113,6 +117,7 @@ public class NewPlaceReviewActivity extends AppCompatActivity {
             }
         });
 
+        // observe load state
         viewModel.getIsLoading().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoading) {
@@ -120,6 +125,7 @@ public class NewPlaceReviewActivity extends AppCompatActivity {
             }
         });
 
+        // observe error
         viewModel.getErrorMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String errorMessage) {
@@ -131,6 +137,7 @@ public class NewPlaceReviewActivity extends AppCompatActivity {
         });
     }
 
+    //show or hide progress bar
     private void showProgressBar(boolean show) {
         if (binding != null && binding.progressBar != null) {
             binding.progressBar.setVisibility(show ? View.VISIBLE : View.GONE);

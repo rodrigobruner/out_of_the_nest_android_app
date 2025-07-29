@@ -6,19 +6,16 @@ import app.outofthenest.models.Review;
 import retrofit2.Call;
 import retrofit2.http.*;
 
+/**
+ * Calls to the reviews API.
+ */
 public interface ReviewApi {
+
+    // create a review of a place on the server
     @POST("reviews/createReview")
     Call<Review> createReview(@Body Review request);
 
+    // get all reviews for a place
     @GET("reviews/getReviewsByPlace")
     Call<List<Review>> getReviewsByPlace(@Query("placeId") int placeId);
-
-    @GET("reviews/getReviewsByUser")
-    Call<List<Review>> getReviewsByUser(@Query("userId") String userId);
-
-    @PUT("reviews/updateReview")
-    Call<Review> updateReview(@Path("id") String id, @Body Review review);
-
-    @DELETE("reviews/deleteReview")
-    Call<Void> deleteReview(@Path("id") String id);
 }
