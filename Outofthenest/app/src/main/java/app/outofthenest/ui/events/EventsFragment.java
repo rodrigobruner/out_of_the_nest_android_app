@@ -125,7 +125,7 @@ public class EventsFragment extends Fragment {
         }
     }
 
-    // Deal with Location
+    // Deal with Location permission
     private void requestPermission() {
         requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
     }

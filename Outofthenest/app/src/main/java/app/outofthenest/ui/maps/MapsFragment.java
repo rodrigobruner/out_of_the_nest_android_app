@@ -62,6 +62,7 @@ import app.outofthenest.databinding.FragmentMapsBinding;
 import app.outofthenest.models.Place;
 import app.outofthenest.utils.Constants;
 import app.outofthenest.utils.LocationProvider;
+import app.outofthenest.utils.PlaceUtils;
 
 /**
  * Displaying and interacting with the map.
@@ -83,6 +84,15 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private float navigationZoom = 18f;
     private Polyline traveledPolyline;
     private Polyline remainingPolyline;
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    LocationProvider.getInstance(requireContext()).fetchLocation(requireActivity());
+                } else {
+                    Toast.makeText(getContext(), getString(R.string.permission_location_denied), Toast.LENGTH_SHORT).show();
+                }
+            });
 
     // Deal with permissions
     private final ActivityResultLauncher<String[]> requestPermissionsLauncher =
@@ -396,6 +406,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+
     // set up the marker click
     private void setupMarkerClickListener() {
         mMap.setOnMarkerClickListener(marker -> {
@@ -458,7 +469,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         float distanceInMeters = results[0]; // distance in meters
         String formattedDistance = formatDistance(distanceInMeters);
         place.setDistance(formattedDistance);
-        return updateStatus(place);
+        return PlaceUtils.updateStatus(place, requireContext());
     }
 
     // format the distance
@@ -469,28 +480,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         } else {
             return String.format(Locale.getDefault(), "%.1f km", distanceInMeters / 1000);
         }
-    }
-
-    // update the status of the place
-    // todo: move to Place model
-    private Place updateStatus(Place place) {
-        Log.i(TAG, "updateStatus() for place: " + (place != null ? place.getTitle() : "null"));
-        java.util.Calendar calendar = java.util.Calendar.getInstance();
-        int currentHour = calendar.get(java.util.Calendar.HOUR_OF_DAY);
-
-        String status;
-        if (currentHour >= 6 && currentHour < 20) {
-            if (currentHour >= 19) {
-                status = getString(R.string.text_place_status_close_soon);
-            } else {
-                status = getString(R.string.text_place_status_open);
-            }
-        } else {
-            status = getString(R.string.text_place_status_closed);
-        }
-
-        place.setStatus(status);
-        return place;
     }
 
     // plot places on the map
@@ -731,6 +720,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.POST_NOTIFICATIONS
         };
+        requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
         ActivityCompat.requestPermissions(requireActivity(), permissions, Constants.PERMITION_CODE);
     }
 }

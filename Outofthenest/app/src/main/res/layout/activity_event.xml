@@ -14,7 +14,13 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-    <TextView
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="235dp"
+            app:srcCompat="@drawable/img_events" />
+
+        <TextView
         android:id="@+id/txv_event_title"
         style="@style/TextH1"
         android:layout_width="match_parent"

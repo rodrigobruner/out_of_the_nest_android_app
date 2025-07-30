@@ -8,78 +8,88 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.events.NewEventActivity">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="16dp"
-    android:orientation="vertical">
-
-  <EditText
-      android:id="@+id/inp_event_title"
+  <ScrollView
       android:layout_width="match_parent"
-      android:layout_height="48dp"
-      android:hint="@string/txt_new_event_title"
-      android:autofillHints="@string/txt_new_event_title"
-      android:inputType="textCapSentences" />
+      android:layout_height="match_parent"
+      android:fillViewport="true"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent">
 
-  <EditText
-      android:id="@+id/inp_event_description"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:inputType="textMultiLine"
-      android:gravity="top"
-      android:lines="8"
-      android:maxLines="10"
-      android:minLines="6"
-      android:scrollbars="vertical"
-      android:hint="@string/txt_rating_description"
-      android:autofillHints="@string/txt_rating_description"
-      />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
 
-  <EditText
-      android:id="@+id/inp_event_address"
-      android:layout_width="match_parent"
-      android:layout_height="48dp"
-      android:ems="10"
-      android:inputType="textCapSentences"
-      android:hint="@string/txt_new_event_address"
-      android:autofillHints="postalAddress"
-      />
+      <EditText
+          android:id="@+id/inp_event_title"
+          android:layout_width="match_parent"
+          android:layout_height="48dp"
+          android:hint="@string/txt_new_event_title"
+          android:autofillHints="@string/txt_new_event_title"
+          android:inputType="textCapSentences" />
 
-  <EditText
-      android:id="@+id/inp_event_date"
-      android:layout_width="match_parent"
-      android:layout_height="48dp"
-      android:ems="10"
-      android:inputType="textCapSentences"
-      android:focusable="false"
-      android:clickable="true"
-      android:hint="@string/txt_new_event_date"
-      />
+      <EditText
+          android:id="@+id/inp_event_description"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:inputType="textMultiLine"
+          android:gravity="top"
+          android:lines="8"
+          android:maxLines="10"
+          android:minLines="6"
+          android:scrollbars="vertical"
+          android:hint="@string/txt_rating_description"
+          android:autofillHints="@string/txt_rating_description" />
 
-  <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="2dp"
-      android:text="@string/txt_new_event_audience"
-      android:textStyle="bold"
-      android:textSize="16sp" />
+      <EditText
+          android:id="@+id/inp_event_address"
+          android:layout_width="match_parent"
+          android:layout_height="48dp"
+          android:ems="10"
+          android:inputType="textCapSentences"
+          android:hint="@string/txt_new_event_address"
+          android:autofillHints="postalAddress" />
 
-  <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/recycler_tags"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="8dp"
-      android:clipToPadding="false"
-      android:paddingStart="8dp"
-      android:paddingEnd="8dp" />
+      <EditText
+          android:id="@+id/inp_event_date"
+          android:layout_width="match_parent"
+          android:layout_height="48dp"
+          android:ems="10"
+          android:inputType="textCapSentences"
+          android:focusable="false"
+          android:clickable="true"
+          android:hint="@string/txt_new_event_date" />
 
-  <Button
-      android:id="@+id/button"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="@string/btn_new_event_save" />
-  </LinearLayout>
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="2dp"
+          android:text="@string/txt_new_event_audience"
+          android:textSize="16sp" />
+
+      <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/recycler_tags"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:clipToPadding="false"
+          android:paddingStart="8dp"
+          android:paddingEnd="8dp"
+          android:nestedScrollingEnabled="false" />
+
+      <Button
+          android:id="@+id/button"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/btn_new_event_save" />
+
+    </LinearLayout>
+
+  </ScrollView>
+
   <ProgressBar
       android:id="@+id/progressBar"
       style="?android:attr/progressBarStyleLarge"
@@ -88,8 +98,7 @@
       android:indeterminateTint="@color/progress_bar_color"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.498"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.499" />
+      app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
