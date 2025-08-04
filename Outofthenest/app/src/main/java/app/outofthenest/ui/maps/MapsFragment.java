@@ -69,49 +69,64 @@ import app.outofthenest.utils.PlaceUtils;
  */
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
     String TAG = getClass().getSimpleName();
+    // default map zoom
+    private static final String PLACE_PARAM = "place";
     private static final float DEFAULT_ZOOM = Constants.DEFAULT_ZOOM;
+    // View binding
     private FragmentMapsBinding binding;
+    // ViewModels
     private MapViewModel mapViewModel;
     private PlaceViewModel placeViewModel;
-    private Place destination;
+
+
+
+    // place to navigate to
     private Location currentLocation;
+    // google Map instance
     private GoogleMap mMap;
-    private FusedLocationProviderClient fusedLocationClient;
-    private LocationCallback liveNavLocationCallback;
-    private boolean isNavigating = false;
-    private Polyline currentRoutePolyline;
+    // user marker on the map
     private Marker userMarker;
+
+
+    // destination place for navigation
+    private Place destination;
+    // for live navigation
+    private FusedLocationProviderClient fusedLocationClient;
+    // for live navigation updates
+    private LocationCallback liveNavLocationCallback;
+    // to nkow if we are navigating
+    private boolean isNavigating = false;
+    // draw polylines on the map
+    private Polyline currentRoutePolyline;
+    // zoom for navigation
     private float navigationZoom = 18f;
-    private Polyline traveledPolyline;
-    private Polyline remainingPolyline;
+
 
     // Deal with permissions
     private final ActivityResultLauncher<String[]> requestPermissionsLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
-                boolean allGranted = true;
-                for (Boolean granted : result.values()) {
+                boolean allGranted = true; // flag to check permissions
+                for (String permission : result.keySet()) {
+                    Boolean granted = result.get(permission);
                     if (!granted) {
                         allGranted = false;
-                        break;
                     }
                 }
+
                 if (allGranted) {
                     init();
-                    LocationProvider.getInstance(requireContext()).fetchLocation(requireActivity());
-                    if (mMap != null && currentLocation != null) {
-                        setUserCurrentLocationOnMap();
-                    }
                 } else {
                     Toast.makeText(getContext(), getString(R.string.permission_location_denied), Toast.LENGTH_SHORT).show();
                 }
             });
 
+
+    // lifecycle methods
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onCreateView()");
         binding = FragmentMapsBinding.inflate(inflater, container, false);
         mapViewModel = new ViewModelProvider(requireActivity()).get(MapViewModel.class);
         placeViewModel = new ViewModelProvider(this).get(PlaceViewModel.class);
@@ -120,7 +135,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onViewCreated()");
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
@@ -134,43 +148,57 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onDestroyView() {
-        Log.i(TAG, "onDestroyView()");
+    public void onDestroyView() { // reset resources
         super.onDestroyView();
         if (isNavigating) {
-            Log.i(TAG, "onDestroyView: Stopping live navigation");
             stopLiveNavigation();
         }
         binding = null;
     }
 
     @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        Log.i(TAG, "onMapReady()");
-        mMap = googleMap;
-        mMap.getUiSettings().setZoomControlsEnabled(true);
-        init();
+    public void onPause() { // stop live navigation to save battery
+        super.onPause();
+        if (isNavigating) {
+            stopLiveNavigation();
+        }
     }
 
+    @Override
+    public void onResume() { // resume live navigation
+        super.onResume();
+        if (isNavigating) {
+            startLiveNavigation();
+        }
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        requestPermissions();
+    }
+
+
     private void init() {
-        Log.i(TAG, "init()");
         setSearchButtonListener();
         setCancelButtonListener();
         setGoButtonListener();
         setupMarkerClickListener();
 
-        LocationProvider.getInstance(requireContext()).fetchLocation(requireActivity());
-
+        // control the navigation bar visibility
         if (destination == null) {
             hideShowNavigationBar(false);
         } else {
             hideShowNavigationBar(true);
         }
+
+        // set up the map
+        LocationProvider.getInstance(requireContext()).fetchLocation(requireActivity());
     }
 
-    // Init observers for map and places
+    // init maps observers
     private void initMapObservers() {
-        Log.i(TAG, "initMapObservers()");
         mapObserver();
         observeDestination();
         observePlaces();
@@ -178,9 +206,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     //set up the action bar
     public void setUpActionBar() {
-        Log.i(TAG, "setUpActionBar()");
+
         ActionBar actionbar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if(actionbar != null) {
+
             // Set the action bar title and logo
             actionbar.setTitle(R.string.txt_maps_bar_title);
             actionbar.setDisplayShowHomeEnabled(true);
@@ -206,34 +235,30 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // observer to listen location updates
     private void mapObserver() {
-        Log.i(TAG, "mapObserver()");
+        // start observing location changes
         LocationProvider.getInstance(requireContext()).getLocationLiveData()
                 .observe(getViewLifecycleOwner(), location -> {
+                    // check parameters
                     if (location != null && isAdded() && binding != null) {
                         currentLocation = location;
-//                        Log.i(TAG, "current location: " + currentLocation.getLatitude() + ", " + currentLocation.getLongitude());
+                        // navegation mode
                         if (destination != null && !isNavigating) {
-//                            Log.i(TAG, "trace route to destination");
                             traceRoute(destination);
                             binding.txvDistance.setText(destination.getDistance());
                             binding.txvStatus.setText(destination.getStatus());
                             setUpStatus(destination);
-                        } else if (destination == null && !isNavigating) {
-//                            Log.i(TAG, "user location");
+                        } else if (destination == null && !isNavigating) { //user location
                             setUserCurrentLocationOnMap();
                         }
                     }
                 });
-
-        // location updates
-        LocationProvider.getInstance(requireContext()).fetchLocation(requireActivity());
     }
 
     // observer to destination updates
     private void observeDestination() {
         mapViewModel.getDestination().observe(getViewLifecycleOwner(), place -> {
             if (place != null) {
-//                Log.i(TAG, "Destination: " + place.getTitle());
+                // create a copy of the place
                 this.destination = new Place(
                         place.getId(),
                         place.getTitle(),
@@ -249,10 +274,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         place.getDelta(),
                         place.getTags()
                 );
+
+                // trace route to the destination
                 if (currentLocation != null) {
                     traceRoute(this.destination);
-                } else {
-                    requestPermissions();
                 }
             }
         });
@@ -260,7 +285,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // set up the status
     private void setUpStatus(Place place) {
-        Log.i(TAG, "setUpStatus() for place: " + place.getTitle());
+        // change color of the status
         if(place.getStatus().equals(getString(R.string.text_place_status_closed))){
             binding.txvStatus.setTextColor(getResources().getColor(R.color.red_400, null));
         } else if(place.getStatus().equals("Open")){
@@ -274,9 +299,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // Set up the search button listener
     private void setSearchButtonListener() {
-        Log.i(TAG, "setSearchButtonListener()");
         binding.btnSearchPlace.setOnClickListener(v -> {
-            Log.i(TAG, "Search button clicked");
             Intent intent = new Intent(requireContext(), SearchPlaceActivity.class);
             startActivity(intent);
         });
@@ -284,21 +307,17 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // cancel button listener
     private void setCancelButtonListener() {
-        Log.i(TAG, "setCancelButtonListener()");
         binding.btnCancel.setOnClickListener(v -> {
-            Log.i(TAG, "Cancel button clicked");
             clearNavigation();
         });
     }
 
     // clear and reset the map
     private void clearNavigation() {
-//        Log.i(TAG, "clear called");
         destination = null;
         mapViewModel.clearDestination();
 
         if (isNavigating) {
-//            Log.i(TAG, "stopping live navigation");
             stopLiveNavigation();
             isNavigating = false;
         }
@@ -311,15 +330,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         hideShowNavigationBar(false);
 
         if (mMap != null) {
-            // clear the map, polylines and markers
+            // clear the map polylines and markers
             mMap.clear();
             currentRoutePolyline = null;
-            traveledPolyline = null;
-            remainingPolyline = null;
             userMarker = null;
 
             if (currentLocation != null) {
-                // Get current location
+                // get current location
                 LatLng userLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                 CameraPosition cameraPosition = new CameraPosition.Builder()
                         .target(userLatLng)
@@ -327,11 +344,12 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         .tilt(0f)
                         .bearing(0f)
                         .build();
+
                 // move the camera
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
                 // set user marker
                 new android.os.Handler(Looper.getMainLooper()).postDelayed(() -> {
-                    Log.i(TAG, "Re-adding user marker after clearNavigation()");
                     setUserCurrentLocationOnMap();
                 }, 300);
             }
@@ -340,10 +358,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // Go button listener
     private void setGoButtonListener() {
-        Log.i(TAG, "setGoButtonListener()");
         binding.btnGo.setOnClickListener(v -> {
-            // show progress bar while processing
-            showProgressBar(true);
+            showProgressBar(true); // show progress bar while process
             if (destination != null && currentLocation != null && !isNavigating) {
                 // start live navigation
                 startLiveNavigation();
@@ -360,7 +376,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 binding.btnGo.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_600));
                 binding.btnCancel.setVisibility(View.VISIBLE);
                 showProgressBar(false); // stop progress bar
-//                clearNavigation();
             } else {
                 Toast.makeText(requireContext(), getString(R.string.error_set_destination), Toast.LENGTH_SHORT).show();
             }
@@ -369,7 +384,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // hide or show the navigation bar
     private void hideShowNavigationBar(boolean show) {
-        Log.i(TAG, "hideShowNavigationBar(" + show + ")");
         if (show) {
             binding.txtTitlePlace.setText(destination.getTitle());
             binding.navegationBar.setVisibility(View.VISIBLE);
@@ -380,12 +394,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // show or hide the progress bar
     private void showProgressBar(boolean show) {
-        Log.i(TAG, "showProgressBar(" + show + ")");
         if (binding != null && binding.progressBar != null) {
             binding.progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
-
 
     // set up the marker click
     private void setupMarkerClickListener() {
@@ -409,16 +421,14 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     //open place details activity
     private void openPlaceDetails(Place place) {
-        Log.i(TAG, "openPlaceDetails() for place: " + (place != null ? place.getTitle() : "null"));
         place = updateDistance(place);
         Intent intent = new Intent(requireContext(), PlacesActivity.class);
-        intent.putExtra("place", place);
+        intent.putExtra(PLACE_PARAM, place);
         startActivity(intent);
     }
 
     // find place by title
     private Place findPlaceByTitle(String title) {
-        Log.i(TAG, "findPlaceByTitle(" + title + ")");
         List<Place> places = placeViewModel.getPlaces().getValue();
         if (places != null) {
             for (Place place : places) {
@@ -432,7 +442,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // update the distance
     private Place updateDistance(Place place) {
-//        Log.i(TAG, "distance place: " + (place != null ? place.getTitle() : "null"));
         //skip if place is null
         if (currentLocation == null) {
             return null;
@@ -454,7 +463,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // format the distance
     private String formatDistance(float distanceInMeters) {
-        Log.i(TAG, "formatDistance(" + distanceInMeters + ")");
         if (distanceInMeters < 1000) {
             return String.format(Locale.getDefault(), "%.0f m", distanceInMeters);
         } else {
@@ -464,7 +472,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // plot places on the map
     private void plotPlacesOnMap(List<Place> places) {
-        Log.i(TAG, "plotPlacesOnMap() with " + (places != null ? places.size() : 0) + " places");
         for (Place place : places) {
             LatLng placeLatLng = new LatLng(place.getLatitude(), place.getLongitude());
             mMap.addMarker(new MarkerOptions()
@@ -488,12 +495,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // trace route to the destination
     private void traceRoute(Place destination) {
-        Log.i(TAG, "traceRoute() called for destination: " + (destination != null ? destination.getTitle() : "null"));
-
+        // check if map and locations is set
         if (mMap != null && destination != null && currentLocation != null) {
+
             LatLng origin = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             LatLng dest = new LatLng(destination.getLatitude(), destination.getLongitude());
 
+            // set user marker on the map
             if (userMarker == null) {
                 userMarker = mMap.addMarker(new MarkerOptions().position(origin)
                         .title(getString(R.string.txt_your_location))
@@ -502,35 +510,43 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 userMarker.setPosition(origin);
             }
 
+            // set destination marker on the map
             mMap.addMarker(new MarkerOptions().position(dest).title(destination.getTitle()));
 
+            // this tread is used to calculate route in the background
             new Thread(() -> {
                 try {
+                    // create a GeoApiContext
                     GeoApiContext context = new GeoApiContext.Builder()
                             .apiKey(BuildConfig.MAPS_API_KEY)
                             .build();
 
+                    // request directions from origin to destination
                     DirectionsResult result = DirectionsApi.newRequest(context)
                             .origin(new com.google.maps.model.LatLng(origin.latitude, origin.longitude))
                             .destination(new com.google.maps.model.LatLng(dest.latitude, dest.longitude))
                             .mode(com.google.maps.model.TravelMode.DRIVING)
                             .await();
 
+                    // validate the result
                     if (result.routes != null && result.routes.length > 0) {
-                        DirectionsRoute route = result.routes[0];
+                        DirectionsRoute route = result.routes[0]; // get the first route
+                        // get the path
                         List<com.google.maps.model.LatLng> path = route.overviewPolyline.decodePath();
 
                         if (getActivity() != null) {
-                            getActivity().runOnUiThread(() -> {
-                                Log.i(TAG, "traceRoute: Drawing polyline on map");
+                            getActivity().runOnUiThread(() -> { // update the UI on the main thread
+                                // plot the route on the map
                                 PolylineOptions polylineOptions = new PolylineOptions();
                                 for (com.google.maps.model.LatLng latLng : path) {
                                     polylineOptions.add(new LatLng(latLng.lat, latLng.lng));
                                 }
+                                // set line options
                                 polylineOptions.color(ContextCompat.getColor(requireContext(), R.color.blue_600));
                                 polylineOptions.width(15);
                                 mMap.addPolyline(polylineOptions);
 
+                                // set the camera position
                                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
                                 builder.include(origin);
                                 builder.include(dest);
@@ -541,7 +557,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         }
                     }
                 } catch (Exception e) {
-                    Log.e(TAG, "traceRoute: Error calculating route", e);
                     Toast.makeText(getContext(), getString(R.string.error_unexpected), Toast.LENGTH_SHORT).show();
                 }
             }).start();
@@ -550,12 +565,17 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // update live navigation
     private void updateLiveNavigation() {
-        Log.i(TAG, "updateLiveNavigation() called");
-        if (mMap == null || destination == null || currentLocation == null) return;
 
+        // abort if map or locations are not set
+        if (mMap == null || destination == null || currentLocation == null) {
+            return;
+        }
+
+        // get user and destination LatLng
         LatLng userLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
         LatLng destLatLng = new LatLng(destination.getLatitude(), destination.getLongitude());
 
+        // update user marker position
         if (userMarker == null) {
             userMarker = mMap.addMarker(new MarkerOptions()
                     .position(userLatLng)
@@ -565,40 +585,49 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             userMarker.setPosition(userLatLng);
         }
 
-        new Thread(() -> {
+        new Thread(() -> { // this thread is used to update the route in the background
             try {
+                // create a GeoApiContext
                 GeoApiContext context = new GeoApiContext.Builder()
                         .apiKey(BuildConfig.MAPS_API_KEY)
                         .build();
 
+                // request directions from user to destination
                 DirectionsResult result = DirectionsApi.newRequest(context)
                         .origin(new com.google.maps.model.LatLng(userLatLng.latitude, userLatLng.longitude))
                         .destination(new com.google.maps.model.LatLng(destLatLng.latitude, destLatLng.longitude))
                         .mode(com.google.maps.model.TravelMode.DRIVING)
                         .await();
 
+                // validate the result
                 if (result.routes != null && result.routes.length > 0) {
+                    // get the first route
                     List<com.google.maps.model.LatLng> path = result.routes[0].overviewPolyline.decodePath();
                     if (getActivity() != null) {
-                        getActivity().runOnUiThread(() -> {
-                            // to prevent UI updates if cancel
+                        getActivity().runOnUiThread(() -> { // update the UI on the main thread
+
                             if (!isAdded() || !isNavigating || mMap == null) {
                                 showProgressBar(false);
                                 return;
                             }
-                            Log.i(TAG, "updateLiveNavigation: Drawing navigation polyline");
-                            if (currentRoutePolyline != null) currentRoutePolyline.remove();
-                            if (traveledPolyline != null) traveledPolyline.remove();
-                            if (remainingPolyline != null) traveledPolyline.remove();
 
+                            // remove the previous polyline if exists
+                            if (currentRoutePolyline != null) {
+                                currentRoutePolyline.remove();
+                            }
+
+                            // plot the new route on the map
                             PolylineOptions polylineOptions = new PolylineOptions();
                             for (com.google.maps.model.LatLng latLng : path) {
                                 polylineOptions.add(new LatLng(latLng.lat, latLng.lng));
                             }
+
+                            // set line options
                             polylineOptions.color(ContextCompat.getColor(requireContext(), R.color.blue_600));
                             polylineOptions.width(15);
                             currentRoutePolyline = mMap.addPolyline(polylineOptions);
 
+                            // set the camera position
                             float bearing = currentLocation.getBearing();
                             CameraPosition cameraPosition = new CameraPosition.Builder()
                                     .target(userLatLng)
@@ -612,15 +641,16 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                     }
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Error updating navigation route", e);
+                Log.e(TAG, e.getMessage());
             }
         }).start();
     }
 
     //set user current location on map
     private void setUserCurrentLocationOnMap() {
-        Log.i(TAG, "setUserCurrentLocationOnMap() called");
+
         if (mMap != null && currentLocation != null) {
+            // set user marker on the map
             LatLng userLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             if (userMarker == null) {
                 userMarker = mMap.addMarker(new MarkerOptions().position(userLatLng)
@@ -629,6 +659,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             } else {
                 userMarker.setPosition(userLatLng);
             }
+            // move the camera
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, DEFAULT_ZOOM));
         }
         getPlaces();
@@ -636,22 +667,25 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // start live navigation
     private void startLiveNavigation() {
-        Log.i(TAG, "startLiveNavigation() called");
+
         isNavigating = true;
+        // get location updates
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
         liveNavLocationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
-                Log.i(TAG, "liveNavLocationCallback: onLocationResult()");
-                if (locationResult == null) return;
+
+                if (locationResult == null) {
+                    return;
+                }
+                // update current location
                 for (Location location : locationResult.getLocations()) {
                     currentLocation = location;
-                    Log.i(TAG, "liveNavLocationCallback: currentLocation: " + currentLocation.getLatitude() + ", " + currentLocation.getLongitude());
-                    Log.i(TAG, "liveNavLocationCallback: isNavigating=" + isNavigating + ", destination=" + (destination != null ? "set" : "null"));
                     if(isNavigating && destination != null) {
                         updateLiveNavigation();
                     }
                     if (destination != null) {
+                        // update the distance and status
                         updateDistance(destination);
                         if (binding != null && binding.txvDistance != null) {
                             binding.txvDistance.setText(destination.getDistance());
@@ -661,11 +695,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             }
         };
 
+        // create a location request
         LocationRequest locationRequest = new LocationRequest.Builder(2000)
                 .setMinUpdateIntervalMillis(1000)
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .build();
 
+        // check permissions to request location update
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationClient.requestLocationUpdates(locationRequest, liveNavLocationCallback, Looper.getMainLooper());
@@ -674,16 +710,14 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // stop live navigation
     private void stopLiveNavigation() {
-        Log.i(TAG, "stopLiveNavigation() called");
         isNavigating = false;
         if (fusedLocationClient != null && liveNavLocationCallback != null) {
             fusedLocationClient.removeLocationUpdates(liveNavLocationCallback);
         }
     }
 
-    // get places near the current location
+    // get places near the current location through api
     private void getPlaces(){
-        Log.i(TAG, "getPlaces()");
         placeViewModel.getPlacesNear(
                 currentLocation.getLatitude(),
                 currentLocation.getLongitude(),
@@ -695,7 +729,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // observe places from the ViewModel
     private void observePlaces() {
-        Log.i(TAG, "observePlaces()");
+        // live data observer for places
         placeViewModel.getPlaces().observe(getViewLifecycleOwner(), places -> {
             if (places != null && mMap != null) {
                 plotPlacesOnMap(places);
@@ -705,14 +739,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // Request permissions
     public void requestPermissions() {
-        //Already have permissions
+        // Already have permissions
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             init();
-            LocationProvider.getInstance(requireContext()).fetchLocation(requireActivity());
             return;
         }
 
-        // Solicitar permissões
+        // request permissions
         String[] permissions = {
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
