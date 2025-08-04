@@ -85,20 +85,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private Polyline traveledPolyline;
     private Polyline remainingPolyline;
 
-    private final ActivityResultLauncher<String> requestPermissionLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted) {
-                    LocationProvider.getInstance(requireContext()).fetchLocation(requireActivity());
-                } else {
-                    Toast.makeText(getContext(), getString(R.string.permission_location_denied), Toast.LENGTH_SHORT).show();
-                }
-            });
-
     // Deal with permissions
     private final ActivityResultLauncher<String[]> requestPermissionsLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
                 boolean allGranted = true;
-                // for each permission result, check if it is granted
                 for (Boolean granted : result.values()) {
                     if (!granted) {
                         allGranted = false;
@@ -106,24 +96,15 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                     }
                 }
                 if (allGranted) {
-//                    Log.i(TAG, "All granted, initializing");
                     init();
                     LocationProvider.getInstance(requireContext()).fetchLocation(requireActivity());
+                    if (mMap != null && currentLocation != null) {
+                        setUserCurrentLocationOnMap();
+                    }
                 } else {
-//                    Log.i(TAG, "Some denied");
                     Toast.makeText(getContext(), getString(R.string.permission_location_denied), Toast.LENGTH_SHORT).show();
                 }
             });
-
-//    private final ActivityResultLauncher<String> requestPermissionLauncher =
-//            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-//                Log.i(TAG, "requestPermissionLauncher: Permission result: " + isGranted);
-//                if (isGranted) {
-//                    LocationProvider.getInstance(requireContext()).fetchLocation(requireActivity());
-//                } else {
-//                    Toast.makeText(getContext(), getString(R.string.permission_location_denied), Toast.LENGTH_SHORT).show();
-//                }
-//            });
 
     @Nullable
     @Override
@@ -176,7 +157,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         setSearchButtonListener();
         setCancelButtonListener();
         setGoButtonListener();
-        requestPermissions();
         setupMarkerClickListener();
 
         LocationProvider.getInstance(requireContext()).fetchLocation(requireActivity());
@@ -493,6 +473,17 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                     .snippet(place.getDescription())
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         }
+
+        if (currentLocation != null) {
+            LatLng userLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+            if (userMarker != null) {
+                userMarker.remove(); // Remove o marker anterior se existir
+            }
+            userMarker = mMap.addMarker(new MarkerOptions()
+                    .position(userLatLng)
+                    .title(getString(R.string.txt_your_location))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        }
     }
 
     // trace route to the destination
@@ -714,13 +705,19 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     // Request permissions
     public void requestPermissions() {
-        Log.i(TAG, "requestPermissions()");
+        //Already have permissions
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            init();
+            LocationProvider.getInstance(requireContext()).fetchLocation(requireActivity());
+            return;
+        }
+
+        // Solicitar permissões
         String[] permissions = {
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.POST_NOTIFICATIONS
         };
-        requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
-        ActivityCompat.requestPermissions(requireActivity(), permissions, Constants.PERMITION_CODE);
+        requestPermissionsLauncher.launch(permissions);
     }
 }

@@ -2,6 +2,7 @@ package app.outofthenest.ui.events;
 
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import app.outofthenest.adapters.TagsAdapter;
 import app.outofthenest.databinding.ActivityEventBinding;
 import app.outofthenest.models.Event;
 import app.outofthenest.utils.DateUtils;
+import app.outofthenest.utils.Report;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -47,6 +49,8 @@ public class EventActivity extends AppCompatActivity {
 
     private EventsViewModel viewModel;
 
+    private Event selectedEvent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,7 @@ public class EventActivity extends AppCompatActivity {
         setUpActionBar();
         setUpViewModel();
         setUpEvent();
+        setBtReportProblem();
     }
 
     // Initializes the ViewModel
@@ -100,6 +105,7 @@ public class EventActivity extends AppCompatActivity {
 
     // Set up the UI
     private void setUpUi(Event event) {
+        selectedEvent = event;
         binding.txvEventTitle.setText(event.getTitle());
         binding.txvEventDate.setText(DateUtils.formatDateTime(getResources(), event.getDatetime()));
         binding.txvEventLocation.setText(event.getAddress());
@@ -118,5 +124,15 @@ public class EventActivity extends AppCompatActivity {
         );
         binding.recyclerTags.setLayoutManager(layoutManager);
         binding.recyclerTags.setAdapter(tagsAdapter);
+    }
+
+
+    private void setBtReportProblem(){
+        binding.btnReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Report.Problem(EventActivity.this, Report.TYPE_EVENT, selectedEvent.getId());
+            }
+        });
     }
 }

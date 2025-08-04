@@ -57,7 +57,7 @@ public class Place implements Serializable {
     private String status;
 
     // Rating of the place (0.0 to 5.0)
-//    @SerializedName("rating")
+    @SerializedName("rating")
     @Expose
     private float rating;
 

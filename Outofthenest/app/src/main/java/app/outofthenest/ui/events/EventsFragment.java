@@ -174,6 +174,7 @@ public class EventsFragment extends Fragment {
             eventsList = (events != null) ? new ArrayList<>(events) : new ArrayList<>();
             adapter.setEventList(eventsList);
             binding.imgNoEvents.setVisibility(eventsList.isEmpty() ? View.VISIBLE : View.GONE);
+            binding.txtNoEvents.setVisibility(eventsList.isEmpty() ? View.VISIBLE : View.GONE);
         });
 
     }

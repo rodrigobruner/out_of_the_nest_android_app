@@ -3,6 +3,9 @@
 
     <!-- General -->
     <string name="btn_cancel">Cancel</string>
+    <string name="btn_report">Report</string>
+    <string name="txt_report">The administrator will check your report</string>
+
     <string name="error_unexpected">Ops! An unexpected error occurred. Please try again later.</string>
     <string name="txt_search_here">Search here...</string>
     <string name="txt_saving">Saving...</string>
@@ -169,6 +172,13 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <!-- report problem -->
+    <!-- report problem -->
+    <string name="hint_report_problem">Describe the problem found...</string>
+    <string name="title_report_problem">Report Problem</string>
+    <string name="txt_report_sent_admin">Report sent! The administrator will be notified.</string>
+    <string name="error_empty_report">Please describe the problem</string>
+    <string name="error_send_report">Error to send report</string>
 
     <string name="place_type_default">Select a type...</string>
 
@@ -193,6 +203,14 @@
         <item>Family friendly</item>
         <item>Parking</item>
         <item>Wi-fi</item>
+        <item>Splash pad</item>
+        <item>Playground</item>
+        <item>Play area</item>
+        <item>Outdoor</item>
+        <item>Indoor</item>
+        <item>Basketball court</item>
+        <item>Picnic area</item>
+
     </string-array>
 
     <string-array name="list_target_audience">

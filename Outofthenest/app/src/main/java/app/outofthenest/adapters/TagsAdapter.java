@@ -63,7 +63,7 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
 
             // get the icon based on the tag and category
             Integer iconRes = TagIconMap.getTagIconMap(position, tagCategory);
-            if(iconRes != null) {
+            if(iconRes != null && iconRes > 0) {
                 holder.chip.setChipIconResource(iconRes);
             }else {
                 holder.chip.setChipIcon(null);

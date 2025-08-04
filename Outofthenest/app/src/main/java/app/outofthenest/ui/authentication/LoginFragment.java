@@ -90,13 +90,15 @@ public class LoginFragment extends Fragment {
                             new ArrayList<>()
                     );
 
-                    Intent intent;
+
                     UserUtils.saveUser(requireContext(), user);
-                        intent = new Intent(getActivity(), OnboardActivity.class);
+
+                    Intent intent;
                     if(OnboardUtils.isFirstTime(getContext())){
+                        intent = new Intent(getActivity(), OnboardActivity.class);
+                    }else{
                         intent = new Intent(getActivity(), MainActivity.class);
                     }
-
                     startActivity(intent);
                 } else {
                     Toast.makeText(getContext(), getString(R.string.error_login), Toast.LENGTH_SHORT).show();

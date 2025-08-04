@@ -3,6 +3,7 @@ package app.outofthenest.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import app.outofthenest.R;
 import app.outofthenest.models.Review;
 import app.outofthenest.utils.DateUtils;
+import app.outofthenest.utils.Report;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,6 +45,12 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
         holder.txvDateTime.setText(DateUtils.formatDateTime(
                 holder.itemView.getResources(),
                 review.getDatetime()));
+        holder.btnReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Report.Problem(v.getContext(), Report.TYPE_REVIEW, review.getId());
+            }
+        });
     }
 
     @Override
@@ -58,12 +66,15 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
         TextView txvReviewTitle, txvDescription, txvDateTime;
         RatingBar ratingBar;
 
+        Button btnReport;
+
         ReviewViewHolder(@NonNull View itemView) {
             super(itemView);
             txvReviewTitle = itemView.findViewById(R.id.txvReviewTitle);
             txvDescription = itemView.findViewById(R.id.txv_description);
             txvDateTime = itemView.findViewById(R.id.txvDateTime);
             ratingBar = itemView.findViewById(R.id.reviewRating);
+            btnReport = itemView.findViewById(R.id.btn_report);
         }
     }
 }

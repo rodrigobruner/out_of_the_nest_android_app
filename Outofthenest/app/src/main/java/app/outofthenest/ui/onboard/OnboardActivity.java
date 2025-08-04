@@ -9,12 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import app.outofthenest.databinding.ActivityOnboardBinding;
 import app.outofthenest.ui.maps.MainActivity;
 
-/**
- * Apears when the app is opened for the first time.
- */
+
 public class OnboardActivity extends AppCompatActivity {
 
-     ActivityOnboardBinding binding;
+    private static final String TAG = "OnboardActivity";
+    ActivityOnboardBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +33,4 @@ public class OnboardActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

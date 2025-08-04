@@ -1,6 +1,7 @@
 package app.outofthenest.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Icon;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -75,7 +76,11 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
                     (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, context.getResources().getDisplayMetrics()),
                     (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, context.getResources().getDisplayMetrics())
             ));
-            tagIcon.setImageResource(TagIconMap.getTagIconMap(index, "PLACE"));
+
+            int iconId = TagIconMap.getTagIconMap(index, TagIconMap.TYPE_PLACE);
+            if (iconId > 0) {
+                tagIcon.setImageResource(iconId);
+            }
             tagIcon.setScaleType(ImageView.ScaleType.CENTER_CROP);
             tagIcon.setPadding(5, 5, 5, 5);
             tagIcon.setColorFilter(context.getColor(R.color.chip_stroke_selected), android.graphics.PorterDuff.Mode.SRC_IN);

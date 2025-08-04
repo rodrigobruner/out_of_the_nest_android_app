@@ -1,16 +1,28 @@
 package app.outofthenest.models;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 /**
  * Notification model class
  */
 public class Notification {
+    @SerializedName("id")
     private String id;
+
+    @SerializedName("title")
     private String title;
+
+    @SerializedName("message")
     private String message;
+
+    @SerializedName("type")
     private String type; // "EVENT"
+
+    @SerializedName("scheduledTime")
     private Date date;
+
+    @SerializedName("read")
     private boolean read;
 
     public Notification(String id, String title, String message, String type, Date date, boolean read) {
@@ -22,6 +34,7 @@ public class Notification {
         this.read = read;
     }
 
+    // getters e setters permanecem iguais
     public String getId() {
         return id;
     }

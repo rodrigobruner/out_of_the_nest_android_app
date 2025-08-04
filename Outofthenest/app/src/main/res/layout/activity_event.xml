@@ -9,6 +9,7 @@
     tools:context=".ui.events.EventActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -21,43 +22,55 @@
             app:srcCompat="@drawable/img_events" />
 
         <TextView
-        android:id="@+id/txv_event_title"
-        style="@style/TextH1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_places_address"/>
+            android:id="@+id/txv_event_title"
+            style="@style/TextH1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_places_address" />
 
-    <TextView
-        android:id="@+id/txv_event_date"
+        <TextView
+            android:id="@+id/txv_event_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_places_address"
+            app:drawableStartCompat="@drawable/ic_menu_event"
+            app:drawableTint="@color/black" />
+
+        <TextView
+            android:id="@+id/txv_event_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_places_address"
+            app:drawableStartCompat="@drawable/ic_address"
+            app:drawableTint="@color/black" />
+
+        <TextView
+            android:id="@+id/txv_event_description"
+            android:layout_width="match_parent"
+            android:layout_height="80dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_tags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clipToPadding="false"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txv_description" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_report"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/txt_places_address"
-        app:drawableStartCompat="@drawable/ic_menu_event"
-        app:drawableTint="@color/black"
-        />
-
-    <TextView
-        android:id="@+id/txv_event_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_places_address"
-        app:drawableStartCompat="@drawable/ic_address"
-        app:drawableTint="@color/black"/>
-
-    <TextView
-        android:id="@+id/txv_event_description"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_tags"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:clipToPadding="false"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txv_description"/>
-    </LinearLayout>
+        android:drawableLeft="@drawable/ic_report"
+        style="@style/ButtonReport"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

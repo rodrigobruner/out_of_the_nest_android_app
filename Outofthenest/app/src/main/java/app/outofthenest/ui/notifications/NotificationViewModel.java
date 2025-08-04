@@ -55,7 +55,7 @@ public class NotificationViewModel extends AndroidViewModel {
     public void markAsRead(String notificationId) {
         repository.markAsRead(notificationId).observeForever(success -> {
             if (!success) {
-                error.setValue(getApplication().getString(R.string.error_read_notifications));
+//                error.setValue(getApplication().getString(R.string.error_read_notifications));
             }
         });
     }
@@ -64,7 +64,7 @@ public class NotificationViewModel extends AndroidViewModel {
     public void deleteNotification(String notificationId) {
         repository.deleteNotification(notificationId).observeForever(success -> {
             if (!success) {
-                error.setValue(getApplication().getString(R.string.error_delete_notifications));
+//                error.setValue(getApplication().getString(R.string.error_delete_notifications));
             }
         });
     }

@@ -34,6 +34,7 @@ import app.outofthenest.ui.maps.MainActivity;
 import app.outofthenest.ui.maps.MapViewModel;
 import app.outofthenest.utils.Constants;
 import app.outofthenest.utils.PlaceUtils;
+import app.outofthenest.utils.Report;
 
 /**
  * Fragment to display the details of a place.
@@ -66,6 +67,7 @@ public class PlaceDetailFragment extends Fragment {
         setUpPlace();
         setUpButton();
         setUpStatus();
+        setBtReportProblem();
     }
 
     //set up the action bar
@@ -137,5 +139,14 @@ public class PlaceDetailFragment extends Fragment {
         );
         placeBinding.recyclerTags.setLayoutManager(layoutManager);
         placeBinding.recyclerTags.setAdapter(tagsAdapter);
+    }
+
+    private void setBtReportProblem(){
+        placeBinding.btnReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Report.Problem(getContext(), Report.TYPE_PLACE, ""+place.getId());
+            }
+        });
     }
 }

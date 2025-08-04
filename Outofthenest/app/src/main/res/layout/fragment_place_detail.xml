@@ -111,6 +111,7 @@
         />
 
     </LinearLayout>
+
     <Button
         android:id="@+id/btnGoToPlace"
         android:layout_width="match_parent"
@@ -119,8 +120,18 @@
         android:text="@string/btn_go_to_place"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_tags" />
 
 
-
+    <Button
+        android:id="@+id/btn_report"
+        style="@style/ButtonReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:drawableLeft="@drawable/ic_report"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnGoToPlace" />
 </androidx.constraintlayout.widget.ConstraintLayout>

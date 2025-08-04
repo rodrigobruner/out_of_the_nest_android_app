@@ -29,7 +29,7 @@ public class Constants {
     public static final int DEFAULT_SEARCH_EVENT_RADIUS = 5000; // 5 km
 
     // Enable this to use mock data for testing
-    public static final boolean USE_MOC_MODE = true;
+    public static final boolean USE_MOC_MODE = false;
 
     // I set the Conestoga College's address as the default location
 //    public static final LatLng defaultLocation = new LatLng(43.4794047, -80.5180089);
