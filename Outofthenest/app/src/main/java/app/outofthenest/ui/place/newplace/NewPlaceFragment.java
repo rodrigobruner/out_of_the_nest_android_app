@@ -127,7 +127,7 @@ public class NewPlaceFragment extends Fragment {
     // set up tags recycler view
     private void setupTagsRecyclerView() {
         List<String> availableTags = getAvailableTags();
-        tagsAdapter = new TagsAdapter(availableTags, "PLACE");
+        tagsAdapter = new TagsAdapter(availableTags, TagsAdapter.PLACE_TYPE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 getContext(),
                 LinearLayoutManager.HORIZONTAL,

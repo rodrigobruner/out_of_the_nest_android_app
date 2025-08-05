@@ -99,6 +99,7 @@
     <string name="btn_add_review">Add a review</string>
     <string name="txt_find_a_place">Find a place</string>
     <string name="txt_place_not_found"></string>
+    <string name="txt_distance_waiting">not found</string>
 
     <string name="text_place_status_open">Open</string>
     <string name="text_place_status_close_soon">Close soon</string>

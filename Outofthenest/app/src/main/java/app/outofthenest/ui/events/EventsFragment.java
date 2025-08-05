@@ -81,6 +81,14 @@ public class EventsFragment extends Fragment {
         return root;
     }
 
+    @Override // update on resume screen
+    public void onResume() {
+        super.onResume();
+        if (currentLocation != null) {
+            searchEvents();
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

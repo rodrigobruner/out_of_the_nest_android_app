@@ -96,9 +96,14 @@ public class PlaceDetailFragment extends Fragment {
 
             Log.i(TAG, "Place: " + place.getRating());
 
+            String distance = getString(R.string.txt_distance_waiting);
+            if(!place.getDistance().isEmpty()) {
+                distance = place.getDistance();
+            }
+
             placeBinding.txvPlacesTitle.setText(place.getTitle());
             placeBinding.txvAddress.setText(place.getAddress());
-            placeBinding.txvDistance.setText(place.getDistance());
+            placeBinding.txvDistance.setText(distance);
             placeBinding.txvStatus.setText(place.getStatus());
             placeBinding.txvDescription.setText(place.getDescription());
             setupTagsRecyclerView(place.getTags());
@@ -130,7 +135,7 @@ public class PlaceDetailFragment extends Fragment {
 
     // set up tags recycler view
     private void setupTagsRecyclerView(List<String> availableTags) {
-        tagsAdapter = new TagsAdapter(availableTags, "PLACE");
+        tagsAdapter = new TagsAdapter(availableTags, TagsAdapter.PLACE_TYPE);
         tagsAdapter.setSelectionEnabled(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 getContext(),

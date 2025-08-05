@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import app.outofthenest.databinding.ActivityOnboardBinding;
 import app.outofthenest.ui.maps.MainActivity;
+import app.outofthenest.utils.OnboardUtils;
 
 
 public class OnboardActivity extends AppCompatActivity {
@@ -27,6 +28,7 @@ public class OnboardActivity extends AppCompatActivity {
         binding.btStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                OnboardUtils.markOnboardCompleted(getBaseContext());
                 Intent intent = new Intent(OnboardActivity.this, MainActivity.class);
                 intent.putExtra("profile", "true");
                 startActivity(intent);

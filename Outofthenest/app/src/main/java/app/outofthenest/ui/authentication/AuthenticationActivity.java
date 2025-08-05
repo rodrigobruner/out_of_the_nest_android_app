@@ -51,8 +51,11 @@ public class AuthenticationActivity extends AppCompatActivity {
                 authenticationBinding.tabLayoutAuthentication,
                 authenticationBinding.viewPagerAuthentication,
                 (tab, position) -> {
-                    if (position == 0) tab.setText(R.string.btn_register);
-                    else tab.setText(R.string.btn_login);
+                    if (position == 0) {
+                        tab.setText(R.string.btn_register);
+                    } else {
+                        tab.setText(R.string.btn_login);
+                    }
                 }
         ).attach();
 

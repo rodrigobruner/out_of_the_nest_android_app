@@ -16,6 +16,7 @@ import app.outofthenest.adapters.TagsAdapter;
 import app.outofthenest.databinding.ActivityNewEventBinding;
 import app.outofthenest.models.Event;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -108,30 +109,28 @@ public class NewEventActivity extends AppCompatActivity {
         binding.inpEventDate.setFocusable(false);
         binding.inpEventDate.setClickable(true);
 
-        // initial text to datepicker
         binding.inpEventDate.setOnClickListener(v -> {
             final Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            // create a dialog with a custom style
+            // Criar um calendário separado para a data mínima
+            Calendar minDateCalendar = Calendar.getInstance();
+            minDateCalendar.add(Calendar.DAY_OF_MONTH, 1);
+
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     this,
                     R.style.DatePickerDialog,
                     (view, selectedYear, selectedMonth, selectedDay) -> {
-                        // After date is picked, show time picker
                         calendar.set(selectedYear, selectedMonth, selectedDay);
                         showTimePicker(calendar);
                     },
                     year, month, day
             );
 
-            // Set minimum date to tomorrow
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
-            datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-
-            // show the date picker dialog
+            // Definir data mínima usando o calendário separado
+            datePickerDialog.getDatePicker().setMinDate(minDateCalendar.getTimeInMillis());
             datePickerDialog.show();
         });
     }
@@ -195,6 +194,15 @@ public class NewEventActivity extends AppCompatActivity {
             }
 
             Date date = new Date();
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                date = dateFormat.parse(dateStr);
+            } catch (Exception e) {
+                Toast.makeText(this, getString(R.string.txt_invalid_event_date), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
             ArrayList<String> targetAudience = new ArrayList<>();
 
             // create a new event
@@ -208,7 +216,7 @@ public class NewEventActivity extends AppCompatActivity {
     private void setUpTargetRecyclerView() {
 
         List<String> availableTags = getAvailableTags();
-        tagsAdapter = new TagsAdapter(availableTags, "EVENT");
+        tagsAdapter = new TagsAdapter(availableTags, TagsAdapter.EVENT_TYPE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 getApplicationContext(),
                 LinearLayoutManager.HORIZONTAL,

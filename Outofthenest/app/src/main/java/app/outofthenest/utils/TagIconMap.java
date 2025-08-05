@@ -15,7 +15,14 @@ public class TagIconMap {
                     R.drawable.ic_tag_02,
                     R.drawable.ic_tag_03,
                     R.drawable.ic_tag_04,
-                    R.drawable.ic_tag_05
+                    R.drawable.ic_tag_05,
+                    R.drawable.ic_tag_06,
+                    R.drawable.ic_tag_07,
+                    R.drawable.ic_tag_08,
+                    R.drawable.ic_tag_09,
+                    R.drawable.ic_tag_10,
+                    R.drawable.ic_tag_11,
+                    R.drawable.ic_tag_12
             };
         }
 

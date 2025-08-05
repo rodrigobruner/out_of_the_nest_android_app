@@ -41,7 +41,7 @@ public class EventsViewModel extends AndroidViewModel {
 
     // create event
     public void createEvent(Event event) {
-        Log.i(TAG, "Creating event: " + event.getTitle());
+
         isLoading.setValue(true);
         errorMessage.setValue(null);
         repository.createEvent(event).observeForever(new Observer<Event>() {

@@ -20,6 +20,10 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.TagViewHolder>
     // To use Log.d(TAG, "message") for debugging
     String TAG = getClass().getSimpleName();
 
+    public static final String PLACE_TYPE = "PLACE";
+
+    public static final String EVENT_TYPE = "EVENT";
+
     private List<String> tags = new ArrayList<>();
 
     private String tagCategory = "NO";

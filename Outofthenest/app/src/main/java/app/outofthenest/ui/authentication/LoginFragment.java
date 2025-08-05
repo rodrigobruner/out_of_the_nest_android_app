@@ -94,10 +94,10 @@ public class LoginFragment extends Fragment {
                     UserUtils.saveUser(requireContext(), user);
 
                     Intent intent;
-                    if(OnboardUtils.isFirstTime(getContext())){
-                        intent = new Intent(getActivity(), OnboardActivity.class);
-                    }else{
+                    if(OnboardUtils.onboardDone(getContext())){
                         intent = new Intent(getActivity(), MainActivity.class);
+                    }else{
+                        intent = new Intent(getActivity(), OnboardActivity.class);
                     }
                     startActivity(intent);
                 } else {

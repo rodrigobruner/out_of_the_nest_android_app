@@ -37,10 +37,10 @@ public class ApiService {
                     .readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
                     .build();
 
-            // TODO: maybe it results in serialization problems and loss ratings score
+            // TODO: check if it results in serialization problems and loss ratings score
             // define date format in the api
             Gson gson = new GsonBuilder()
-                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss") //2025-07-17T16:49:29
+                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                     .create();
 
             // build the Retrofit instance

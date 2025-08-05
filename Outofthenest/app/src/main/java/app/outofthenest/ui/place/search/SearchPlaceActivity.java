@@ -228,7 +228,7 @@ public class SearchPlaceActivity extends AppCompatActivity {
     // set up the tags recycler view
     private void setupTagsRecyclerView() {
         List<String> availableTags = getAvailableTags();
-        tagsAdapter = new TagsAdapter(availableTags);
+        tagsAdapter = new TagsAdapter(availableTags,TagsAdapter.PLACE_TYPE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 this,
                 LinearLayoutManager.HORIZONTAL,
