@@ -10,7 +10,7 @@ Find a restaurant with a playground and a kids' menu?
 We will develop a family-friendly app to help parents find safe and enjoyable places to go or activities to do with their kids or pets
 
 <p align="center">
-  <img src="images/screen_recording.gif" alt="See what stage we are at" width="50%">
+  <img src="images/screen_recording.gif" alt="See what stage we are at" width="95%">
 </p>
 
 
